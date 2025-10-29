@@ -1,24 +1,16 @@
 <!DOCTYPE html>
-
 <html lang="es">
-
   <head>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
-    
     <meta name="keywords" content="blog, music, trance, NVIV">
     <meta name="copyright" content="© NVIV 2025. Todos los derechos reservados.">
-    
     <title>NVIV/histórico</title>
-    
     <style>
-      
       html, body {
         margin: 0;
         padding: 0;
@@ -34,9 +26,7 @@
         background-position: center;
         background-attachment: fixed;
       }
-      
       * { box-sizing: border-box; }
-      
       .fullscreen {
         width: 100vw;
         height: 100vh;
@@ -44,17 +34,14 @@
         position: relative;
         overflow: hidden;
       }
-      
       .center {
         display: flex;
         align-items: center;
         justify-content: center;
       }
-      
       .hidden {
         display: none !important;
       }
-      
       #parte1, #parte2, #parte3 {
         position: absolute;
         top: 0;
@@ -63,60 +50,53 @@
         height: 100%;
         transition: opacity 1s ease, transform 1s ease;
       }
-      
       #boton1 {
-        width: 3em;
-        height: 3em;
+        width: 100px;
+        height: 100px;
         border-radius: 50%;
         background-color: rgba(0, 0, 0, 0);
         color: #FFF;
         font-size: 1.2em;
         border: none;
-        box-shadow: 0 0 1.3em 0.3em #FFF;
+        box-shadow: 0 0 20px 5px #FFF;
         animation: pulse 3s infinite;
         font-family: Quicksand;
       }
-      
       @keyframes pulse {
-        0% { box-shadow: 0 0 0.7em #FFF; }
-        50% { box-shadow: 0 0 3.3em #FFF; }
-        100% { box-shadow: 0 0 0.7em #FFF; }
+        0% { box-shadow: 0 0 10px #FFF; }
+        50% { box-shadow: 0 0 50px #FFF; }
+        100% { box-shadow: 0 0 10px #FFF; }
       }
-      
       #botones-estilos {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 1em;
+        gap: 15px;
         width: 100vw;
         height: auto;
-        padding: 0 0.6em;
+        padding: 0 10px;
         justify-items: center;
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
       }
-      
       .estilo-btn {
-        width: 7.3em;
-        height: 4em;
+        width: 110px;
+        height: 60px;
         font-size: 2em;
         color: #FFF;
         border: none;
         cursor: pointer;
       }
-      
       #parte3 {
         overflow: hidden;
       }
-      
       [data-autor="NVIV"]::after {
         content: " ";
         font-size: 0;
         visibility: hidden;
         position: absolute;
       }
-      
       .pagina-principal {
         width: 100vw;
         height: 100vh;
@@ -126,7 +106,6 @@
         overflow-y: scroll;
         scroll-snap-type: y mandatory;
       }
-      
       .pagina-secundaria {
         width: 100vw;
         height: 100vh;
@@ -137,35 +116,32 @@
         background-repeat: no-repeat;
         position: relative;
       }
-      
       .texto-secundario {
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
         color: #FFF;
-        text-shadow: 0.06em 0.06em #000;
+        text-shadow: 1px 1px #000;
         text-align: center;
         display: none;
         font-size: 1.1em;
         width: 80%;
       }
-      
       .boton-control {
         position: fixed;
-        bottom: 0.7em;
-        right: 1.3em;
+        bottom: 10px;
+        right: 20px;
         z-index: 1000;
-        width: 4.7em;
-        height: 4.7em;
+        width: 70px;
+        height: 70px;
         border-radius: 50%;
         background-color: #333;
         color: #FFF;
         border: none;
-        margin-bottom: 0.7em;
-        box-shadow: 0 0.3em 0.7em rgba(0,0,0,0);
+        margin-bottom: 10px;
+        box-shadow: 0 5px 10px rgba(0,0,0,0);
       }
-      
       .etiqueta {
         position: fixed;
         bottom: 0;
@@ -174,58 +150,49 @@
         color: #FFF;
         font-size: 0.5em;
       }
-      
       .pulsante-texto {
         text-align: center;
         font-size: 3em;
         color: #FFF;
-        margin-top: 6.7em;
-        margin-bottom: 0.7em;
+        margin-top: 100px;
+        margin-bottom: 10px;
         animation: pulseText 4s infinite;
       }
-      
       @keyframes pulseText {
-        0% { text-shadow: 0 0 0.3em #FFF; }
-        50% { text-shadow: 0 0 1.7em #FFF; }
-        100% { text-shadow: 0 0 0.3em #FFF; }
+        0% { text-shadow: 0 0 5px #FFF; }
+        50% { text-shadow: 0 0 25px #FFF; }
+        100% { text-shadow: 0 0 5px #FFF; }
       }
-      
       .profile-container {
         text-align: center;
         max-width: 100%;
       }
-      
       .profile-photo {
         width: 40vw;
         max-width: 300px;
         border-radius: 50%;
-        box-shadow: 0 0.27em 0.8em rgba(0,0,0,0.2);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         transition: transform 0.3s ease;
         cursor: pointer;
       }
-      
       .profile-photo:active {
         transform: scale(0.95);
       }
-      
       .profile-name {
         font-size: 1em;
         margin: 1rem 0 0.5rem;
         color: #FFF;
         font-weight: bold;
       }
-      
       .profile-description {
         font-size: 0.8em;
         color: #666;
         padding: 0 1rem;
       }
-      
       .img_private {
         pointer-events: none;
         touch-action: none;  
       }
-      
       .links {
         width: 95%;
         height: 10em;
@@ -237,88 +204,52 @@
         background-size: contain;
         cursor: pointer;
       }
-      
     </style>
-    
   </head>
-  
   <body>
-    
     <div data-autor="NVIV">
-      
-      <!-- ptI............................................................................................................................................................................................................................ -->
-      
       <div id="parte1" class="fullscreen center" style="background-image: url('https://lh3.googleusercontent.com/d/1uLO8NHTarp0SKlbZCrSOH1L6mWjzI4qO=s3000'); background-repeat: no-repeat; background-size: cover; 
         background-position: center; background-attachment: fixed;">
-        
-        <p style="color: #FFF; margin-top: 195%; font-size: 1.5em;" onclick="window.open('index.html', '_self')">
+        <p style="color: #FFF; margin-top: 195%; font-size: 1.5em;" onclick="location.href='.html'">
           <i class="fa-solid fa-user"></i>
         </p>
-        
         <button class="estilo-btn" id="boton1" data-index="2" style="font-size: 3em;"><i class="fa-brands fa-searchengin"></i></button>
-        
         <p onclick="location.reload()" style="color: #FFF; margin-top: 195%; font-size: 1.9em;">
           <i class="fa-solid fa-xmark"></i>
         </p>
-        
       </div>
-      
-      <!-- ptII........................................................................................................................................................................................................................... -->
-      
       <div id="parte2" class="fullscreen hidden">
-        
         <div id="contenedor-paginas" style="display:flex; width:100%; height:100%; overflow-x: scroll; scroll-snap-type: x mandatory;">
-          
           <div class="pagina-principal" data-index="2" style="display:none;">
-            
-            <!-- HISTORIAL................................................................................................................................................................................................................. -->
-            
             <div class="pagina-secundaria" data-bg="https://lh3.googleusercontent.com/d/=s2000" onclick="this.querySelector('.texto-secundario').style.display = 
               this.querySelector('.texto-secundario').style.display === 'block' ? 'none' : 'block';">
               <div class="texto-secundario img_private">
                 <img src="https://lh3.googleusercontent.com/d/=s2000" alt="h-002" style="width: 100%;">
               </div>
             </div>
-            
             <div class="pagina-secundaria" data-bg="https://lh3.googleusercontent.com/d/1QBA_1lodyyUCez0yV13Ibsp5keq9WgH-=s2000" onclick="this.querySelector('.texto-secundario').style.display = 
               this.querySelector('.texto-secundario').style.display === 'block' ? 'none' : 'block';">
               <div class="texto-secundario img_private">
                 <img src="https://lh3.googleusercontent.com/d/1r-99GKXs6AweQop2jNLtnKDD4tXXdCfs=s2000" alt="h-001" style="width: 100%;">
               </div>
             </div>
-            
           </div>
-          
-          <!-- CONTROLES................................................................................................................................................................................................................... -->
-          
         </div>
-        
         <button id="boton12" class="boton-control" style="font-size: 1.5em; background-color: rgba(0,0,0,0)"><i class="fa-solid fa-house"></i></button>
-        
-        <button id="boton13" class="boton-control" style="font-size: 1em; bottom: 6em; background-color: rgba(0,0,0,0)"></button>
-        
+        <button id="boton13" class="boton-control" style="font-size: 1em; bottom: 90px; background-color: rgba(0,0,0,0)"></button>
         <div class="etiqueta" id="etiqueta">Creado por <b>NVIV</b> (2025). Todos los derechos reservados.</div>
-        
       </div>
-      
-        <!-- SCRIPT....................................................................................................................................................................................................................... -->
-      
       <div id="player"></div>
-      
       <script>
-        
         const playlistIDs = {
           2: 'PLTsg_kaNc_ZbXU0RavkKW-jiPrqIgDp-H'
         };
-        
         let currentPlaylist = '';
         let player;
-        
         document.getElementById('boton1').onclick = () => {
           document.getElementById('parte1').classList.add('hidden');
           document.getElementById('parte2').classList.remove('hidden');
         };
-        
         document.querySelectorAll('.estilo-btn').forEach(btn => {
           btn.onclick = () => {
             const idx = btn.dataset.index;
@@ -332,7 +263,6 @@
             document.getElementById('etiqueta').style.color = btn.style.backgroundColor;
           };
         });
-        
         document.getElementById('boton12').onclick = () => {
           document.getElementById('parte2').classList.add('hidden');
           document.getElementById('parte1').classList.remove('hidden');
@@ -341,7 +271,6 @@
             div.style.display = 'none';
           });
         };
-        
         function onYouTubeIframeAPIReady() {
           player = new YT.Player('player', {
             height: '0', width: '0',
@@ -357,7 +286,6 @@
             }
           });
         }
-        
         function loadYouTube(id) {
           if (!window.YT) {
             const tag = document.createElement('script');
@@ -372,9 +300,7 @@
             });
           }
         }
-        
         window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
-        
         document.getElementById('boton1').addEventListener('click', () => {
           const docEl = document.documentElement;
           if (docEl.requestFullscreen) {
@@ -385,21 +311,16 @@
             docEl.msRequestFullscreen();
           }
         });
-        
-        // --- OPTIMIZACIÓN GIFS CON DATA-BG ---
         const paginas = document.querySelectorAll('.pagina-secundaria');
-        
         const observer = new IntersectionObserver(entries => {
           entries.forEach(entry => {
             const el = entry.target;
             if (entry.isIntersecting) {
               if (el.dataset.bg) {
-                // primera vez: cargar imagen/gif
                 el.style.backgroundImage = `url('${el.dataset.bg}')`;
                 delete el.dataset.bg;
               } else {
-                // si ya estaba cargado antes, reiniciar el gif
-                const url = el.style.backgroundImage.slice(5, -2); // extrae url("...")
+                const url = el.style.backgroundImage.slice(5, -2);
                 el.style.backgroundImage = "none";
                 setTimeout(() => {
                   el.style.backgroundImage = `url('${url}?t=${Date.now()}')`;
@@ -408,15 +329,8 @@
             }
           });
         }, { root: null, rootMargin: "0px", threshold: 0.6 });
-        
         paginas.forEach(p => observer.observe(p));
-        
       </script>
-      
     </div>
-    
   </body>
-  
-
 </html>
-
