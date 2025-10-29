@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+
+<html lang="es-Mx">
+
+  <head>
+  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    
+    <title>NVIV/perfil</title>
+    
+    <style>
+    
+    /* Configuracion de la pagina */
+    
+      @media only screen and (max-width: 600px) {
+        #main {margin-left: 0}
+      }
+      
+      * {
+        scroll-behavior: smooth;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      html, body {
+        height: 100%; 
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden; /* Para evitar scroll horizontal */
+        background-color: #000;
+        color: #fff;
+        font-size: 15px;
+        font-family: Jost;
+      }
+      
+      p {
+        font-size: 0.5em;
+      }
+      
+      nav {
+        position: sticky; /* Sticky para los navegadores modernos */
+        top: 0;          /* Lo mantiene pegado arriba */
+        width: 100%;
+        background: #333;
+        padding: 20px 0;
+        z-index: 1000;   /* Para que siempre quede encima */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Efecto de seleccion */
+        font-size: 0.8em;
+      }
+      
+      nav ul {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+      }
+      
+      nav ul li {
+        display: inline;
+      }
+      
+      nav ul li a {
+        text-decoration: none;
+        color: white;
+        padding: 10px 20px;
+      }
+      
+      nav ul li a:hover {
+        background: #555;
+        border-radius: 5px;
+      }
+      
+      .seccion {
+        height: 200vh;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-size: 2rem;
+        border-bottom: 2px solid #000;
+      }
+      
+      /* Estilo del contenedor */
+      
+      .contenedor {
+        display: flex;
+        overflow-x: auto; /* Permite desplazamiento horizontal */
+        white-space: nowrap; /* Asegura que no haya saltos de línea */
+        scroll-snap-type: x mandatory; /* Desplazamiento suave */
+      }
+      
+      /* Estilo para las imágenes */
+      
+      .contenedor img {
+        width: 205px;
+        height: auto;
+        margin-right: 10px;
+        scroll-snap-align: start; /* Alinea cada imagen al deslizar */
+      }
+      
+      /* Opcional: estilizar el contenedor */
+      
+      .contenedor::-webkit-scrollbar {
+        height: 10px; /* Tamaño de la barra de desplazamiento */
+      }
+      
+      .contenedor::-webkit-scrollbar-thumb {
+        background: #888; /* Color de la barra */
+        border-radius: 4px; /* Redondear esquinas */
+      }
+      
+      table, td {
+        text-align: center;
+        border: 1px solid #fff;
+        font-size: 20px;
+      }
+      
+    </style>
+
+  </head>
+
+<!--CONTENIDO...............................................................................................................................................................................................................................-->
+
+  <body>
+
+<!--MENU....................................................................................................................................................................................................................................-->
+
+    <nav>
+      <ul>
+        <li><a href="/pages/index.html">Regresar</a></li>
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#indice">Índice</a></li>
+        <li><a href="#" id="max-min"><i class="fa-solid fa-expand"></i></a></li>
+      </ul>
+    </nav>
+  
+  <!--INICIO................................................................................................................................................................................................................................-->
+  
+    <section id="inicio" class="seccion">
+      
+      <div>
+        <img src="/img/image_10.gif" alt="portada" style="width: 60%; margin-top: 2.5em;">
+        <p>
+          <i>"Bienvenidos al desierto de lo real".</i>
+        </p>
+      </div>
+      
+    </section>
+    
+    <br>
+    
+    <section id="indice" class="seccion">
+      
+      <div>
+        <img src="/img/image_10.gif" alt="portada" style="width: 60%; margin-top: 2.5em;">
+        <h6>I d i o m a s :</h6>
+        <br>
+        <div class="contenedor">
+          <a href="/img/blank.png"><img src="/img/language1.png" alt="Language 1"></a>
+          <a href="/img/blank.png"><img src="/img/language2.png" alt="Language 2"></a>
+        </div>
+        <br>
+          
+        <h6>L i t e r a t u r a :</h6>
+        <br>
+        <div class="contenedor">
+          <a href="/img/blank.png"><img src="/img/book01.png" alt="Book 1"></a>
+          <a href="/img/blank.png"><img src="/img/book02.png" alt="Book 2"></a>
+          <a href="/img/blank.png"><img src="/img/book03.png" alt="Book 3"></a>
+          <a href="/img/blank.png"><img src="/img/book04.png" alt="Book 4"></a>
+          <a href="/img/blank.png"><img src="/img/book05.png" alt="Book 5"></a>
+          <a href="/img/blank.png"><img src="/img/book06.png" alt="Book 6"></a>
+          <a href="/img/blank.png"><img src="/img/book07.png" alt="Book 7"></a>
+          <a href="/img/blank.png"><img src="/img/book08.png" alt="Book 8"></a>
+          <a href="/img/blank.png"><img src="/img/book09.png" alt="Book 9"></a>
+          <a href="/img/blank.png"><img src="/img/book10.png" alt="Book 10"></a>
+          <a href="/img/blank.png"><img src="/img/book11.png" alt="Book 11"></a>
+          <a href="/img/blank.png"><img src="/img/book12.png" alt="Book 12"></a>
+        </div>
+        <br>
+        
+        <h6>C i n e :</h6>
+        <br>
+        <div class="contenedor">
+          <a href="/img/blank.png"><img src="/img/movie01.png" alt="Movie 1"></a>
+          <a href="/img/blank.png"><img src="/img/movie02.png" alt="Movie 2"></a>
+          <a href="/img/blank.png"><img src="/img/movie03.png" alt="Movie 3"></a>
+          <a href="/img/blank.png"><img src="/img/movie04.png" alt="Movie 4"></a>
+          <a href="/img/blank.png"><img src="/img/movie05.png" alt="Movie 5"></a>
+          <a href="/img/blank.png"><img src="/img/movie06.png" alt="Movie 6"></a>
+          <a href="/img/blank.png"><img src="/img/movie07.png" alt="Movie 7"></a>
+          <a href="/img/blank.png"><img src="/img/movie08.png" alt="Movie 8"></a>
+          <a href="/img/blank.png"><img src="/img/movie09.png" alt="Movie 9"></a>
+          <a href="/img/blank.png"><img src="/img/movie10.png" alt="Movie 10"></a>
+          <a href="/img/blank.png"><img src="/img/movie11.png" alt="Movie 11"></a>
+          <a href="/img/blank.png"><img src="/img/movie12.png" alt="Movie 12"></a>
+          <a href="/img/blank.png"><img src="/img/movie13.png" alt="Movie 13"></a>
+          <a href="/img/blank.png"><img src="/img/movie14.png" alt="Movie 14"></a>
+          <a href="/img/blank.png"><img src="/img/movie15.png" alt="Movie 15"></a>
+        </div>
+        <br>
+        
+        <h6>C u r s o s :</h6>
+        <br>
+        <div class="contenedor">
+          <a href="/img/blank.png"><img src="/img/course01.png" alt="Course 1"></a>
+          <a href="/img/blank.png"><img src="/img/course02.png" alt="Course 2"></a>
+          <a href="/img/blank.png"><img src="/img/course03.png" alt="Course 3"></a>
+        </div>
+        <br>
+        
+        <h6>L e g i s l a c i ó n :</h6>
+        <br>
+        <div class="contenedor">
+          <a href="/img/blank.png"><img src="/img/legislation01.png" alt="Legislation 1"></a>
+        </div>
+        <br>
+      </div>
+      
+    </section>
+    
+    <script>
+      const foto = document.getElementById("max-min");
+      
+      foto.addEventListener("click", () => {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(err => {
+            console.warn("Error al intentar pantalla completa:", err);
+          });
+        } else {
+          document.exitFullscreen();
+        }
+      });
+      
+      function abrirEnlace(url) {
+        window.open(url, "_blank");
+      }
+    </script>
+
+  </body>
+
+</html>

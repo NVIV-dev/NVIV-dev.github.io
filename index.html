@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+  <head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    
+    <title>NVIV</title>
+    
+    <style>
+      
+      /* CONFIGURACIÓN GENERAL DE LA PÁGINA */
+      html, body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background-image: url('https://lh3.googleusercontent.com/d/14215i2sb6hRP0XiZ_ROmNzCXv0NniWZi=s3000');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        font-family: Jost;
+        font-size: 15px;
+      }
+      
+      body::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        backdrop-filter: blur(2px) brightness(0.9);
+        z-index: 0;
+      }
+      
+      /* CONTENEDOR PRINCIPAL */
+      .container {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 90%;
+        padding: 3vh 5vw;
+        box-sizing: border-box;
+      }
+      
+      /* IMAGEN DE PERFIL */
+      .profile-photo {
+        width: 20%;
+        max-width: 180px;
+        border-radius: 50%;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        cursor: pointer;
+      }
+      
+      img:active {
+        transform: scale(0.95);
+      }
+      
+      /* TÍTULO */
+      h1 {
+        margin-top: 2vh;
+        font-size: 1.6em;
+        color: #FFF;
+        text-align: center;
+      }
+      
+      /* TARJETA DE BOTONES */
+      .card {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: stretch;
+        width: 50%;
+        max-width: 400px;
+        height: 60vh;
+        background: rgba(255, 0, 0, 0.15);
+        border-radius: 20px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        padding: 1em;
+        margin-top: 3vh;
+        font-size: 0.8em;
+      }
+      
+      /* CADA BOTÓN */
+      .btn {
+        width: 100%;
+        height: 15%;
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        border-radius: 10px;
+        color: #fff;
+        font-size: 1.3em;
+        margin: 0.6em 0;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        font-family: Jost;
+      }
+      
+      .btn:hover {
+        background: rgba(255, 255, 255, 0.35);
+        transform: scale(1.02);
+      }
+      
+      /* PIE DE PÁGINA */
+      p {
+        color: #ddd;
+        font-size: 0.9em;
+        margin-top: 1.5em;
+        text-align: center;
+      }
+      
+      @media (max-width: 600px) {
+        .profile-photo { width: 30%; }
+        .card { width: 60%; height: 35vh; }
+        .btn { font-size: 1em; }
+      }
+
+    #mensaje {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-family: sans-serif;
+      font-size: 16px;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+      z-index: 1000;
+    }
+      
+    </style>
+    
+  </head>
+
+  <body>
+    
+    <div class="container">
+      
+      <!-- IMAGEN DE PERFIL -->
+      <img src="https://lh3.googleusercontent.com/d/1hwqu0Yb6XVcszyzen2MPl24vlQJZj_Pt=s2000" alt="NVIV-p" class="profile-photo" id="foto">
+      
+      <!-- TÍTULO -->
+      <h1>N V I V</h1>
+      
+      <!-- BOTONES -->
+      <div class="card">
+        <button class="btn" onclick="mostrarMensaje()">P E R F I L</button>
+          <div id="mensaje" style="font-size: 0.9em; text-align: center;">No disponible para usuarios de rango: <span style="color: #FF0000;">PRINCIPIANTE</span>.</div>
+        <button class="btn" onclick="location.href='.html'">H I S T Ó R I C O</button>
+        <button class="btn" onclick="location.href='.html'">P F A Q</button>
+        <button class="btn" onclick="location.href='.html'">P O R T A F O L I O</button>
+        <button class="btn" onclick="location.href='.html'" style="font-weight: bold;">†</button>
+      </div>
+      
+      <!-- PIE -->
+      <p style="font-size: 0.6em;">Creado por <b>NVIV</b> (2025). Todos los derechos reservados.</p>
+    </div>
+    
+    <script>
+      const foto = document.getElementById("foto");
+      
+      foto.addEventListener("click", () => {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(err => {
+            console.warn("Error al intentar pantalla completa:", err);
+          });
+        } else {
+          document.exitFullscreen();
+        }
+      });
+      
+      function abrirEnlace(url) {
+        window.open(url, "_blank");
+      }
+      
+      function mostrarMensaje() {
+        const mensaje = document.getElementById('mensaje');
+        mensaje.style.opacity = '1';
+        
+        setTimeout(() => {
+          mensaje.style.opacity = '0';
+        }, 4000);
+      }
+    </script>
+    
+  </body>
+  
+</html>
