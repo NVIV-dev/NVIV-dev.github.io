@@ -1,18 +1,11 @@
 <!DOCTYPE html>
-
 <html lang="es">
-
   <head>
-  
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    
     <title>NVIV/mensaje</title>
-    
     <style>
-      
       html, body {
         margin: 0;
         padding: 0;
@@ -22,8 +15,6 @@
         background: black;
         touch-action: manipulation;
       }
-      
-      /* Contenedor principal */
       .contenedor {
         width: 100%;
         height: 100%;
@@ -34,22 +25,17 @@
         position: relative;
         transition: transform 1s ease;
       }
-      
-      /* Relación de aspecto 9:16 */
       @media screen and (max-aspect-ratio: 9/16) {
         .contenedor {
           height: 100vh;
           width: 100vw;
         }
       }
-      
-      /* PRIMERA PARTE */
       #parte1 {
         background-image: url('https://lh3.googleusercontent.com/d/1NNYB7WUdvdZt1ulWDzuK5Q6pMQUZFpAf=s3000');
         background-size: cover;
         background-position: center;
       }
-      
       #boton1 {
         width: 500px;
         height: 500px;
@@ -64,8 +50,6 @@
         overflow: hidden;
         box-shadow: 0 0 20px 5px rgba(255,255,255,0.5);
       }
-      
-      /* SEGUNDA PARTE */
       #parte2 {
         background-image: url('https://lh3.googleusercontent.com/d/16TzmbRshGiJX2V2CPPO8NUlQgac293RM=s3000');
         background-size: cover;
@@ -80,8 +64,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-      }
-      
+      }      
       #textoVideo {
         font-size: 1.5em;
         text-align: center;
@@ -89,7 +72,6 @@
         color: #FFF;
         font-weight: bold;
       }
-      
       #boton2 {
         position: absolute;
         bottom: 2%;
@@ -106,47 +88,34 @@
         backdrop-filter: blur(5px);
         transition: background 0.3s;
       }
-      
       #boton2:active {
         background: rgba(255,255,255,0.5);
       }
-      
-      /* Ocultar reproductores */
       .oculto {
         display: none;
         width: 0;
         height: 0;
       }
-      
     </style>
-    
   </head>
-  
   <body>
-    
     <div id="parte1" class="contenedor">
       <button id="boton1"><i class="fa-solid fa-circle"></i></button>
     </div>
-    
     <div id="parte2" class="contenedor">
       <div id="textoVideo">...</div>
       <button id="boton2"><i class="fa-solid fa-rotate-right"></i></button>
     </div>
-    
     <div id="player1" class="oculto"></div>
     <div id="player2" class="oculto"></div>
-    
     <script src="https://www.youtube.com/iframe_api"></script>
-    
     <script>
-      
       const PLAYLIST1 = "PLTsg_kaNc_ZZeFRJl0yL-pAUyNXLbE5Aj";
       const PLAYLIST2 = "PLTsg_kaNc_ZbTyFbk6mexc6TOoQprOhuK";
       let player1, player2;
       let parte1 = document.getElementById("parte1");
       let parte2 = document.getElementById("parte2");
       let textoVideo = document.getElementById("textoVideo");
-      
       function onYouTubeIframeAPIReady() {
         player1 = new YT.Player('player1', {
           height: '0',
@@ -164,7 +133,6 @@
             'onStateChange': onPlayer1StateChange
           }
         });
-        
         player2 = new YT.Player('player2', {
           height: '0',
           width: '0',
@@ -179,9 +147,7 @@
           events: { 'onReady': onPlayer2Ready }
         });
       }
-      
       function onPlayer1Ready(event) {
-        // Espera toque antes de reproducir
         document.getElementById("boton1").addEventListener("touchstart", () => {
           activarPantallaCompleta();
           event.target.setVolume(100);
@@ -194,11 +160,8 @@
           parte2.style.transform = "translateY(-100%)";
         }, { once: true });
       }
-      
       function onPlayer2Ready(event) {
-        // listo
-      }
-      
+      }      
       function onPlayer1StateChange(event) {
         if (event.data === YT.PlayerState.PLAYING) {
           const titulo = player1.getVideoData().title;
@@ -208,22 +171,15 @@
           textoVideo.textContent = titulo;
         }
       }
-      
-      // Botón SALIR
       document.getElementById("boton2").addEventListener("touchstart", () => {
         location.reload();
       });
-      
-      // Pantalla completa
       function activarPantallaCompleta() {
         let elem = document.documentElement;
         if (elem.requestFullscreen) elem.requestFullscreen();
         else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
         else if (elem.msRequestFullscreen) elem.msRequestFullscreen();
       }
-      
     </script>
-    
   </body>
-  
 </html>
