@@ -13,7 +13,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     
-    <title>NVIV</title>
+    <title>N V I V</title>
     
     <style>
       
@@ -37,7 +37,7 @@
         content: "";
         position: absolute;
         inset: 0;
-        backdrop-filter: blur(2px) brightness(0.9);
+        backdrop-filter: blur(0.15em) brightness(0.9);
         z-index: 0;
       }
       
@@ -57,9 +57,9 @@
       /* IMAGEN DE PERFIL */
       .profile-photo {
         width: 20%;
-        max-width: 180px;
+        max-width: 15em;
         border-radius: 50%;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        box-shadow: 0 0.3em 1em rgba(0,0,0,0.2);
         cursor: pointer;
       }
       
@@ -82,11 +82,11 @@
         justify-content: center;
         align-items: stretch;
         width: 50%;
-        max-width: 400px;
+        max-width: 27em;
         height: 60vh;
         background: rgba(255, 0, 0, 0.15);
-        border-radius: 20px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        border-radius: 1.4em;
+        box-shadow: 0 0.26em 1.3em rgba(0,0,0,0.2);
         padding: 1em;
         margin-top: 3vh;
         font-size: 0.8em;
@@ -98,8 +98,8 @@
         height: 15%;
         background: rgba(255, 255, 255, 0.2);
         border: none;
-        border-radius: 10px;
-        color: #fff;
+        border-radius: 0.7em;
+        color: #FFF;
         font-size: 1.3em;
         margin: 0.6em 0;
         cursor: pointer;
@@ -107,7 +107,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 10px;
+        gap: 0.6em;
         font-family: Jost;
       }
       
@@ -118,7 +118,7 @@
       
       /* PIE DE PÁGINA */
       p {
-        color: #ddd;
+        color: #DDD;
         font-size: 0.9em;
         margin-top: 1.5em;
         text-align: center;
@@ -129,23 +129,23 @@
         .card { width: 60%; height: 35vh; }
         .btn { font-size: 1em; }
       }
-
-    #mensaje {
-      position: fixed;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: rgba(0, 0, 0, 0.8);
-      color: white;
-      padding: 10px 20px;
-      border-radius: 8px;
-      font-family: sans-serif;
-      font-size: 16px;
-      opacity: 0;
-      transition: opacity 0.5s ease;
-      pointer-events: none;
-      z-index: 1000;
-    }
+      
+      #mensaje1 {
+        position: fixed;
+        top: 1.3em;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: rgba(0, 0, 0, 0.8);
+        color: #FFF;
+        padding: 0.6em 1.3em;
+        border-radius: 0.5em;
+        font-family: sans-serif;
+        font-size: 1em;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        pointer-events: none;
+        z-index: 1000;
+      }
       
     </style>
     
@@ -164,11 +164,11 @@
       <!-- BOTONES -->
       <div class="card">
         <button class="btn" onclick="mostrarMensaje()">P E R F I L</button>
-          <div id="mensaje" style="font-size: 0.9em; text-align: center;">No disponible para usuarios de rango: <span style="color: #FF0000;">PRINCIPIANTE</span>.</div>
-        <button class="btn" onclick="location.href='.html'">H I S T Ó R I C O</button>
-        <button class="btn" onclick="location.href='.html'">P F A Q</button>
-        <button class="btn" onclick="location.href='.html'">P O R T A F O L I O</button>
-        <button class="btn" onclick="location.href='.html'" style="font-weight: bold;">†</button>
+          <div id="mensaje1" style="font-size: 0.9em; text-align: center;">No disponible para usuarios de rango: <span style="color: #FF0000;">PRINCIPIANTE</span>.</div>
+        <button class="btn" onclick="window.open('historico.html', '_blank')">H I S T Ó R I C O</button>
+        <button class="btn" onclick="window.open('pfaq.html', '_blank')">P F A Q</button>
+        <button class="btn" onclick="window.open('portafolio.html', '_blank')">P O R T A F O L I O</button>
+        <button class="btn" onclick="window.open('mensaje.html', '_blank')" style="font-weight: bold;">†</button>
       </div>
       
       <!-- PIE -->
@@ -193,7 +193,7 @@
       }
       
       function mostrarMensaje() {
-        const mensaje = document.getElementById('mensaje');
+        const mensaje = document.getElementById('mensaje1');
         mensaje.style.opacity = '1';
         
         setTimeout(() => {
