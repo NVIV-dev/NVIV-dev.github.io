@@ -65,31 +65,31 @@
       }
       
       #boton1 {
-        width: 100px;
-        height: 100px;
+        width: 6.6em;
+        height: 6.6em;
         border-radius: 50%;
         background-color: rgba(0, 0, 0, 0);
         color: #FFF;
         font-size: 1.2em;
         border: none;
-        box-shadow: 0 0 20px 5px #FFF;
+        box-shadow: 0 0 1.3em 0.3em #FFF;
         animation: pulse 3s infinite;
         font-family: Quicksand;
       }
       
       @keyframes pulse {
-        0% { box-shadow: 0 0 10px #FFF; }
-        50% { box-shadow: 0 0 50px #FFF; }
-        100% { box-shadow: 0 0 10px #FFF; }
+        0% { box-shadow: 0 0 0.7em #FFF; }
+        50% { box-shadow: 0 0 3.3em #FFF; }
+        100% { box-shadow: 0 0 0.7em #FFF; }
       }
       
       #botones-estilos {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 15px;
+        gap: 1em;
         width: 100vw;
         height: auto;
-        padding: 0 10px;
+        padding: 0 0.6em;
         justify-items: center;
         position: absolute;
         top: 50%;
@@ -98,8 +98,8 @@
       }
       
       .estilo-btn {
-        width: 110px;
-        height: 60px;
+        width: 7.3em;
+        height: 4em;
         font-size: 2em;
         color: #FFF;
         border: none;
@@ -144,7 +144,7 @@
         left: 50%;
         transform: translate(-50%, -50%);
         color: #FFF;
-        text-shadow: 1px 1px #000;
+        text-shadow: 0.06em 0.06em #000;
         text-align: center;
         display: none;
         font-size: 1.1em;
@@ -153,17 +153,17 @@
       
       .boton-control {
         position: fixed;
-        bottom: 10px;
-        right: 20px;
+        bottom: 0.7em;
+        right: 1.3em;
         z-index: 1000;
-        width: 70px;
-        height: 70px;
+        width: 4.7em;
+        height: 4.7em;
         border-radius: 50%;
         background-color: #333;
         color: #FFF;
         border: none;
-        margin-bottom: 10px;
-        box-shadow: 0 5px 10px rgba(0,0,0,0);
+        margin-bottom: 0.7em;
+        box-shadow: 0 0.3em 0.7em rgba(0,0,0,0);
       }
       
       .etiqueta {
@@ -179,15 +179,15 @@
         text-align: center;
         font-size: 3em;
         color: #FFF;
-        margin-top: 100px;
-        margin-bottom: 10px;
+        margin-top: 6.7em;
+        margin-bottom: 0.7em;
         animation: pulseText 4s infinite;
       }
       
       @keyframes pulseText {
-        0% { text-shadow: 0 0 5px #FFF; }
-        50% { text-shadow: 0 0 25px #FFF; }
-        100% { text-shadow: 0 0 5px #FFF; }
+        0% { text-shadow: 0 0 0.3em #FFF; }
+        50% { text-shadow: 0 0 1.7em #FFF; }
+        100% { text-shadow: 0 0 0.3em #FFF; }
       }
       
       .profile-container {
@@ -199,7 +199,7 @@
         width: 40vw;
         max-width: 300px;
         border-radius: 50%;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        box-shadow: 0 0.27em 0.8em rgba(0,0,0,0.2);
         transition: transform 0.3s ease;
         cursor: pointer;
       }
@@ -251,7 +251,7 @@
       <div id="parte1" class="fullscreen center" style="background-image: url('https://lh3.googleusercontent.com/d/1uLO8NHTarp0SKlbZCrSOH1L6mWjzI4qO=s3000'); background-repeat: no-repeat; background-size: cover; 
         background-position: center; background-attachment: fixed;">
         
-        <p style="color: #FFF; margin-top: 195%; font-size: 1.5em;" onclick="location.href='.html'">
+        <p style="color: #FFF; margin-top: 195%; font-size: 1.5em;" onclick="window.open('index.html', '_self')">
           <i class="fa-solid fa-user"></i>
         </p>
         
@@ -295,7 +295,7 @@
         
         <button id="boton12" class="boton-control" style="font-size: 1.5em; background-color: rgba(0,0,0,0)"><i class="fa-solid fa-house"></i></button>
         
-        <button id="boton13" class="boton-control" style="font-size: 1em; bottom: 90px; background-color: rgba(0,0,0,0)"></button>
+        <button id="boton13" class="boton-control" style="font-size: 1em; bottom: 6em; background-color: rgba(0,0,0,0)"></button>
         
         <div class="etiqueta" id="etiqueta">Creado por <b>NVIV</b> (2025). Todos los derechos reservados.</div>
         
@@ -417,4 +417,5 @@
     
   </body>
   
+
 </html>
