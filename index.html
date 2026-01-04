@@ -1,171 +1,186 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, viewport-fit=cover">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <title>N V I V</title>
-    <style>
-      html, body {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        background-image: url('https://lh3.googleusercontent.com/d/14215i2sb6hRP0XiZ_ROmNzCXv0NniWZi=s3000');
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
-        font-family: Jost;
-        font-size: 15px;
-        padding-top: env(safe-area-inset-top);
-        padding-bottom: env(safe-area-inset-bottom);
-      }
-      body::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        backdrop-filter: blur(0.15em) brightness(0.9);
-        z-index: 0;
-      }
-      .container {
-        position: relative;
-        z-index: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 100vw;
-        height: 100dvh;
-        padding: 3vh 5vw;
-        box-sizing: border-box;
-      }
-      .profile-photo {
-        width: 20%;
-        max-width: 15em;
-        border-radius: 50%;
-        box-shadow: 0 0.3em 1em rgba(0,0,0,0.2);
-        cursor: pointer;
-      }
-      img:active {
-        transform: scale(0.95);
-      }
-      h1 {
-        margin-top: 2vh;
-        font-size: 1.6em;
-        color: #FFF;
-        text-align: center;
-      }
-      .card {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: stretch;
-        width: 50%;
-        max-width: 27em;
-        height: 60vh;
-        background: rgba(255, 0, 0, 0.15);
-        border-radius: 1.4em;
-        box-shadow: 0 0.26em 1.3em rgba(0,0,0,0.2);
-        padding: 1em;
-        margin-top: 3vh;
-        font-size: 0.8em;
-      }
-      .btn {
-        width: 100%;
-        height: 15%;
-        background: rgba(255, 255, 255, 0.2);
-        border: none;
-        border-radius: 0.7em;
-        color: #FFF;
-        font-size: 1.3em;
-        margin: 0.6em 0;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.6em;
-        font-family: Jost;
-      }
-      .btn:hover {
-        background: rgba(255, 255, 255, 0.35);
-        transform: scale(1.02);
-      }
-      p {
-        color: #DDD;
-        font-size: 0.9em;
-        margin-top: 1.5em;
-        text-align: center;
-      }
-      @media (max-width: 600px) {
-        .profile-photo { width: 30%; }
-        .card { width: 60%; height: 35vh; }
-        .btn { font-size: 1em; }
-      }
-      #mensaje1 {
-        position: fixed;
-        top: 1.3em;
-        left: 50%;
-        transform: translateX(-50%);
-        background-color: rgba(0, 0, 0, 0.8);
-        color: #FFF;
-        padding: 0.6em 1.3em;
-        border-radius: 0.5em;
-        font-family: sans-serif;
-        font-size: 1em;
-        opacity: 0;
-        transition: opacity 0.5s ease;
-        pointer-events: none;
-        z-index: 1000;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <img src="https://lh3.googleusercontent.com/d/1hwqu0Yb6XVcszyzen2MPl24vlQJZj_Pt=s2000" alt="NVIV-p" class="profile-photo" id="foto">
-      <h1>N V I V</h1>
-      <div class="card">
-        <button class="btn" onclick="mostrarMensaje()">P E R F I L</button>
-          <div id="mensaje1" style="font-size: 0.9em; text-align: center;">No disponible para usuarios de rango: <span style="color: #FF0000;">PRINCIPIANTE</span>.</div>
-        <button class="btn" onclick="window.open('historico.html', '_blank')">H I S T Ó R I C O</button>
-        <button class="btn" onclick="window.open('pfaq.html', '_blank')">P F A Q</button>
-        <button class="btn" onclick="window.open('portafolio.html', '_blank')">P O R T A F O L I O</button>
-        <button class="btn" onclick="window.open('mensaje.html', '_blank')" style="font-weight: bold;">†</button>
-      </div>
-      <p style="font-size: 0.6em;">Creado por <b>NVIV</b> (2025). Todos los derechos reservados.</p>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, height=device-height, initial-scale=1.0, viewport-fit=cover">
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@100..900&display=swap" rel="stylesheet">
+
+  <title>N V I V</title>
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: Jost, system-ui, sans-serif;
+      background: black;
+    }
+
+    body {
+      background-image: url('https://lh3.googleusercontent.com/d/14215i2sb6hRP0XiZ_ROmNzCXv0NniWZi=s3000');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      backdrop-filter: blur(0.15em) brightness(0.9);
+      z-index: 0;
+    }
+
+    .container {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      width: 100vw;
+      height: 100dvh;
+
+      box-sizing: border-box;
+    }
+
+    .profile-photo {
+      width: 20%;
+      max-width: 15em;
+      border-radius: 50%;
+      box-shadow: 0 0.3em 1em rgba(0,0,0,0.2);
+      cursor: pointer;
+    }
+
+    img:active { transform: scale(0.95); }
+
+    h1 {
+      margin-top: 2vh;
+      font-size: 1.6em;
+      color: #FFF;
+      text-align: center;
+    }
+
+    .card {
+      width: 50%;
+      max-width: 27em;
+      height: 60vh;
+      background: rgba(255, 0, 0, 0.15);
+      border-radius: 1.4em;
+      box-shadow: 0 0.26em 1.3em rgba(0,0,0,0.2);
+      padding: 1em;
+      margin-top: 3vh;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.6em;
+    }
+
+    .btn {
+      height: 15%;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      border-radius: 0.7em;
+      color: #FFF;
+      font-size: 1.3em;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6em;
+      font-family: Jost;
+    }
+
+    .btn:hover {
+      background: rgba(255, 255, 255, 0.35);
+      transform: scale(1.02);
+    }
+
+    p {
+      color: #DDD;
+      font-size: 0.6em;
+      margin-top: 2vh;
+      text-align: center;
+    }
+
+    #mensaje1 {
+      position: fixed;
+      top: env(safe-area-inset-top, 1em);
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.8);
+      color: #FFF;
+      padding: 0.6em 1.3em;
+      border-radius: 0.5em;
+      font-size: 1em;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    @media (max-width: 600px) {
+      .profile-photo { width: 30%; }
+      .card { width: 60%; height: 35vh; }
+      .btn { font-size: 1em; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <img src="https://lh3.googleusercontent.com/d/1hwqu0Yb6XVcszyzen2MPl24vlQJZj_Pt=s2000"
+         alt="NVIV-p" class="profile-photo" id="foto">
+
+    <h1>N V I V</h1>
+
+    <div class="card">
+      <button class="btn" onclick="mostrarMensaje()">P E R F I L</button>
+      <button class="btn" onclick="window.open('historico.html')">H I S T Ó R I C O</button>
+      <button class="btn" onclick="window.open('pfaq.html')">P F A Q</button>
+      <button class="btn" onclick="window.open('portafolio.html')">P O R T A F O L I O</button>
+      <button class="btn" onclick="window.open('mensaje.html')" style="font-weight:bold;">†</button>
     </div>
-    <script>
-      const foto = document.getElementById("foto");
-      foto.addEventListener("click", () => {
-        if (!document.fullscreenElement) {
-          document.documentElement.requestFullscreen().catch(err => {
-            console.warn("Error al intentar pantalla completa:", err);
-          });
-        } else {
-          document.exitFullscreen();
-        }
-      });
-      function abrirEnlace(url) {
-        window.open(url, "_blank");
+
+    <p>Creado por <b>NVIV</b> (2025). Todos los derechos reservados.</p>
+  </div>
+
+  <div id="mensaje1">
+    No disponible para usuarios de rango:
+    <span style="color:#FF0000;">PRINCIPIANTE</span>.
+  </div>
+
+  <script>
+    const foto = document.getElementById("foto");
+
+    foto.addEventListener("click", () => {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+      } else {
+        document.exitFullscreen();
       }
-      function mostrarMensaje() {
-        const mensaje = document.getElementById('mensaje1');
-        mensaje.style.opacity = '1';
-        setTimeout(() => {
-          mensaje.style.opacity = '0';
-        }, 4000);
-      }
-    </script>
-  </body>
+    });
+
+    function mostrarMensaje() {
+      const m = document.getElementById('mensaje1');
+      m.style.opacity = '1';
+      setTimeout(() => m.style.opacity = '0', 4000);
+    }
+  </script>
+
+</body>
 </html>
-
-
-
-
-
-
