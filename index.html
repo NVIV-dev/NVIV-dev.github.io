@@ -1,9 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="es">
+
 <head>
+  
   <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, height=device-height, initial-scale=1.0, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, viewport-fit=cover">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,12 +14,13 @@
   <title>N V I V</title>
 
   <style>
+    
     html, body {
       margin: 0;
       width: 100%;
       height: 100%;
       font-family: Jost, system-ui, sans-serif;
-      background: black;
+      background: #000;
     }
 
     body {
@@ -40,16 +43,14 @@
     /* CONTENEDOR ÚNICO */
     .wrapper {
       z-index: 1;
-      width: 90%;
+      width: 80%;
       max-width: 420px;
       aspect-ratio: 9 / 16;
-
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       gap: 1rem;
-
       padding: 1.2rem;
       box-sizing: border-box;
     }
@@ -64,18 +65,17 @@
 
     h1 {
       margin: 0.5rem 0;
-      font-size: clamp(1.2rem, 4vw, 1.6rem);
-      color: #fff;
+      font-size: clamp(1.4rem, 4vw, 1.6rem);
+      color: #FFF;
       text-align: center;
     }
 
     .card {
-      width: 100%;
+      width: 80%;
       flex: 1;
       background: rgba(255, 0, 0, 0.15);
       border-radius: 1.4em;
       padding: 1rem;
-
       display: flex;
       flex-direction: column;
       justify-content: space-evenly;
@@ -83,14 +83,14 @@
     }
 
     .btn {
+      width: 100%;
       flex: 1;
       background: rgba(255,255,255,0.2);
       border: none;
       border-radius: 0.7em;
-      color: #fff;
-      font-size: clamp(0.9rem, 3vw, 1.2rem);
+      color: #FFF;
+      font-size: clamp(0.6rem, 2vw, 1.2rem);
       cursor: pointer;
-
       display: flex;
       align-items: center;
       justify-content: center;
@@ -102,7 +102,7 @@
 
     p {
       font-size: 0.5rem;
-      color: #ddd;
+      color: #DDD;
       text-align: center;
       margin: 0;
     }
@@ -113,22 +113,25 @@
       left: 50%;
       transform: translateX(-50%);
       background: rgba(0,0,0,0.8);
-      color: #fff;
+      color: #FFF;
       padding: 0.6em 1.3em;
       border-radius: 0.5em;
       opacity: 0;
       transition: opacity 0.4s ease;
       pointer-events: none;
       z-index: 10;
+      text-align: center;
+      font-size: 0.5rem;
     }
+    
   </style>
+  
 </head>
 
 <body>
 
   <div class="wrapper">
-    <img src="https://lh3.googleusercontent.com/d/1hwqu0Yb6XVcszyzen2MPl24vlQJZj_Pt=s2000"
-         class="profile-photo" id="foto">
+    <img src="https://lh3.googleusercontent.com/d/1hwqu0Yb6XVcszyzen2MPl24vlQJZj_Pt=s2000" class="profile-photo" id="foto">
 
     <h1>N V I V</h1>
 
@@ -144,8 +147,8 @@
   </div>
 
   <div id="mensaje1">
-    No disponible para usuarios de rango:
-    <span style="color:#ff0000;">PRINCIPIANTE</span>
+    <i>No disponible para usuarios de rango:</i>
+    <span style="color:#FF0000;">PRINCIPIANTE</span>
   </div>
 
   <script>
@@ -168,5 +171,3 @@
 
 </body>
 </html>
-
-
