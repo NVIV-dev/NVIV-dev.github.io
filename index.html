@@ -1,21 +1,14 @@
 <!DOCTYPE html>
-
 <html lang="es">
-
 <head>
-  
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, viewport-fit=cover">
-  
   <link rel="icon" href="https://lh3.googleusercontent.com/d/1q2ytw5Y2NF2AoVfdn2n69TJsuq6gJ7Zs=s2000">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jost:wght@100..900&display=swap" rel="stylesheet">
-
   <title>N V I V</title>
-
   <style>
-    
     html, body {
       margin: 0;
       width: 100%;
@@ -23,7 +16,6 @@
       font-family: Jost, system-ui, sans-serif;
       background: #000;
     }
-
     body {
       background-image: url('https://lh3.googleusercontent.com/d/14215i2sb6hRP0XiZ_ROmNzCXv0NniWZi=s3000');
       background-size: cover;
@@ -32,7 +24,6 @@
       align-items: center;
       justify-content: center;
     }
-
     body::before {
       content: "";
       position: fixed;
@@ -40,8 +31,6 @@
       backdrop-filter: blur(0.15em) brightness(0.9);
       z-index: 0;
     }
-
-    /* CONTENEDOR ÚNICO */
     .wrapper {
       z-index: 1;
       width: 80%;
@@ -55,7 +44,6 @@
       padding: 1.2rem;
       box-sizing: border-box;
     }
-
     .profile-photo {
       width: 35%;
       max-width: 140px;
@@ -63,14 +51,12 @@
       box-shadow: 0 0.3em 1em rgba(0,0,0,0.25);
       cursor: pointer;
     }
-
     h1 {
       margin: 0.5rem 0;
       font-size: clamp(1.4rem, 4vw, 1.6rem);
       color: #FFF;
       text-align: center;
     }
-
     .card {
       width: 80%;
       flex: 1;
@@ -82,7 +68,6 @@
       justify-content: space-evenly;
       gap: 0.6rem;
     }
-
     .btn {
       width: 100%;
       flex: 1;
@@ -96,18 +81,15 @@
       align-items: center;
       justify-content: center;
     }
-
     .btn:hover {
       background: rgba(255,255,255,0.35);
     }
-
     p {
       font-size: 0.5rem;
       color: #DDD;
       text-align: center;
       margin: 0;
     }
-
     #mensaje1 {
       position: fixed;
       top: env(safe-area-inset-top, 1rem);
@@ -124,18 +106,12 @@
       text-align: center;
       font-size: 0.5rem;
     }
-    
   </style>
-  
 </head>
-
 <body>
-
   <div class="wrapper">
     <img src="https://lh3.googleusercontent.com/d/1hwqu0Yb6XVcszyzen2MPl24vlQJZj_Pt=s2000" class="profile-photo" id="foto">
-
     <h1>N V I V</h1>
-
     <div class="card">
       <button class="btn" onclick="mostrarMensaje()">P E R F I L</button>
       <button class="btn" onclick="window.open('historico.html')">H I S T Ó R I C O</button>
@@ -143,18 +119,14 @@
       <button class="btn" onclick="window.open('portafolio.html')">P O R T A F O L I O</button>
       <button class="btn" onclick="window.open('mensaje.html')"><b>†</b></button>
     </div>
-
     <p>Creado por <b>NVIV</b> (2025). Todos los derechos reservados.</p>
   </div>
-
   <div id="mensaje1">
     <i>No disponible para usuarios de rango:</i>
-    <span style="color:#FF0000;">PRINCIPIANTE</span>
+    <span style="color:#FF0000;">APRENDIZ</span>
   </div>
-
   <script>
     const foto = document.getElementById("foto");
-
     foto.addEventListener("click", () => {
       if (!document.fullscreenElement) {
         document.documentElement.requestFullscreen();
@@ -162,14 +134,11 @@
         document.exitFullscreen();
       }
     });
-
     function mostrarMensaje() {
       const m = document.getElementById('mensaje1');
       m.style.opacity = '1';
       setTimeout(() => m.style.opacity = '0', 3500);
     }
   </script>
-
 </body>
 </html>
-
