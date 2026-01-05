@@ -331,20 +331,27 @@
         }
         
         document.getElementById('boton1').onclick = () => {
+        // 1️⃣ Navegación SIEMPRE
+        document.getElementById('parte1').classList.add('hidden');
+        document.getElementById('parte2').classList.remove('hidden');
+      
+        // 2️⃣ Pantalla completa
+        const docEl = document.documentElement;
+        if (docEl.requestFullscreen) {
+          docEl.requestFullscreen();
+        }
+      
+        // 3️⃣ Música SOLO si el player ya existe
+        if (player && player.loadPlaylist) {
           player.loadPlaylist({
             listType: 'playlist',
             list: currentPlaylist,
             index: 0,
             suggestedQuality: 'large'
           });
-        
           player.playVideo();
-        
-          document.getElementById('parte1').classList.add('hidden');
-          document.getElementById('parte2').classList.remove('hidden');
-        
-          document.documentElement.requestFullscreen?.();
-        };
+        }
+      };
         
         document.querySelectorAll('.estilo-btn').forEach(btn => {
           btn.onclick = () => {
@@ -460,6 +467,7 @@
   </body>
   
 </html>
+
 
 
 
