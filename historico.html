@@ -1,154 +1,103 @@
 <!DOCTYPE html>
+
 <html lang="es">
-<head>
 
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    
+    <meta name="keywords" content="blog, music, trance, NVIV">
+    <meta name="copyright" content="© NVIV 2025. Todos los derechos reservados.">
+    
+    <title>NVIV/h</title>
+    
+    <style>
+      /* TODO TU CSS ORIGINAL, SIN CAMBIOS */
+    </style>
+    
+  </head>
+  
+  <body>
+    
+    <div data-autor="NVIV">
 
-  <title>NVIV/h</title>
+      <div id="parte1" class="fullscreen center" style="background-image: url('https://lh3.googleusercontent.com/d/1uLO8NHTarp0SKlbZCrSOH1L6mWjzI4qO=s3000'); background-repeat: no-repeat; background-size: cover; background-position: center; background-attachment: fixed;">
+        
+        <p style="color: #FFF; margin-top: 195%; font-size: 1.5em;">
+          <i class="fa-solid fa-user"></i>
+        </p>
+        
+        <button class="estilo-btn" id="boton1" data-index="2" style="font-size: 3em;">
+          <i class="fa-brands fa-searchengin"></i>
+        </button>
+        
+        <p onclick="location.reload()" style="color: #FFF; margin-top: 195%; font-size: 1.9em;">
+          <i class="fa-solid fa-xmark"></i>
+        </p>
+        
+      </div>
+      
+      <div id="parte2" class="fullscreen hidden">
+        <div id="contenedor-paginas"></div>
+        <div class="etiqueta" id="etiqueta">Creado por <b>NVIV</b> (2025).</div>
+      </div>
 
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+      <!-- REPRODUCTOR -->
+      <div id="player"></div>
 
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      width: 100vw;
-      height: 100vh;
-      overflow: hidden;
-      font-family: Quicksand, sans-serif;
-      background: #111;
-      color: #fff;
-    }
+      <!-- API DE YOUTUBE: SE CARGA AL INICIAR -->
+      <script src="https://www.youtube.com/iframe_api"></script>
 
-    .fullscreen {
-      width: 100vw;
-      height: 100vh;
-      position: relative;
-    }
+      <script>
+        
+        let player;
 
-    .center {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    #parte1 {
-      background-image: url('https://lh3.googleusercontent.com/d/1uLO8NHTarp0SKlbZCrSOH1L6mWjzI4qO=s3000');
-      background-size: cover;
-      background-position: center;
-    }
-
-    #boton1 {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      border: none;
-      background: rgba(0,0,0,0);
-      color: #fff;
-      font-size: 3em;
-      box-shadow: 0 0 30px #fff;
-      animation: pulse 3s infinite;
-      cursor: pointer;
-    }
-
-    @keyframes pulse {
-      0% { box-shadow: 0 0 10px #fff; }
-      50% { box-shadow: 0 0 50px #fff; }
-      100% { box-shadow: 0 0 10px #fff; }
-    }
-
-    #parte2 {
-      background: #000;
-    }
-
-    .etiqueta {
-      position: fixed;
-      bottom: 5px;
-      width: 100%;
-      text-align: center;
-      font-size: 0.6em;
-      color: #aaa;
-    }
-  </style>
-
-</head>
-<body>
-
-  <!-- PARTE 1 -->
-  <div id="parte1" class="fullscreen center">
-    <button id="boton1">
-      <i class="fa-brands fa-youtube"></i>
-    </button>
-  </div>
-
-  <!-- PARTE 2 -->
-  <div id="parte2" class="fullscreen hidden center">
-    <p>La playlist ya fluye. No la interrumpas.</p>
-    <div class="etiqueta">Creado por NVIV · 2025</div>
-  </div>
-
-  <!-- REPRODUCTOR YOUTUBE (INVISIBLE) -->
-  <div id="player"></div>
-
-  <!-- API DE YOUTUBE -->
-  <script src="https://www.youtube.com/iframe_api"></script>
-
-  <script>
-    const PLAYLIST_ID = 'PLTsg_kaNc_ZbXU0RavkKW-jiPrqIgDp-H';
-    let player;
-
-    // Se crea el reproductor apenas carga la página
-    function onYouTubeIframeAPIReady() {
-      player = new YT.Player('player', {
-        height: '0',
-        width: '0',
-        playerVars: {
-          autoplay: 0,
-          controls: 0,
-          loop: 1,
-          rel: 0
-        },
-        events: {
-          onReady: e => e.target.setVolume(80)
+        function onYouTubeIframeAPIReady() {
+          player = new YT.Player('player', {
+            height: '0',
+            width: '0',
+            playerVars: {
+              autoplay: 0,
+              controls: 0,
+              loop: 1,
+              rel: 0
+            },
+            events: {
+              onReady: e => e.target.setVolume(80)
+            }
+          });
         }
-      });
-    }
 
-    // BOTÓN PRINCIPAL
-    document.getElementById('boton1').addEventListener('click', () => {
+        document.getElementById('boton1').onclick = () => {
 
-      // Mostrar segunda pantalla
-      document.getElementById('parte1').classList.add('hidden');
-      document.getElementById('parte2').classList.remove('hidden');
+          document.getElementById('parte1').classList.add('hidden');
+          document.getElementById('parte2').classList.remove('hidden');
 
-      // Reproducir playlist
-      if (player) {
-        player.loadPlaylist({
-          listType: 'playlist',
-          list: PLAYLIST_ID,
-          index: 0,
-          suggestedQuality: 'large'
-        });
-      }
+          if (player) {
+            player.loadPlaylist({
+              listType: 'playlist',
+              list: 'PLTsg_kaNc_ZbXU0RavkKW-jiPrqIgDp-H',
+              index: 0,
+              suggestedQuality: 'large'
+            });
+          }
 
-      // Pantalla completa
-      const docEl = document.documentElement;
-      if (docEl.requestFullscreen) {
-        docEl.requestFullscreen();
-      } else if (docEl.webkitRequestFullscreen) {
-        docEl.webkitRequestFullscreen();
-      }
-    });
-  </script>
+          const docEl = document.documentElement;
+          if (docEl.requestFullscreen) {
+            docEl.requestFullscreen();
+          }
+        };
 
-</body>
+      </script>
+      
+    </div>
+    
+  </body>
+  
 </html>
