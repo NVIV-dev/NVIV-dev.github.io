@@ -315,14 +315,15 @@
         let player;
         
         document.getElementById('boton1').onclick = () => {
-          const idx = document.getElementById('boton1').dataset.index;
-          loadYouTube(playlistIDs[idx]);
-        
-          document.getElementById('parte1').classList.add('hidden');
-          document.getElementById('parte2').classList.remove('hidden');
-        
-          document.documentElement.requestFullscreen?.();
-        };
+  const idx = document.getElementById('boton1').dataset.index;
+  currentPlaylist = playlistIDs[idx];
+  loadYouTube(currentPlaylist);
+
+  document.getElementById('parte1').classList.add('hidden');
+  document.getElementById('parte2').classList.remove('hidden');
+
+  document.documentElement.requestFullscreen?.();
+};
         
         document.querySelectorAll('.estilo-btn').forEach(btn => {
           btn.onclick = () => {
@@ -348,31 +349,33 @@
         };
         
         function onYouTubeIframeAPIReady() {
-          player = new YT.Player('player', {
-            height: '0',
-            width: '0',
-            playerVars: {
-              autoplay: 1,
-              controls: 0,
-              loop: 1,
-              rel: 0
-            },
-            events: {
-              onReady: e => {
-                e.target.setVolume(80);
-        
-                if (currentPlaylist) {
-                  e.target.loadPlaylist({
-                    listType: 'playlist',
-                    list: currentPlaylist,
-                    index: 0,
-                    suggestedQuality: 'large'
-                  });
-                }
-              }
-            }
+  player = new YT.Player('player', {
+    height: '0',
+    width: '0',
+    playerVars: {
+      autoplay: 1,
+      controls: 0,
+      loop: 1,
+      rel: 0,
+      playsinline: 1
+    },
+    events: {
+      onReady: e => {
+        e.target.mute();              // ← CLAVE ABSOLUTA
+        e.target.setVolume(80);
+
+        if (currentPlaylist) {
+          e.target.loadPlaylist({
+            listType: 'playlist',
+            list: currentPlaylist,
+            index: 0,
+            suggestedQuality: 'large'
           });
         }
+      }
+    }
+  });
+}
         
         function loadYouTube(id) {
           currentPlaylist = id;
@@ -436,5 +439,6 @@
   </body>
   
 </html>
+
 
 
