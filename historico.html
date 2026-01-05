@@ -258,25 +258,39 @@
         const playlistIDs = {
           2: 'PLTsg_kaNc_ZbXU0RavkKW-jiPrqIgDp-H'
         };
-        let currentPlaylist = '';
-        let player;
+        let player = null;
+        let pendingPlaylist = null;
         document.getElementById('boton1').onclick = () => {
-          const playlistID = 'PLTsg_kaNc_ZbXU0RavkKW-jiPrqIgDp-H';
+          pendingPlaylist = playlistIDs[2];
           document.getElementById('parte1').classList.add('hidden');
           document.getElementById('parte2').classList.remove('hidden');
-          loadYouTube(playlistID);
+          const docEl = document.documentElement;
+          if (docEl.requestFullscreen) docEl.requestFullscreen();
+          else if (docEl.webkitRequestFullscreen) docEl.webkitRequestFullscreen();
+          else if (docEl.msRequestFullscreen) docEl.msRequestFullscreen();
+          if (window.YT && player) {
+            loadYouTube(pendingPlaylist);
+            pendingPlaylist = null;
+          }
+          else if (!window.YT) {
+            const tag = document.createElement('script');
+            tag.src = 'https://www.youtube.com/iframe_api';
+            document.body.appendChild(tag);
+          }
         };
         document.querySelectorAll('.estilo-btn').forEach(btn => {
           btn.onclick = () => {
             const idx = btn.dataset.index;
-            currentPlaylist = playlistIDs[idx];
-            loadYouTube(currentPlaylist);
+            pendingPlaylist = playlistIDs[idx];
             document.querySelectorAll('.pagina-principal').forEach(div => {
               div.style.display = div.dataset.index === idx ? 'flex' : 'none';
             });
             document.getElementById('parte1').classList.add('hidden');
             document.getElementById('parte2').classList.remove('hidden');
-            document.getElementById('etiqueta').style.color = btn.style.backgroundColor;
+            if (window.YT && player) {
+              loadYouTube(pendingPlaylist);
+              pendingPlaylist = null;
+            }
           };
         });
         document.getElementById('boton12').onclick = () => {
@@ -289,44 +303,35 @@
         };
         function onYouTubeIframeAPIReady() {
           player = new YT.Player('player', {
-            height: '0', width: '0',
+            height: '0',
+            width: '0',
             playerVars: {
               autoplay: 1,
               controls: 0,
               loop: 1,
-              playlist: '',
               rel: 0
             },
             events: {
-              onReady: e => e.target.setVolume(80),
+              onReady: e => {
+                e.target.setVolume(80);
+                if (pendingPlaylist) {
+                  loadYouTube(pendingPlaylist);
+                  pendingPlaylist = null;
+                }
+              }
             }
           });
         }
         function loadYouTube(id) {
-          if (!window.YT) {
-            const tag = document.createElement('script');
-            tag.src = 'https://www.youtube.com/iframe_api';
-            document.body.appendChild(tag);
-          } else {
-            player.loadPlaylist({
-              listType: 'playlist',
-              list: id,
-              index: 0,
-              suggestedQuality: 'large'
-            });
-          }
+          if (!player || !id) return;
+          player.loadPlaylist({
+            listType: 'playlist',
+            list: id,
+            index: 0,
+            suggestedQuality: 'large'
+          });
         }
         window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
-        document.getElementById('boton1').addEventListener('click', () => {
-          const docEl = document.documentElement;
-          if (docEl.requestFullscreen) {
-            docEl.requestFullscreen();
-          } else if (docEl.webkitRequestFullscreen) {
-            docEl.webkitRequestFullscreen();
-          } else if (docEl.msRequestFullscreen) {
-            docEl.msRequestFullscreen();
-          }
-        });
         const paginas = document.querySelectorAll('.pagina-secundaria');
         const observer = new IntersectionObserver(entries => {
           entries.forEach(entry => {
@@ -344,17 +349,9 @@
               }
             }
           });
-        }, { root: null, rootMargin: "0px", threshold: 0.6 });
+        }, { threshold: 0.6 });
         paginas.forEach(p => observer.observe(p));
       </script>
     </div>
   </body>
 </html>
-
-
-
-
-
-
-
-
