@@ -304,6 +304,8 @@
         <!-- SCRIPT....................................................................................................................................................................................................................... -->
       
       <div id="player"></div>
+
+      <script src="https://www.youtube.com/iframe_api"></script>
       
       <script>
         
@@ -313,17 +315,36 @@
         
         let currentPlaylist = '';
         let player;
+        let currentPlaylist = 'PLTsg_kaNc_ZbXU0RavkKW-jiPrqIgDp-H';
+        
+        function onYouTubeIframeAPIReady() {
+          player = new YT.Player('player', {
+            height: '1',
+            width: '1',
+            playerVars: {
+              autoplay: 0,
+              controls: 0,
+              playsinline: 1,
+              rel: 0
+            }
+          });
+        }
         
         document.getElementById('boton1').onclick = () => {
-  const idx = document.getElementById('boton1').dataset.index;
-  currentPlaylist = playlistIDs[idx];
-  loadYouTube(currentPlaylist);
-
-  document.getElementById('parte1').classList.add('hidden');
-  document.getElementById('parte2').classList.remove('hidden');
-
-  document.documentElement.requestFullscreen?.();
-};
+          player.loadPlaylist({
+            listType: 'playlist',
+            list: currentPlaylist,
+            index: 0,
+            suggestedQuality: 'large'
+          });
+        
+          player.playVideo();
+        
+          document.getElementById('parte1').classList.add('hidden');
+          document.getElementById('parte2').classList.remove('hidden');
+        
+          document.documentElement.requestFullscreen?.();
+        };
         
         document.querySelectorAll('.estilo-btn').forEach(btn => {
           btn.onclick = () => {
@@ -349,33 +370,33 @@
         };
         
         function onYouTubeIframeAPIReady() {
-  player = new YT.Player('player', {
-    height: '0',
-    width: '0',
-    playerVars: {
-      autoplay: 1,
-      controls: 0,
-      loop: 1,
-      rel: 0,
-      playsinline: 1
-    },
-    events: {
-      onReady: e => {
-        e.target.mute();              // ← CLAVE ABSOLUTA
-        e.target.setVolume(80);
-
-        if (currentPlaylist) {
-          e.target.loadPlaylist({
-            listType: 'playlist',
-            list: currentPlaylist,
-            index: 0,
-            suggestedQuality: 'large'
+          player = new YT.Player('player', {
+            height: '0',
+            width: '0',
+            playerVars: {
+              autoplay: 1,
+              controls: 0,
+              loop: 1,
+              rel: 0,
+              playsinline: 1
+            },
+            events: {
+              onReady: e => {
+                e.target.mute();              // ← CLAVE ABSOLUTA
+                e.target.setVolume(80);
+        
+                if (currentPlaylist) {
+                  e.target.loadPlaylist({
+                    listType: 'playlist',
+                    list: currentPlaylist,
+                    index: 0,
+                    suggestedQuality: 'large'
+                  });
+                }
+              }
+            }
           });
         }
-      }
-    }
-  });
-}
         
         function loadYouTube(id) {
           currentPlaylist = id;
@@ -439,6 +460,7 @@
   </body>
   
 </html>
+
 
 
 
