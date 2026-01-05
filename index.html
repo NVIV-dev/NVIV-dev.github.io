@@ -110,13 +110,21 @@
       position: relative;
       display: inline-block;
     }
+    .profile-photo {
+      width: 35%;
+      max-width: 140px;
+      border-radius: 50%;
+      box-shadow: 0 0.3em 1em rgba(0,0,0,0.25);
+      cursor: pointer;
+      position: relative;
+      z-index: 1;
+    }
     .badge-star {
       position: absolute;
-      bottom: 5%;
-      right: 5%;
+      bottom: 6%;
+      right: 6%;
       width: 42px;
       height: 42px;
-      background: transparent;
       border: 2px solid purple;
       color: purple;
       font-weight: bold;
@@ -124,6 +132,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      background: transparent;
+      z-index: 2; /* ← ESTO es lo que la pone encima */
       clip-path: polygon(
         50% 0%,
         61% 35%,
@@ -136,15 +146,15 @@
         2% 35%,
         39% 35%
       );
-      box-sizing: border-box;
     }
   </style>
 </head>
 <body>
   <div class="wrapper">
     <div class="profile-container">
-  <img src="https://lh3.googleusercontent.com/d/1hwqu0Yb6XVcszyzen2MPl24vlQJZj_Pt=s2000" class="profile-photo" id="foto">
-  <div class="badge-star">33</div>
+      <img src="https://lh3.googleusercontent.com/d/1hwqu0Yb6XVcszyzen2MPl24vlQJZj_Pt=s2000" class="profile-photo" id="foto">
+      <div class="badge-star">33</div>
+    </div>
 </div>
     <h1>N V I V</h1>
     <div class="card">
@@ -177,4 +187,5 @@
   </script>
 </body>
 </html>
+
 
