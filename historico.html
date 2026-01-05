@@ -315,6 +315,10 @@
         let player;
         
         document.getElementById('boton1').onclick = () => {
+          const idx = document.getElementById('boton1').dataset.index;
+          currentPlaylist = playlistIDs[idx];
+          loadYouTube(currentPlaylist);
+          
           document.getElementById('parte1').classList.add('hidden');
           document.getElementById('parte2').classList.remove('hidden');
         };
@@ -344,16 +348,26 @@
         
         function onYouTubeIframeAPIReady() {
           player = new YT.Player('player', {
-            height: '0', width: '0',
+            height: '0',
+            width: '0',
             playerVars: {
               autoplay: 1,
               controls: 0,
               loop: 1,
-              playlist: '',
               rel: 0
             },
             events: {
-              onReady: e => e.target.setVolume(80),
+              onReady: e => {
+                e.target.setVolume(80);
+                if (currentPlaylist) {
+                  e.target.loadPlaylist({
+                    listType: 'playlist',
+                    list: currentPlaylist,
+                    index: 0,
+                    suggestedQuality: 'large'
+                  });
+                }
+              }
             }
           });
         }
@@ -418,3 +432,4 @@
   </body>
   
 </html>
+
