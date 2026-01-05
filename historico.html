@@ -314,10 +314,30 @@
         let currentPlaylist = '';
         let player;
         
-        document.getElementById('boton1').onclick = () => {
-          document.getElementById('parte1').classList.add('hidden');
-          document.getElementById('parte2').classList.remove('hidden');
-        };
+const PLAYLIST_ID = 'PLTsg_kaNc_ZbXU0RavkKW-jiPrqIgDp-H';
+
+  document.getElementById('boton1').onclick = () => {
+
+    /* ---------- PANTALLA COMPLETA ---------- */
+    const docEl = document.documentElement;
+    if (docEl.requestFullscreen) {
+      docEl.requestFullscreen();
+    } else if (docEl.webkitRequestFullscreen) {
+      docEl.webkitRequestFullscreen();
+    } else if (docEl.msRequestFullscreen) {
+      docEl.msRequestFullscreen();
+    }
+
+    /* ---------- YOUTUBE ---------- */
+    if (player) {
+      player.loadPlaylist({
+        listType: 'playlist',
+        list: PLAYLIST_ID,
+        index: 0
+      });
+      player.playVideo();
+    }
+  };
         
         document.querySelectorAll('.estilo-btn').forEach(btn => {
           btn.onclick = () => {
@@ -358,33 +378,20 @@
           });
         }
         
-        function loadYouTube(id) {
-          if (!window.YT) {
-            const tag = document.createElement('script');
-            tag.src = 'https://www.youtube.com/iframe_api';
-            document.body.appendChild(tag);
-          } else {
-            player.loadPlaylist({
-              listType: 'playlist',
-              list: id,
-              index: 0,
-              suggestedQuality: 'large'
-            });
-          }
+        function onYouTubeIframeAPIReady() {
+          player = new YT.Player('player', {
+            height: '0',
+            width: '0',
+            playerVars: {
+              autoplay: 0,
+              controls: 0,
+              loop: 1,
+              rel: 0
+            }
+          });
         }
         
         window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
-        
-        document.getElementById('boton1').addEventListener('click', () => {
-          const docEl = document.documentElement;
-          if (docEl.requestFullscreen) {
-            docEl.requestFullscreen();
-          } else if (docEl.webkitRequestFullscreen) {
-            docEl.webkitRequestFullscreen();
-          } else if (docEl.msRequestFullscreen) {
-            docEl.msRequestFullscreen();
-          }
-        });
         
         const paginas = document.querySelectorAll('.pagina-secundaria');
         
@@ -417,3 +424,4 @@
   </body>
   
 </html>
+
