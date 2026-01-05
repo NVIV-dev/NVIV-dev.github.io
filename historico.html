@@ -143,9 +143,10 @@
         box-shadow: 0 5px 10px rgba(0,0,0,0);
       }
       #boton12 {
-        top: 10px;
+        position: fixed;
+        bottom: 10px;
         right: 20px;
-        bottom: auto;
+        top: auto;
       }
       .etiqueta {
         position: fixed;
@@ -209,6 +210,13 @@
         background-size: contain;
         cursor: pointer;
       }
+      .cerrar {
+        position: fixed;
+        top: 10px;
+        right: 20px;
+        z-index: 2000;
+        cursor: pointer;
+      }
     </style>
   </head>
   <body>
@@ -219,7 +227,7 @@
           <i class="fa-solid fa-user"></i>
         </p>
         <button class="estilo-btn" id="boton1" data-index="2" style="font-size: 3em;"><i class="fa-brands fa-searchengin"></i></button>
-        <p onclick="location.reload()" style="color: #FFF; margin-top: 195%; font-size: 1.9em;">
+        <p class="cerrar" onclick="location.reload()" style="color: #FFF; font-size: 1.9em;">
           <i class="fa-solid fa-xmark"></i>
         </p>
       </div>
@@ -339,5 +347,6 @@
     </div>
   </body>
 </html>
+
 
 
