@@ -99,34 +99,147 @@
 
 <body>
 
-<div id="parte1" class="fullscreen center"
-     style="background:url('https://lh3.googleusercontent.com/d/1uLO8NHTarp0SKlbZCrSOH1L6mWjzI4qO=s3000') center/cover no-repeat fixed;">
-  <button id="boton1"><i class="fa-brands fa-searchengin"></i></button>
-</div>
-
-<div id="parte2" class="fullscreen hidden">
-  <div class="pagina-principal" data-index="2">
-    <div class="pagina-secundaria"
-         style="background-image:url('https://lh3.googleusercontent.com/d/1QBA_1lodyyUCez0yV13Ibsp5keq9WgH-=s2000')">
-    </div>
-  </div>
-
-  <button id="boton12" class="boton-control"><i class="fa-solid fa-house"></i></button>
-  <div class="etiqueta">Creado por <b>NVIV</b> (2025)</div>
-</div>
-
-<!-- Player oculto -->
-<div id="player"></div>
+<!-- ptI............................................................................................................................................................................................................................ -->
+      
+      <div id="parte1" class="fullscreen center" style="background-image: url('https://lh3.googleusercontent.com/d/1uLO8NHTarp0SKlbZCrSOH1L6mWjzI4qO=s3000'); background-repeat: no-repeat; background-size: cover; 
+        background-position: center; background-attachment: fixed;">
+        
+        <p style="color: #FFF; margin-top: 195%; font-size: 1.5em;" onclick="location.href='.html'">
+          <i class="fa-solid fa-user"></i>
+        </p>
+        
+        <button class="estilo-btn" id="boton1" data-index="2" style="font-size: 3em;"><i class="fa-brands fa-searchengin"></i></button>
+        
+        <p onclick="location.reload()" style="color: #FFF; margin-top: 195%; font-size: 1.9em;">
+          <i class="fa-solid fa-xmark"></i>
+        </p>
+        
+      </div>
+      
+      <!-- ptII........................................................................................................................................................................................................................... -->
+      
+      <div id="parte2" class="fullscreen hidden">
+        
+        <div id="contenedor-paginas" style="display:flex; width:100%; height:100%; overflow-x: scroll; scroll-snap-type: x mandatory;">
+          
+          <div class="pagina-principal" data-index="2" style="display:none;">
+            
+            <!-- HISTORIAL................................................................................................................................................................................................................. -->
+            
+            <div class="pagina-secundaria" data-bg="https://lh3.googleusercontent.com/d/=s2000" onclick="this.querySelector('.texto-secundario').style.display = 
+              this.querySelector('.texto-secundario').style.display === 'block' ? 'none' : 'block';">
+              <div class="texto-secundario img_private">
+                <img src="https://lh3.googleusercontent.com/d/=s2000" alt="h-002" style="width: 100%;">
+              </div>
+            </div>
+            
+            <div class="pagina-secundaria" data-bg="https://lh3.googleusercontent.com/d/1QBA_1lodyyUCez0yV13Ibsp5keq9WgH-=s2000" onclick="this.querySelector('.texto-secundario').style.display = 
+              this.querySelector('.texto-secundario').style.display === 'block' ? 'none' : 'block';">
+              <div class="texto-secundario img_private">
+                <img src="https://lh3.googleusercontent.com/d/1r-99GKXs6AweQop2jNLtnKDD4tXXdCfs=s2000" alt="h-001" style="width: 100%;">
+              </div>
+            </div>
+            
+          </div>
+          
+          <!-- CONTROLES................................................................................................................................................................................................................... -->
+          
+        </div>
+        
+        <button id="boton12" class="boton-control" style="font-size: 1.5em; background-color: rgba(0,0,0,0)"><i class="fa-solid fa-house"></i></button>
+        
+        <button id="boton13" class="boton-control" style="font-size: 1em; bottom: 90px; background-color: rgba(0,0,0,0)"></button>
+        
+        <div class="etiqueta" id="etiqueta">Creado por <b>NVIV</b> (2025). Todos los derechos reservados.</div>
+        
+      </div>
 
 <script>
-  const PLAYLIST_ID = 'PLTsg_kaNc_ZbXU0RavkKW-jiPrqIgDp-H';
-  let player;
-  let ytReady = false;
 
-  // Cargar API al iniciar (clave)
-  const tag = document.createElement('script');
-  tag.src = 'https://www.youtube.com/iframe_api';
-  document.body.appendChild(tag);
+  /* =========================================================
+     CONFIGURACIÓN DE PLAYLIST
+     =========================================================
+     ⚠️ REDUNDANTE SI SOLO USAS UNA PLAYLIST
+     👉 Puedes eliminar el objeto y usar directamente el ID
+  */
+  const playlistIDs = {
+    2: 'PLTsg_kaNc_ZbXU0RavkKW-jiPrqIgDp-H'
+  };
+
+  let currentPlaylist = '';
+  let player;
+
+  /* =========================================================
+     BOTÓN PRINCIPAL (boton1)
+     =========================================================
+     ✅ CLAVE
+     - Avanza a parte2
+     - Inicia reproducción
+  */
+
+  document.getElementById('boton1').onclick = () => {
+    document.getElementById('parte1').classList.add('hidden');
+    document.getElementById('parte2').classList.remove('hidden');
+
+    // ⚠️ SOLO FUNCIONA SI EL PLAYER YA ESTÁ LISTO
+    if (player && currentPlaylist) {
+      player.playVideo();
+    }
+  };
+
+  /* =========================================================
+     MANEJO DE BOTONES DE ESTILO
+     =========================================================
+     ⚠️ REDUNDANTE SI SOLO EXISTE boton1
+     👉 Este bloque puede eliminarse si no usarás más estilos
+  */
+
+  document.querySelectorAll('.estilo-btn').forEach(btn => {
+    btn.onclick = () => {
+
+      const idx = btn.dataset.index;
+
+      /* ⚠️ INNECESARIO SI SOLO HAY UNA PLAYLIST */
+      currentPlaylist = playlistIDs[idx];
+
+      /* ⚠️ loadYouTube() puede simplificarse */
+      loadYouTube(currentPlaylist);
+
+      document.querySelectorAll('.pagina-principal').forEach(div => {
+        div.style.display = div.dataset.index === idx ? 'flex' : 'none';
+      });
+
+      document.getElementById('parte1').classList.add('hidden');
+      document.getElementById('parte2').classList.remove('hidden');
+    };
+  });
+
+  /* =========================================================
+     BOTÓN HOME (boton12)
+     =========================================================
+     ✅ ÚTIL
+     - Regresa a parte1
+     - Detiene reproducción
+  */
+
+  document.getElementById('boton12').onclick = () => {
+    document.getElementById('parte2').classList.add('hidden');
+    document.getElementById('parte1').classList.remove('hidden');
+
+    if (player) player.stopVideo();
+
+    /* ⚠️ INNECESARIO SI SOLO HAY UNA PAGINA */
+    document.querySelectorAll('.pagina-principal').forEach(div => {
+      div.style.display = 'none';
+    });
+  };
+
+  /* =========================================================
+     YOUTUBE IFRAME API
+     =========================================================
+     ✅ CLAVE
+     - No tocar estructura
+  */
 
   function onYouTubeIframeAPIReady() {
     player = new YT.Player('player', {
@@ -136,36 +249,91 @@
         autoplay: 0,
         controls: 0,
         loop: 1,
-        playlist: PLAYLIST_ID,
+
+        /* ⚠️ SIEMPRE VACÍO HASTA loadYouTube() */
+        playlist: '',
+
         rel: 0
       },
       events: {
-        onReady: () => {
-          ytReady = true;
-          player.setVolume(80);
-        }
+        onReady: e => e.target.setVolume(80),
       }
     });
   }
 
-  // BOTON1: cambia de parte + reproduce playlist
-  document.getElementById('boton1').addEventListener('click', () => {
-    document.getElementById('parte1').classList.add('hidden');
-    document.getElementById('parte2').classList.remove('hidden');
-    document.querySelector('.pagina-principal').style.display = 'flex';
+  /* =========================================================
+     CARGA DE PLAYLIST
+     =========================================================
+     ⚠️ SE PUEDE SIMPLIFICAR
+     👉 Si siempre usas una playlist fija
+  */
 
-    if (ytReady) {
-      player.playVideo();
+  function loadYouTube(id) {
+    if (!window.YT) {
+      const tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      document.body.appendChild(tag);
+    } else {
+      player.loadPlaylist({
+        listType: 'playlist',
+        list: id,
+        index: 0,
+        suggestedQuality: 'large'
+      });
+    }
+  }
+
+  window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
+
+  /* =========================================================
+     FULLSCREEN AL PRESIONAR boton1
+     =========================================================
+     ⚠️ DUPLICA EVENTO DE boton1
+     👉 Puede fusionarse con el onclick principal
+  */
+
+  document.getElementById('boton1').addEventListener('click', () => {
+    const docEl = document.documentElement;
+    if (docEl.requestFullscreen) {
+      docEl.requestFullscreen();
+    } else if (docEl.webkitRequestFullscreen) {
+      docEl.webkitRequestFullscreen();
+    } else if (docEl.msRequestFullscreen) {
+      docEl.msRequestFullscreen();
     }
   });
 
-  // Volver a inicio
-  document.getElementById('boton12').addEventListener('click', () => {
-    document.getElementById('parte2').classList.add('hidden');
-    document.getElementById('parte1').classList.remove('hidden');
-    if (player) player.stopVideo();
-  });
-</script>
+  /* =========================================================
+     OPTIMIZACIÓN DE GIFS (IntersectionObserver)
+     =========================================================
+     ⚠️ OPCIONAL
+     👉 Útil solo si usas GIFs pesados en scroll
+  */
 
+  const paginas = document.querySelectorAll('.pagina-secundaria');
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      const el = entry.target;
+      if (entry.isIntersecting) {
+        if (el.dataset.bg) {
+          el.style.backgroundImage = `url('${el.dataset.bg}')`;
+          delete el.dataset.bg;
+        } else {
+          const url = el.style.backgroundImage.slice(5, -2);
+          el.style.backgroundImage = "none";
+          setTimeout(() => {
+            el.style.backgroundImage = `url('${url}?t=${Date.now()}')`;
+          }, 50);
+        }
+      }
+    });
+  }, { threshold: 0.6 });
+
+  paginas.forEach(p => observer.observe(p));
+
+</script>
+  
 </body>
 </html>
+
