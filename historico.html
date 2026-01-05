@@ -18,6 +18,7 @@
     <title>NVIV/h</title>
     
     <style>
+      
       html, body {
         margin: 0;
         padding: 0;
@@ -236,6 +237,7 @@
         background-size: contain;
         cursor: pointer;
       }
+      
     </style>
     
   </head>
@@ -243,16 +245,17 @@
   <body>
     
     <div data-autor="NVIV">
-
-      <div id="parte1" class="fullscreen center" style="background-image: url('https://lh3.googleusercontent.com/d/1uLO8NHTarp0SKlbZCrSOH1L6mWjzI4qO=s3000'); background-repeat: no-repeat; background-size: cover; background-position: center; background-attachment: fixed;">
+      
+      <!-- ptI............................................................................................................................................................................................................................ -->
+      
+      <div id="parte1" class="fullscreen center" style="background-image: url('https://lh3.googleusercontent.com/d/1uLO8NHTarp0SKlbZCrSOH1L6mWjzI4qO=s3000'); background-repeat: no-repeat; background-size: cover; 
+        background-position: center; background-attachment: fixed;">
         
-        <p style="color: #FFF; margin-top: 195%; font-size: 1.5em;">
+        <p style="color: #FFF; margin-top: 195%; font-size: 1.5em;" onclick="location.href='.html'">
           <i class="fa-solid fa-user"></i>
         </p>
         
-        <button class="estilo-btn" id="boton1" data-index="2" style="font-size: 3em;">
-          <i class="fa-brands fa-searchengin"></i>
-        </button>
+        <button class="estilo-btn" id="boton1" data-index="2" style="font-size: 3em;"><i class="fa-brands fa-searchengin"></i></button>
         
         <p onclick="location.reload()" style="color: #FFF; margin-top: 195%; font-size: 1.9em;">
           <i class="fa-solid fa-xmark"></i>
@@ -260,57 +263,154 @@
         
       </div>
       
+      <!-- ptII........................................................................................................................................................................................................................... -->
+      
       <div id="parte2" class="fullscreen hidden">
-        <div id="contenedor-paginas"></div>
-        <div class="etiqueta" id="etiqueta">Creado por <b>NVIV</b> (2025).</div>
+        
+        <div id="contenedor-paginas" style="display:flex; width:100%; height:100%; overflow-x: scroll; scroll-snap-type: x mandatory;">
+          
+          <div class="pagina-principal" data-index="2" style="display:none;">
+            
+            <!-- HISTORIAL................................................................................................................................................................................................................. -->
+            
+            <div class="pagina-secundaria" data-bg="https://lh3.googleusercontent.com/d/=s2000" onclick="this.querySelector('.texto-secundario').style.display = 
+              this.querySelector('.texto-secundario').style.display === 'block' ? 'none' : 'block';">
+              <div class="texto-secundario img_private">
+                <img src="https://lh3.googleusercontent.com/d/=s2000" alt="h-002" style="width: 100%;">
+              </div>
+            </div>
+            
+            <div class="pagina-secundaria" data-bg="https://lh3.googleusercontent.com/d/1QBA_1lodyyUCez0yV13Ibsp5keq9WgH-=s2000" onclick="this.querySelector('.texto-secundario').style.display = 
+              this.querySelector('.texto-secundario').style.display === 'block' ? 'none' : 'block';">
+              <div class="texto-secundario img_private">
+                <img src="https://lh3.googleusercontent.com/d/1r-99GKXs6AweQop2jNLtnKDD4tXXdCfs=s2000" alt="h-001" style="width: 100%;">
+              </div>
+            </div>
+            
+          </div>
+          
+          <!-- CONTROLES................................................................................................................................................................................................................... -->
+          
+        </div>
+        
+        <button id="boton12" class="boton-control" style="font-size: 1.5em; background-color: rgba(0,0,0,0)"><i class="fa-solid fa-house"></i></button>
+        
+        <button id="boton13" class="boton-control" style="font-size: 1em; bottom: 90px; background-color: rgba(0,0,0,0)"></button>
+        
+        <div class="etiqueta" id="etiqueta">Creado por <b>NVIV</b> (2025). Todos los derechos reservados.</div>
+        
       </div>
-
-      <!-- REPRODUCTOR -->
+      
+        <!-- SCRIPT....................................................................................................................................................................................................................... -->
+      
       <div id="player"></div>
-
-      <!-- API DE YOUTUBE: SE CARGA AL INICIAR -->
-      <script src="https://www.youtube.com/iframe_api"></script>
-
+      
       <script>
         
+        const playlistIDs = {
+          2: 'PLTsg_kaNc_ZbXU0RavkKW-jiPrqIgDp-H'
+        };
+        
+        let currentPlaylist = '';
         let player;
-
+        
+        document.getElementById('boton1').onclick = () => {
+          document.getElementById('parte1').classList.add('hidden');
+          document.getElementById('parte2').classList.remove('hidden');
+        };
+        
+        document.querySelectorAll('.estilo-btn').forEach(btn => {
+          btn.onclick = () => {
+            const idx = btn.dataset.index;
+            currentPlaylist = playlistIDs[idx];
+            loadYouTube(currentPlaylist);
+            document.querySelectorAll('.pagina-principal').forEach(div => {
+              div.style.display = div.dataset.index === idx ? 'flex' : 'none';
+            });
+            document.getElementById('parte1').classList.add('hidden');
+            document.getElementById('parte2').classList.remove('hidden');
+            document.getElementById('etiqueta').style.color = btn.style.backgroundColor;
+          };
+        });
+        
+        document.getElementById('boton12').onclick = () => {
+          document.getElementById('parte2').classList.add('hidden');
+          document.getElementById('parte1').classList.remove('hidden');
+          if (player) player.stopVideo();
+          document.querySelectorAll('.pagina-principal').forEach(div => {
+            div.style.display = 'none';
+          });
+        };
+        
         function onYouTubeIframeAPIReady() {
           player = new YT.Player('player', {
-            height: '0',
-            width: '0',
+            height: '0', width: '0',
             playerVars: {
-              autoplay: 0,
+              autoplay: 1,
               controls: 0,
               loop: 1,
+              playlist: '',
               rel: 0
             },
             events: {
-              onReady: e => e.target.setVolume(80)
+              onReady: e => e.target.setVolume(80),
             }
           });
         }
-
-        document.getElementById('boton1').onclick = () => {
-
-          document.getElementById('parte1').classList.add('hidden');
-          document.getElementById('parte2').classList.remove('hidden');
-
-          if (player) {
+        
+        function loadYouTube(id) {
+          if (!window.YT) {
+            const tag = document.createElement('script');
+            tag.src = 'https://www.youtube.com/iframe_api';
+            document.body.appendChild(tag);
+          } else {
             player.loadPlaylist({
               listType: 'playlist',
-              list: 'PLTsg_kaNc_ZbXU0RavkKW-jiPrqIgDp-H',
+              list: id,
               index: 0,
               suggestedQuality: 'large'
             });
           }
-
+        }
+        
+        window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
+        
+        document.getElementById('boton1').addEventListener('click', () => {
           const docEl = document.documentElement;
           if (docEl.requestFullscreen) {
             docEl.requestFullscreen();
+          } else if (docEl.webkitRequestFullscreen) {
+            docEl.webkitRequestFullscreen();
+          } else if (docEl.msRequestFullscreen) {
+            docEl.msRequestFullscreen();
           }
-        };
-
+        });
+        
+        // --- OPTIMIZACIÓN GIFS CON DATA-BG ---
+        const paginas = document.querySelectorAll('.pagina-secundaria');
+        
+        const observer = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            const el = entry.target;
+            if (entry.isIntersecting) {
+              if (el.dataset.bg) {
+                // primera vez: cargar imagen/gif
+                el.style.backgroundImage = `url('${el.dataset.bg}')`;
+                delete el.dataset.bg;
+              } else {
+                // si ya estaba cargado antes, reiniciar el gif
+                const url = el.style.backgroundImage.slice(5, -2); // extrae url("...")
+                el.style.backgroundImage = "none";
+                setTimeout(() => {
+                  el.style.backgroundImage = `url('${url}?t=${Date.now()}')`;
+                }, 50);
+              }
+            }
+          });
+        }, { root: null, rootMargin: "0px", threshold: 0.6 });
+        
+        paginas.forEach(p => observer.observe(p));
+        
       </script>
       
     </div>
@@ -318,4 +418,3 @@
   </body>
   
 </html>
-
