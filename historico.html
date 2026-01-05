@@ -317,12 +317,21 @@
         document.getElementById('boton1').onclick = () => {
           document.getElementById('parte1').classList.add('hidden');
           document.getElementById('parte2').classList.remove('hidden');
+        
+          // 👉 AL PRESIONAR BOTON1, SE REPRODUCE LA PLAYLIST
+          if (player) {
+            player.loadPlaylist({
+              listType: 'playlist',
+              list: 'PLTsg_kaNc_ZbXU0RavkKW-jiPrqIgDp-H',
+              index: 0,
+              suggestedQuality: 'large'
+            });
+          }
         };
         
         document.querySelectorAll('.estilo-btn').forEach(btn => {
           btn.onclick = () => {
             const idx = btn.dataset.index;
-            currentPlaylist = playlistIDs[idx];
             loadYouTube(currentPlaylist);
             document.querySelectorAll('.pagina-principal').forEach(div => {
               div.style.display = div.dataset.index === idx ? 'flex' : 'none';
@@ -360,9 +369,13 @@
         
         function loadYouTube(id) {
           if (!window.YT) {
+            // 👉 ESTO ES LO QUE HACE QUE YOUTUBE SE CARGUE DESDE EL INICIO
             const tag = document.createElement('script');
             tag.src = 'https://www.youtube.com/iframe_api';
             document.body.appendChild(tag);
+        
+            // 👉 GUARDAMOS LA PLAYLIST PARA USARLA CUANDO EL PLAYER ESTÉ LISTO
+            currentPlaylist = id;
           } else {
             player.loadPlaylist({
               listType: 'playlist',
@@ -374,6 +387,7 @@
         }
         
         window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
+        loadYouTube('PLTsg_kaNc_ZbXU0RavkKW-jiPrqIgDp-H');
         
         document.getElementById('boton1').addEventListener('click', () => {
           const docEl = document.documentElement;
@@ -418,3 +432,4 @@
   </body>
   
 </html>
+
