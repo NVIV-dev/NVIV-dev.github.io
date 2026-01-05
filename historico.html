@@ -261,8 +261,10 @@
         let currentPlaylist = '';
         let player;
         document.getElementById('boton1').onclick = () => {
+          const playlistID = 'PLTsg_kaNc_ZbXU0RavkKW-jiPrqIgDp-H';
           document.getElementById('parte1').classList.add('hidden');
           document.getElementById('parte2').classList.remove('hidden');
+          loadYouTube(playlistID);
         };
         document.querySelectorAll('.estilo-btn').forEach(btn => {
           btn.onclick = () => {
@@ -348,6 +350,7 @@
     </div>
   </body>
 </html>
+
 
 
 
