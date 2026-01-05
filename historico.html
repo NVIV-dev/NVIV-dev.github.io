@@ -316,11 +316,12 @@
         
         document.getElementById('boton1').onclick = () => {
           const idx = document.getElementById('boton1').dataset.index;
-          currentPlaylist = playlistIDs[idx];
-          loadYouTube(currentPlaylist);
-          
+          loadYouTube(playlistIDs[idx]);
+        
           document.getElementById('parte1').classList.add('hidden');
           document.getElementById('parte2').classList.remove('hidden');
+        
+          document.documentElement.requestFullscreen?.();
         };
         
         document.querySelectorAll('.estilo-btn').forEach(btn => {
@@ -359,6 +360,7 @@
             events: {
               onReady: e => {
                 e.target.setVolume(80);
+        
                 if (currentPlaylist) {
                   e.target.loadPlaylist({
                     listType: 'playlist',
@@ -373,14 +375,16 @@
         }
         
         function loadYouTube(id) {
+          currentPlaylist = id;
+        
           if (!window.YT) {
             const tag = document.createElement('script');
             tag.src = 'https://www.youtube.com/iframe_api';
             document.body.appendChild(tag);
-          } else {
+          } else if (player) {
             player.loadPlaylist({
               listType: 'playlist',
-              list: id,
+              list: currentPlaylist,
               index: 0,
               suggestedQuality: 'large'
             });
@@ -432,4 +436,5 @@
   </body>
   
 </html>
+
 
