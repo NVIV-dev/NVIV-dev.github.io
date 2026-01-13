@@ -130,9 +130,82 @@
       text-align: center;
       font-size: 0.5rem;
     }
+    .w50 { 
+      width: 50%;
+    }
+    #blocker { 
+      display: none; 
+      height: 100vh; 
+      width: 100vw; 
+      background-color: #000; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      text-align: center;
+    }
+    @media screen and (max-width: 2712px) { 
+      #app { 
+        display: block; 
+      } 
+      #blocker { 
+        display: none; 
+      }
+    }
+    @media screen and (min-width: 1220px) { 
+      #app { 
+        display: none;
+      }
+      #blocker { 
+        display: flex;
+      }
+    }
+    @media screen and (orientation: portrait) { 
+      #app { 
+        display: block;
+      }
+      #blocker {
+        display: none;
+      }
+    }
+    @media screen and (orientation: landscape) { 
+      #app { 
+        display: none;
+      }
+      #blocker {
+        display: flex;
+      }
+    }
+    .rotada { 
+      transform: rotate(-90deg); 
+      transform-origin: center; 
+      display: block;
+    }
+    @media screen and (orientation: landscape) { 
+      html, body {
+        margin: 0; 
+        padding: 0; 
+        overflow: hidden; 
+        width: 100vw;
+        height: 100vh; 
+      } 
+      #blocker.pagina {
+        position: fixed; 
+        top: 0; 
+        left: 0; 
+        width: 100vw; 
+        height: 100vh; 
+        z-index: 999999; 
+        background-size: cover; 
+        background-position: center; 
+        background-repeat: no-repeat; 
+        background-attachment: fixed;
+      } 
   </style>
 </head>
 <body>
+  <div id="blocker" class="pagina">
+    <img src="https://lh3.googleusercontent.com/d/1opiJb6BEu4HxaRDGMr3zdI3D2X3BHTWL=s2000" alt="error" class="rotada w50">
+  </div>
   <div class="wrapper">
     <div class="profile-container">
       <img src="https://lh3.googleusercontent.com/d/1oCvAMzG848kL0r9k-DmlaIEZyXM0VwUD=s2000" class="profile-photo" id="foto">
@@ -169,6 +242,7 @@
   </script>
 </body>
 </html>
+
 
 
 
