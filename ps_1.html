@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, viewport-fit=cover">
+    <title>Travesía Al Abismo</title>
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        background: #FFF;
+        overflow: hidden;
+        font-family: sans-serif;
+        font-size: 15px;
+      }
+      #app {
+        width: 100vw;
+        height: 100vh;
+        position: relative;
+      }
+      .screen {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        inset: 0;
+        display: none;
+      }
+      .screen.active {
+        display: block;
+      }
+      #coverWrapper {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      #cover {
+        width: 80%;
+        height: 80%;
+        background-image: url("https://lh3.googleusercontent.com/d/1LI3Ua4N-Ew2VFkb2yC8OP5zWkn7zqLk6=s2000");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+      .chapter {
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 20px;
+        box-sizing: border-box;
+      }
+      .chapter div {
+        margin-bottom: 20px;
+      }
+      .chapter img {
+        width: 100%;
+        border-radius: 8px;
+      }
+      .buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 40px;
+      }
+      button {
+        font-size: 0.8em;
+        border: none;
+        border-radius: 6px;
+        background: rgba(0, 0, 0, 0);
+        color: #000;
+        font-weight: bold;
+      }
+      #musicBtn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 999;
+        width: 50px;
+        height: 50px;
+        font-size: 30px;
+        border: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div id="screen1" class="screen active">
+        <div id="coverWrapper">
+          <div id="cover"></div>
+        </div>
+      </div>
+      <div id="screen2" class="screen chapter">
+        <div>
+          <img src="https://lh3.googleusercontent.com/d/1Q-Cvw1MqMCNW4N3FIql8GD9FR29LGCS7=s2000" alt="01">
+        </div>
+      </div>
+      <div id="screen3" class="screen chapter">
+        <img src="https://lh3.googleusercontent.com/d/1iVnkaJ9xDrcBp5dIOIAsXoXQdnhMzYft=s2000" alt="02.1">
+        <img src="https://lh3.googleusercontent.com/d/1xMTwQ8cZjf0a-SUtJUaUJybVvE1usPdf=s2000" alt="02.2">
+        <br><br><br><br>
+      </div>
+      <div id="screen4" class="screen chapter">
+        <img src="https://lh3.googleusercontent.com/d/1QU9iStw3GMBoomv8CeeQJElEjdsgXrgT=s2000" alt="03.1">
+        <img src="https://lh3.googleusercontent.com/d/1d0wnAwucctrOs0LPVQblpnW065oPkgte=s2000" alt="03.2">
+        <br><br><br><br>
+      </div>
+      <div id="screen5" class="screen chapter">
+        <img src="https://lh3.googleusercontent.com/d/1FsWd9mI_8RDXrdxenGNKcg4pgYYmORkA=s2000" alt="04">
+        <br>
+      </div>
+      <div id="screen6" class="screen chapter">
+        <img src="https://lh3.googleusercontent.com/d/12B5HVeFpAdzj82MGSeT_2qyVVzGJqNP4=s2000" alt="05.1">
+        <img src="https://lh3.googleusercontent.com/d/15FDKY2RlYZqtwyEakujtHD98CoUIKPaw=s2000" alt="05.2">
+        <br><br><br><br>
+      </div>
+      <div id="screen7" class="screen chapter">
+        <img src="https://lh3.googleusercontent.com/d/1qHPD5UmS5BNO941DBTy3daQPOUdpgnXe=s2000" alt="06">
+        <br><br><br><br>
+      </div>
+      <div id="screen8" class="screen chapter">
+        <img src="https://lh3.googleusercontent.com/d/1RgLgbfznynW7wwaTeiGW6ZrN-8FbtulY=s2000" alt="07">
+        <br>
+      </div>
+    </div>
+    <button id="musicBtn">▶️</button>
+    <script src="https://www.youtube.com/iframe_api"></script>    
+    <script>
+      let player;
+      let playerReady = false;
+      let isPlaying = false;
+      let isFullscreen = false;
+      let currentScreen = 1;
+      const totalScreens = document.querySelectorAll('.screen').length;
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player('ytplayer', {
+          height: '0',
+          width: '0',
+          playerVars: {
+            listType: 'playlist',
+            list: 'PLTsg_kaNc_Za3jQ2MdxDYGebDrL1NMcrj',
+            autoplay: 0,
+            loop: 1,
+            shuffle: 1
+          },
+          events: {
+            onReady: e => {
+              e.target.setVolume(60);
+              playerReady = true;
+            }
+          }
+        });
+      }
+      function goToScreen(n) {
+        if (n < 1 || n > totalScreens) return;
+        currentScreen = n;
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById('screen' + n).classList.add('active');
+      }
+      function enterFullscreen() {
+        const el = document.documentElement;
+        if (el.requestFullscreen) el.requestFullscreen();
+        else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+        isFullscreen = true;
+      }
+      function exitFullscreen() {
+        if (document.exitFullscreen) document.exitFullscreen();
+        else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+        isFullscreen = false;
+      }
+      document.getElementById('cover').addEventListener('click', () => {
+        if (!isFullscreen) {
+          enterFullscreen();
+          goToScreen(2);
+          if (playerReady) {
+            player.playVideo();
+            isPlaying = true;
+            musicBtn.textContent = "⏸";
+          }
+        } else {
+          exitFullscreen();
+        }
+      });
+      const musicBtn = document.getElementById('musicBtn');
+      musicBtn.addEventListener('click', () => {
+        if (!playerReady) return;
+        if (!isPlaying) {
+          player.playVideo();
+          musicBtn.textContent = "▶️";
+          isPlaying = true;
+        } else {
+          player.pauseVideo();
+          musicBtn.textContent = "⏸️";
+          isPlaying = false;
+        }
+      });
+      let startX = 0;
+      let endX = 0;
+      const threshold = 60;
+      function handleSwipe() {
+        const deltaX = endX - startX;
+        if (Math.abs(deltaX) < threshold) return;
+        if (deltaX < 0) {
+          goToScreen(currentScreen + 1);
+        } else {
+          goToScreen(currentScreen - 1);
+        }
+      }
+      document.addEventListener('touchstart', e => {
+        startX = e.changedTouches[0].screenX;
+      });
+      document.addEventListener('touchend', e => {
+        endX = e.changedTouches[0].screenX;
+        handleSwipe();
+      });
+      document.addEventListener('mousedown', e => {
+        startX = e.screenX;
+      });
+      document.addEventListener('mouseup', e => {
+        endX = e.screenX;
+        handleSwipe();
+      });
+    </script>
+    <div id="ytplayer"></div>
+  </body>
+</html>
