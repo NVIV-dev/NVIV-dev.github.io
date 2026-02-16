@@ -1,25 +1,17 @@
 <!DOCTYPE html>
-
 <html lang="es">
-  
   <head>
-    
     <title>NVIV/x</title>
-    
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    
     <link rel="icon" href="https://lh3.googleusercontent.com/d/1q2ytw5Y2NF2AoVfdn2n69TJsuq6gJ7Zs=s2000">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    
     <style>
-      
       :root {
         font-size: 16px;
         --btn-size: 15.5rem;
         --text: #FFF;
       }
-      
       html, body {
         height: 100%;
         width: 100%;
@@ -35,14 +27,12 @@
         background-position: center;
         background-attachment: fixed;
       }
-      
       .view {
         position: absolute;
         inset: 0;
         display: grid;
         place-items: center;
       }
-      
       .circle {
         inline-size: var(--btn-size);
         block-size: var(--btn-size);
@@ -53,20 +43,17 @@
         cursor: pointer;
         backdrop-filter: blur(1px);
       }
-      
       .circle.t {
         background: rgba(0,0,0,0);
         width: 20rem;
         height: 40rem;
       }
-      
       .center-single {
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
       }
-      
       .btn-bottom-right {
         position: absolute;
         inset-inline-end: 1rem;
@@ -77,7 +64,6 @@
         cursor: pointer;
         font-size: 1.5rem;
       }
-      
       .btn-bottom-left {
         position: absolute;
         inset-inline-start: 1rem;
@@ -88,11 +74,9 @@
         cursor: pointer;
         font-size: 1.5rem;
       }
-      
       #btn1, #btn3 {
         box-shadow: none !important;
       }
-      
       .second {
         inline-size: 100%;
         block-size: 100%;
@@ -101,7 +85,6 @@
         -webkit-overflow-scrolling: touch;
         background: #000;
       }
-      
       .page {
         position: relative;
         inline-size: 100%;
@@ -115,7 +98,6 @@
         background-repeat: no-repeat;
         overflow: hidden;
       }
-      
       .btn4 {
         position: fixed;
         inset-inline-end: 1rem;
@@ -127,7 +109,6 @@
         font-size: 1.5rem;
         z-index: 10;
       }
-      
       .btn5 {
         position: fixed;
         inset-inline-end: 1rem;
@@ -139,7 +120,6 @@
         font-size: 1.5rem;
         z-index: 10;
       }
-      
       .footer {
         position: fixed;
         inset-inline: 0;
@@ -149,7 +129,6 @@
         color: #DDD;
         z-index: 9;
       }
-      
       .yt-invisible {
         position: fixed;
         inline-size: 0.01rem;
@@ -159,19 +138,15 @@
         pointer-events: none;
         z-index: -1;
       }
-      
       .hidden {
         display: none !important;
       }
-      
       .visible {
         display: grid;
       }
-      
       .w50 { 
         width: 50%;
       }
-      
       #blocker { 
         display: none; 
         height: 100vh; 
@@ -182,7 +157,6 @@
         justify-content: center; 
         text-align: center;
       }
-      
       @media screen and (max-width: 2712px) { 
         #app { 
           display: block; 
@@ -191,7 +165,6 @@
           display: none; 
         }
       }
-      
       @media screen and (min-width: 1220px) { 
         #app { 
           display: none;
@@ -200,7 +173,6 @@
           display: flex;
         }
       }
-      
       @media screen and (orientation: portrait) { 
         #app { 
           display: block;
@@ -209,7 +181,6 @@
           display: none;
         }
       }
-      
       @media screen and (orientation: landscape) { 
         #app { 
           display: none;
@@ -218,13 +189,11 @@
           display: flex;
         }
       }
-      
       .rotada { 
         transform: rotate(-90deg); 
         transform-origin: center; 
         display: block;
       }
-      
       @media screen and (orientation: landscape) { 
         html, body {
           margin: 0; 
@@ -246,19 +215,13 @@
           background-attachment: fixed;
         } 
       }
-      
     </style>
-    
   </head>
-  
   <body>
-    
     <div id="blocker" class="pagina">
       <img src="https://lh3.googleusercontent.com/d/1opiJb6BEu4HxaRDGMr3zdI3D2X3BHTWL=s2000" alt="error" class="rotada w50">
     </div>
-    
     <div id="yt-container" class="yt-invisible"></div>
-    
     <section id="firstView" class="view visible">
       <button id="btn1" class="circle t center-single"></button>
       <button id="btn2" class="btn-bottom-left">
@@ -268,7 +231,6 @@
         <i class="fa-solid fa-arrows-rotate"></i>
       </button>
     </section>
-    
     <section id="secondView" class="view second hidden">
       <button id="btn5" class="btn5"></button>
       <button id="btn4" class="btn4">
@@ -277,55 +239,44 @@
       <div class="footer">
         Creado por <b>NVIV</b> (2025). Todos los derechos reservados.
       </div>
-      
       <!-- 001 -->
       <div class="page"
         data-gif="https://lh3.googleusercontent.com/d/1qepxtBJR8oy-9FDJU3BY-SCwNLD0GlVX=s2000"
         data-png="https://lh3.googleusercontent.com/d/1wMA7bIjoriKiqa0oUsVo17UX0m__vm7Z=s3000">
       </div>
-      
       <!-- 006 -->
       <div class="page"
         data-gif="https://lh3.googleusercontent.com/d/1qepxtBJR8oy-9FDJU3BY-SCwNLD0GlVX=s2000"
         data-png="https://lh3.googleusercontent.com/d/1zKq1QTdFemhaDYKXSR-b00skoae7zKgL=s3000">
       </div>
-      
       <!-- 005 -->
       <div class="page"
         data-gif="https://lh3.googleusercontent.com/d/1qepxtBJR8oy-9FDJU3BY-SCwNLD0GlVX=s2000"
         data-png="https://lh3.googleusercontent.com/d/1D7nHBLemIVeM3VsksvE9P2KnBf-bRLqV=s3000">
       </div>
-      
       <!-- 004 -->
       <div class="page"
         data-gif="https://lh3.googleusercontent.com/d/1qepxtBJR8oy-9FDJU3BY-SCwNLD0GlVX=s2000"
         data-png="https://lh3.googleusercontent.com/d/1W7UjoiQzn_39EbNjXdwrF1Y8EwUvf5ZW=s3000">
       </div>
-      
       <!-- 003 -->
       <div class="page"
         data-gif="https://lh3.googleusercontent.com/d/1qepxtBJR8oy-9FDJU3BY-SCwNLD0GlVX=s2000"
         data-png="https://lh3.googleusercontent.com/d/1sfImp_89A87GSG8FarLSfOrX6LqJc75S=s3000">
       </div>
-      
       <!-- 002 -->
       <div class="page"
         data-gif="https://lh3.googleusercontent.com/d/1qepxtBJR8oy-9FDJU3BY-SCwNLD0GlVX=s2000"
         data-png="https://lh3.googleusercontent.com/d/1BGJBxGIPV3GXx3U6cjflFSLxhgObC3PL=s3000">
       </div>
-      
     </section>
-    
     <script src="https://www.youtube.com/iframe_api"></script>
-    
     <script>
-      
       const PLAYLIST_ID = "PLTsg_kaNc_ZYbsTEbhi_Fgy0w45SY849c";
       const OPEN_URL = "https://nviv-dev.github.io/index.html";
       let ytPlayer = null;
       let apiReady = false;
       let playlistStarted = false;
-      
       function onYouTubeIframeAPIReady() {
         apiReady = true;
         ytPlayer = new YT.Player('yt-container', {
@@ -345,16 +296,13 @@
           }
         });
       }
-      
       async function enterFullscreen() {
         const el = document.documentElement;
         if (el.requestFullscreen) return el.requestFullscreen();
         if (el.webkitRequestFullscreen) return el.webkitRequestFullscreen();
       }
-      
       const firstView = document.getElementById('firstView');
       const secondView = document.getElementById('secondView');
-      
       document.getElementById('btn1').addEventListener('click', async () => {
         firstView.classList.add('hidden');
         secondView.classList.remove('hidden');
@@ -364,24 +312,19 @@
           playlistStarted = true;
         }
       });
-      
       document.getElementById('btn2').addEventListener('click', () => {
         location.href = OPEN_URL;
       });
-      
       document.getElementById('btn3').addEventListener('click', () => {
         location.reload();
       });
-      
       document.getElementById('btn4').addEventListener('click', () => {
         secondView.classList.add('hidden');
         firstView.classList.remove('hidden');
       });
-      
       document.querySelectorAll('.page').forEach(page => {
         const gif = page.dataset.gif;
         const png = page.dataset.png;
-        
         if (gif) {
           const bg = new Image();
           bg.src = gif;
@@ -389,7 +332,6 @@
             page.style.backgroundImage = `url("${gif}")`;
           };
         }
-        
         if (png) {
           const img = document.createElement('img');
           img.src = png;
@@ -403,9 +345,6 @@
           page.appendChild(img);
         }
       });
-      
     </script>
-    
   </body>
-  
 </html>
