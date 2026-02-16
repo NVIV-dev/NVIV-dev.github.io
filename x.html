@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+
+<html lang="es">
+  
+  <head>
+    
+    <title>NVIV/x</title>
+    
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <link rel="icon" href="https://lh3.googleusercontent.com/d/1q2ytw5Y2NF2AoVfdn2n69TJsuq6gJ7Zs=s2000">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    
+    <style>
+      
+      :root {
+        font-size: 16px;
+        --btn-size: 15.5rem;
+        --text: #FFF;
+      }
+      
+      html, body {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        background: #000;
+        color: var(--text);
+        font-family: system-ui, Arial, sans-serif;
+        touch-action: manipulation;
+        background-image: url('https://lh3.googleusercontent.com/d/1PqMMmtgBbBgr3vAuOFjReMarKo4neRv4=s2000');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+      }
+      
+      .view {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+      }
+      
+      .circle {
+        inline-size: var(--btn-size);
+        block-size: var(--btn-size);
+        border: none;
+        display: grid;
+        place-items: center;
+        color: var(--text);
+        cursor: pointer;
+        backdrop-filter: blur(1px);
+      }
+      
+      .circle.t {
+        background: rgba(0,0,0,0);
+        width: 20rem;
+        height: 40rem;
+      }
+      
+      .center-single {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      
+      .btn-bottom-right {
+        position: absolute;
+        inset-inline-end: 1rem;
+        inset-block-end: 1rem;
+        background: transparent;
+        color: var(--text);
+        border: none;
+        cursor: pointer;
+        font-size: 1.5rem;
+      }
+      
+      .btn-bottom-left {
+        position: absolute;
+        inset-inline-start: 1rem;
+        inset-block-end: 1rem;
+        background: transparent;
+        color: var(--text);
+        border: none;
+        cursor: pointer;
+        font-size: 1.5rem;
+      }
+      
+      #btn1, #btn3 {
+        box-shadow: none !important;
+      }
+      
+      .second {
+        inline-size: 100%;
+        block-size: 100%;
+        overflow-y: auto;
+        scroll-snap-type: y mandatory;
+        -webkit-overflow-scrolling: touch;
+        background: #000;
+      }
+      
+      .page {
+        position: relative;
+        inline-size: 100%;
+        block-size: 100vh;
+        scroll-snap-align: start;
+        display: grid;
+        place-items: center;
+        background-color: #000;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        overflow: hidden;
+      }
+      
+      .btn4 {
+        position: fixed;
+        inset-inline-end: 1rem;
+        inset-block-end: 1rem;
+        background: transparent;
+        color: var(--text);
+        border: none;
+        cursor: pointer;
+        font-size: 1.5rem;
+        z-index: 10;
+      }
+      
+      .btn5 {
+        position: fixed;
+        inset-inline-end: 1rem;
+        inset-block-end: 4rem;
+        background: transparent;
+        color: var(--text);
+        border: none;
+        cursor: pointer;
+        font-size: 1.5rem;
+        z-index: 10;
+      }
+      
+      .footer {
+        position: fixed;
+        inset-inline: 0;
+        inset-block-end: 0.5rem;
+        text-align: center;
+        font-size: 0.5rem;
+        color: #DDD;
+        z-index: 9;
+      }
+      
+      .yt-invisible {
+        position: fixed;
+        inline-size: 0.01rem;
+        block-size: 0.01rem;
+        inset: -999rem auto auto -999rem;
+        opacity: 0;
+        pointer-events: none;
+        z-index: -1;
+      }
+      
+      .hidden {
+        display: none !important;
+      }
+      
+      .visible {
+        display: grid;
+      }
+      
+      .w50 { 
+        width: 50%;
+      }
+      
+      #blocker { 
+        display: none; 
+        height: 100vh; 
+        width: 100vw; 
+        background-color: #000; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+        text-align: center;
+      }
+      
+      @media screen and (max-width: 2712px) { 
+        #app { 
+          display: block; 
+        } 
+        #blocker { 
+          display: none; 
+        }
+      }
+      
+      @media screen and (min-width: 1220px) { 
+        #app { 
+          display: none;
+        }
+        #blocker { 
+          display: flex;
+        }
+      }
+      
+      @media screen and (orientation: portrait) { 
+        #app { 
+          display: block;
+        }
+        #blocker {
+          display: none;
+        }
+      }
+      
+      @media screen and (orientation: landscape) { 
+        #app { 
+          display: none;
+        }
+        #blocker {
+          display: flex;
+        }
+      }
+      
+      .rotada { 
+        transform: rotate(-90deg); 
+        transform-origin: center; 
+        display: block;
+      }
+      
+      @media screen and (orientation: landscape) { 
+        html, body {
+          margin: 0; 
+          padding: 0; 
+          overflow: hidden; 
+          width: 100vw;
+          height: 100vh; 
+        } 
+        #blocker.pagina {
+          position: fixed; 
+          top: 0; 
+          left: 0; 
+          width: 100vw; 
+          height: 100vh; 
+          z-index: 999999; 
+          background-size: cover; 
+          background-position: center; 
+          background-repeat: no-repeat; 
+          background-attachment: fixed;
+        } 
+      }
+      
+    </style>
+    
+  </head>
+  
+  <body>
+    
+    <div id="blocker" class="pagina">
+      <img src="https://lh3.googleusercontent.com/d/1opiJb6BEu4HxaRDGMr3zdI3D2X3BHTWL=s2000" alt="error" class="rotada w50">
+    </div>
+    
+    <div id="yt-container" class="yt-invisible"></div>
+    
+    <section id="firstView" class="view visible">
+      <button id="btn1" class="circle t center-single"></button>
+      <button id="btn2" class="btn-bottom-left">
+        <i class="fa-solid fa-user"></i>
+      </button>
+      <button id="btn3" class="btn-bottom-right">
+        <i class="fa-solid fa-arrows-rotate"></i>
+      </button>
+    </section>
+    
+    <section id="secondView" class="view second hidden">
+      <button id="btn5" class="btn5"></button>
+      <button id="btn4" class="btn4">
+        <i class="fa-solid fa-arrow-left"></i>
+      </button>
+      <div class="footer">
+        Creado por <b>NVIV</b> (2025). Todos los derechos reservados.
+      </div>
+      
+      <!-- 001 -->
+      <div class="page"
+        data-gif="https://lh3.googleusercontent.com/d/1qepxtBJR8oy-9FDJU3BY-SCwNLD0GlVX=s2000"
+        data-png="https://lh3.googleusercontent.com/d/1wMA7bIjoriKiqa0oUsVo17UX0m__vm7Z=s3000">
+      </div>
+      
+      <!-- 006 -->
+      <div class="page"
+        data-gif="https://lh3.googleusercontent.com/d/1qepxtBJR8oy-9FDJU3BY-SCwNLD0GlVX=s2000"
+        data-png="https://lh3.googleusercontent.com/d/1zKq1QTdFemhaDYKXSR-b00skoae7zKgL=s3000">
+      </div>
+      
+      <!-- 005 -->
+      <div class="page"
+        data-gif="https://lh3.googleusercontent.com/d/1qepxtBJR8oy-9FDJU3BY-SCwNLD0GlVX=s2000"
+        data-png="https://lh3.googleusercontent.com/d/1D7nHBLemIVeM3VsksvE9P2KnBf-bRLqV=s3000">
+      </div>
+      
+      <!-- 004 -->
+      <div class="page"
+        data-gif="https://lh3.googleusercontent.com/d/1qepxtBJR8oy-9FDJU3BY-SCwNLD0GlVX=s2000"
+        data-png="https://lh3.googleusercontent.com/d/1W7UjoiQzn_39EbNjXdwrF1Y8EwUvf5ZW=s3000">
+      </div>
+      
+      <!-- 003 -->
+      <div class="page"
+        data-gif="https://lh3.googleusercontent.com/d/1qepxtBJR8oy-9FDJU3BY-SCwNLD0GlVX=s2000"
+        data-png="https://lh3.googleusercontent.com/d/1sfImp_89A87GSG8FarLSfOrX6LqJc75S=s3000">
+      </div>
+      
+      <!-- 002 -->
+      <div class="page"
+        data-gif="https://lh3.googleusercontent.com/d/1qepxtBJR8oy-9FDJU3BY-SCwNLD0GlVX=s2000"
+        data-png="https://lh3.googleusercontent.com/d/1BGJBxGIPV3GXx3U6cjflFSLxhgObC3PL=s3000">
+      </div>
+      
+    </section>
+    
+    <script src="https://www.youtube.com/iframe_api"></script>
+    
+    <script>
+      
+      const PLAYLIST_ID = "PLTsg_kaNc_ZYbsTEbhi_Fgy0w45SY849c";
+      const OPEN_URL = "https://nviv-dev.github.io/index.html";
+      let ytPlayer = null;
+      let apiReady = false;
+      let playlistStarted = false;
+      
+      function onYouTubeIframeAPIReady() {
+        apiReady = true;
+        ytPlayer = new YT.Player('yt-container', {
+          playerVars: {
+            listType: 'playlist',
+            list: PLAYLIST_ID,
+            autoplay: 0,
+            controls: 0,
+            loop: 1
+          },
+          events: {
+            onReady: e => {
+              e.target.setShuffle(true);
+              e.target.setLoop(true);
+              e.target.setVolume(100);
+            }
+          }
+        });
+      }
+      
+      async function enterFullscreen() {
+        const el = document.documentElement;
+        if (el.requestFullscreen) return el.requestFullscreen();
+        if (el.webkitRequestFullscreen) return el.webkitRequestFullscreen();
+      }
+      
+      const firstView = document.getElementById('firstView');
+      const secondView = document.getElementById('secondView');
+      
+      document.getElementById('btn1').addEventListener('click', async () => {
+        firstView.classList.add('hidden');
+        secondView.classList.remove('hidden');
+        if (!playlistStarted && ytPlayer && apiReady) {
+          await enterFullscreen();
+          ytPlayer.playVideo();
+          playlistStarted = true;
+        }
+      });
+      
+      document.getElementById('btn2').addEventListener('click', () => {
+        location.href = OPEN_URL;
+      });
+      
+      document.getElementById('btn3').addEventListener('click', () => {
+        location.reload();
+      });
+      
+      document.getElementById('btn4').addEventListener('click', () => {
+        secondView.classList.add('hidden');
+        firstView.classList.remove('hidden');
+      });
+      
+      document.querySelectorAll('.page').forEach(page => {
+        const gif = page.dataset.gif;
+        const png = page.dataset.png;
+        
+        if (gif) {
+          const bg = new Image();
+          bg.src = gif;
+          bg.onload = () => {
+            page.style.backgroundImage = `url("${gif}")`;
+          };
+        }
+        
+        if (png) {
+          const img = document.createElement('img');
+          img.src = png;
+          img.style.position = 'absolute';
+          img.style.inset = '0';
+          img.style.margin = 'auto';
+          img.style.maxWidth = '85%';
+          img.style.maxHeight = '85%';
+          img.style.zIndex = '5';
+          img.style.pointerEvents = 'none';
+          page.appendChild(img);
+        }
+      });
+      
+    </script>
+    
+  </body>
+  
+</html>
