@@ -1,9 +1,7 @@
 <!DOCTYPE html>
-
 <html>
-
   <head>
-    
+    <title>NVIV/msg</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <link rel="icon" href="https://lh3.googleusercontent.com/d/1q2ytw5Y2NF2AoVfdn2n69TJsuq6gJ7Zs=s2000">
@@ -11,13 +9,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
-    
-    <title>NVIV/msg</title>
-    
     <script src="https://www.youtube.com/iframe_api"></script>
-    
     <style>
-      
       html, body {
         margin: 0;
         padding: 0;
@@ -30,7 +23,6 @@
         align-items: center;
         font-family: Oswald;
       }
-      
       #app {
         position: relative;
         width: 100vh;
@@ -40,7 +32,6 @@
         max-height: 100vh;
         overflow: hidden;
       }
-      
       .screen {
         position: absolute;
         width: 100%;
@@ -48,18 +39,15 @@
         background-size: cover;
         background-position: center;
       }
-      
       #screen1 {
         justify-content: center;
         align-items: center;
         background-image: url('https://lh3.googleusercontent.com/d/1NNYB7WUdvdZt1ulWDzuK5Q6pMQUZFpAf=s3000');
       }
-      
       #screen2 {
         display: none;
         background-image: url('https://lh3.googleusercontent.com/d/16TzmbRshGiJX2V2CPPO8NUlQgac293RM=s3000');
       }
-      
       .cross-button {
         position: absolute;
         top: 34%;
@@ -69,27 +57,22 @@
         height: 200px;
         cursor: pointer;
       }
-      
       .cross-button::before,
       .cross-button::after {
         content: '';
         position: absolute;
         background: transparent;
       }
-      
       .cross-button::before {
         width: 40px;
         height: 220px;
         left: 40px;
       }
-      
       .cross-button::after {
         width: 120px;
         height: 40px;
         top: 60px;
       }
-      
-      /* BOTÓN 2 CORREGIDO */
       #reloadButton {
         position: absolute;
         width: 50px;
@@ -100,11 +83,9 @@
         border: none;
         font-size: 1em;
         cursor: pointer;
-        /* Garantiza que no se corte */
         bottom: 15px;
         right: 15px;
       }
-      
       #videoTitle {
         position: absolute;
         top: 50%;
@@ -115,18 +96,15 @@
         text-align: center;
         width: 90%;
       }
-      
       .hidden-player {
         position: absolute;
         width: 0;
         height: 0;
         overflow: hidden;
       }
-      
       .w50 { 
         width: 50%;
       }
-      
       #blocker { 
         display: none; 
         height: 100vh; 
@@ -137,7 +115,6 @@
         justify-content: center; 
         text-align: center;
       }
-      
       @media screen and (max-width: 2712px) { 
         #app { 
           display: block; 
@@ -146,7 +123,6 @@
           display: none; 
         }
       }
-      
       @media screen and (min-width: 1220px) { 
         #app { 
           display: none;
@@ -155,7 +131,6 @@
           display: flex;
         }
       }
-      
       @media screen and (orientation: portrait) { 
         #app { 
           display: block;
@@ -164,7 +139,6 @@
           display: none;
         }
       }
-      
       @media screen and (orientation: landscape) { 
         #app { 
           display: none;
@@ -173,13 +147,11 @@
           display: flex;
         }
       }
-      
       .rotada { 
         transform: rotate(-90deg); 
         transform-origin: center; 
         display: block;
       }
-      
       @media screen and (orientation: landscape) { 
         html, body {
           margin: 0; 
@@ -201,17 +173,12 @@
           background-attachment: fixed;
         } 
       }
-      
     </style>
-    
   </head>
-  
   <body>
-    
     <div id="blocker" class="pagina">
       <img src="https://lh3.googleusercontent.com/d/1opiJb6BEu4HxaRDGMr3zdI3D2X3BHTWL=s2000" alt="error" class="rotada w50">
     </div>
-    
     <div id="app">
       <div id="screen1" class="screen">
         <div class="cross-button" id="button1"></div>
@@ -220,15 +187,11 @@
         <div id="videoTitle"></div>
       </div>
     </div>
-    
     <div id="player1" class="hidden-player"></div>
     <div id="player2" class="hidden-player"></div>
-    
     <script>
-      
       let player1;
       let player2;
-      
       function onYouTubeIframeAPIReady() {
         player1 = new YT.Player('player1', {
           events: {
@@ -242,10 +205,8 @@
           }
         });
       }
-      
       function onPlayer1Ready() {}
       function onPlayer2Ready() {}
-      
       function startPlaylists() {
         player1.loadPlaylist({
           listType: 'playlist',
@@ -260,20 +221,17 @@
         player1.setVolume(100);
         player2.setVolume(70);
       }
-      
       function onPlayer1StateChange(event) {
         if (event.data == YT.PlayerState.PLAYING) {
           updateTitle();
         }
       }
-      
       function updateTitle() {
         let data = player1.getVideoData();
         if (data && data.title) {
           document.getElementById('videoTitle').innerText = data.title;
         }
       }
-      
       document.getElementById('button1').addEventListener('click', function() {
         if (document.documentElement.requestFullscreen) {
           document.documentElement.requestFullscreen();
@@ -282,13 +240,9 @@
         document.getElementById('screen2').style.display = 'block';
         startPlaylists();
       });
-      
       document.getElementById('reloadButton').addEventListener('click', function() {
         location.reload();
       });
-    
     </script>
-    
   </body>
-  
 </html>
