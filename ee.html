@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://lh3.googleusercontent.com/d/1q2ytw5Y2NF2AoVfdn2n69TJsuq6gJ7Zs=s2000">
+    <title>NVIV/EE</title>
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        font-size: 1em;
+        background: #000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        font-family: sans-serif;
+      }
+      .pantalla {
+        width: 100%;
+        height: 100%;
+        max-height: 100vh;
+        max-width: calc(100vh * 9 / 16);
+        aspect-ratio: 9 / 16;
+        position: relative;
+        overflow: hidden;
+      }
+      .inicio {
+        background-image: url('https://lh3.googleusercontent.com/d/19tZOoCzUQJGHzZ-UL4JbCtzrBZYcIP8W=s3000');
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        padding: 2em;
+        box-sizing: border-box;
+      }
+      button {
+        width: 50%;
+        font-size: 1em;
+        padding: 0.8em 2em;
+        border: none;
+        border-radius: 2em;
+        background: #000;
+        color: #FFF;
+        cursor: pointer;
+      }
+      button:active {
+        transform: scale(0.95);
+      }
+      .segunda {
+        display: none;
+        position: relative;
+        background-image: url('https://lh3.googleusercontent.com/d/19bNmfCTPtlVyxAAesrrdEEPkx1sMDIpp=s2000');
+        background-size: cover;
+        background-position: center;
+      }
+      #ytplayer {
+        position: absolute;
+        width: 0;
+        height: 0;
+        opacity: 0;
+        pointer-events: none;
+      }
+      .imagen-contenedor {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .imagen-contenedor img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+      }
+      .pila {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="pantalla inicio" id="inicio">
+      <button id="activar">Reflexionar</button>
+    </div>
+    <div class="pantalla segunda" id="segunda">
+      <div id="ytplayer"></div>
+      <div class="imagen-contenedor" id="imagenContenedor"></div>
+      <div class="pila" id="pila">
+        <img src="https://lh3.googleusercontent.com/d/1MSHGPKDeqrv_6mijzcaqWkf-F9BPwMcy=s2000" alt="001">
+        <img src="https://lh3.googleusercontent.com/d/1ALQvnqzABP84HY38cQfGdYyiVqEfV9iG=s2000" alt="002">
+        <img src="https://lh3.googleusercontent.com/d/1A2rhPTaRsrEKWe3xw9-CiPdrMagMGrEm=s2000" alt="003">
+        <img src="https://lh3.googleusercontent.com/d/10iAnoQDvM_Q2qxXsOloCapIBIswPrUOs=s2000" alt="004">
+        <img src="https://lh3.googleusercontent.com/d/1BmAGUXULBJMfPUS391Hi8W3UDUZLpC57=s2000" alt="005">
+        <img src="https://lh3.googleusercontent.com/d/172zy_hNoKSDH6s9vTg3PPTszsAWI2OXJ=s2000" alt="006">
+        <img src="https://lh3.googleusercontent.com/d/1VVEzKs0MlYJZzrUSMgtpXfEn8zhLk4Jd=s2000" alt="007">
+        <img src="https://lh3.googleusercontent.com/d/1ZUU_ewWvCWD9AtuaEQVWjtIMDRjOkvqQ=s2000" alt="008">
+        <img src="https://lh3.googleusercontent.com/d/1ZE63MvH5BQIz5v-P2Xh6TCJ5VPyVL1KP=s2000" alt="009">
+        <img src="https://lh3.googleusercontent.com/d/1eklCabPXIGjDkW6v3-AnGyV7bk995URd=s2000" alt="010">
+        <img src="https://lh3.googleusercontent.com/d/1GP4FgjNFVAa0qb53cjHnSYw1YynRZxsj=s2000" alt="011">
+        <img src="https://lh3.googleusercontent.com/d/1Knx4hGH3Awuwo--mOex_mhPqGelIFZtg=s2000" alt="012">
+        <img src="https://lh3.googleusercontent.com/d/1VCZsdWGRfEiFWDbYlYoIfgjR3K5ws1Ex=s2000" alt="013">
+        <img src="https://lh3.googleusercontent.com/d/1PS5_mk5CpYCuY_l8X5suBxf3EECu8FaO=s2000" alt="014">
+        <img src="https://lh3.googleusercontent.com/d/1q_xdQni5Y5koSSST-eXGpIOlI-QCPTMr=s2000" alt="015">
+        <img src="https://lh3.googleusercontent.com/d/1vzRtL3Kd5iOaP16vJSqptTUxR4KWI1py=s2000" alt="016">
+        <img src="https://lh3.googleusercontent.com/d/1XAd7TE9GCRt8EkjTptTMvSVUy6ZRSTG8=s2000" alt="017">
+        <img src="https://lh3.googleusercontent.com/d/1K0JGa5H9FNw-rliO8Ls_P-X80VQUpcy_=s2000" alt="018">
+        <img src="https://lh3.googleusercontent.com/d/1GpQsTdbSOmKDd8bXz9PK_T6xjEikCqpn=s2000" alt="019">
+        <img src="https://lh3.googleusercontent.com/d/1eR2ksVZ4IHf35GHc946m00uS4R8ra0Mc=s2000" alt="020">
+        <img src="https://lh3.googleusercontent.com/d/1CO13xGHhxXdjU7BQZYslw9fjUjK0MBYf=s2000" alt="021">
+        <img src="https://lh3.googleusercontent.com/d/1zcpfBRxHKx2duX8nW5RlPghbXa2TU4jy=s2000" alt="022">
+        <img src="https://lh3.googleusercontent.com/d/1OM8Mt1ExsVDbXQt7m3JdcI61SGoPmBjy=s2000" alt="023">
+        <img src="https://lh3.googleusercontent.com/d/1xrsj5TwG-XE86Z3eW_oA6swHsfmqTmkI=s2000" alt="024">
+        <img src="https://lh3.googleusercontent.com/d/10ny0Ip24qz1VqafZ3fyHkMagr-eiwIGn=s2000" alt="025">
+        <img src="https://lh3.googleusercontent.com/d/1UD9VvXqHyGA6ThTdzTUqiFkKdZ0FsW6H=s2000" alt="026">
+        <img src="https://lh3.googleusercontent.com/d/1MPV7ZirMvDSu0SWsFRbzWWir6tch8QY8=s2000" alt="027">
+        <img src="https://lh3.googleusercontent.com/d/1uUpgpr5Tbw4i1XHv0QtWcvglKkRp4bxf=s2000" alt="028">
+        <img src="https://lh3.googleusercontent.com/d/1a7btacMCFiNuVs71K-B0VbYMC1cGGikP=s2000" alt="029">
+        <img src="https://lh3.googleusercontent.com/d/120WkcWYvbTZAmPOn9g8NVkBlndrjjZSK=s2000" alt="030">
+        <img src="https://lh3.googleusercontent.com/d/1MG1QVM0KRXhFlZWhzzDglW5j4YJuHTU1=s2000" alt="031">
+        <img src="https://lh3.googleusercontent.com/d/1VpETat-Ax9BYj2ZMZ6q0VOegWUVTho0X=s2000" alt="032">
+        <img src="https://lh3.googleusercontent.com/d/1lc2OLUkXcdweuTm1C-AkUHQzWXJ2QMnT=s2000" alt="033">
+        <img src="https://lh3.googleusercontent.com/d/1rP9XLt8QW2d1_eo1w64AlT-AJAIfJOWI=s2000" alt="034">
+        <img src="https://lh3.googleusercontent.com/d/1XajrH34s5yuL7iPmpO9BT1AmlkCOICuP=s2000" alt="035">
+        <img src="https://lh3.googleusercontent.com/d/1KulO5_Amv1GEeAPQU0db41dbqKyaCiSK=s2000" alt="036">
+        <img src="https://lh3.googleusercontent.com/d/12ForZzWtjQTtwsyUdowBlrk_HQHPyxhX=s2000" alt="037">
+        <img src="https://lh3.googleusercontent.com/d/1O4erkWQLtm0iITbW74984-qlK5lKgZ7y=s2000" alt="038">
+        <img src="https://lh3.googleusercontent.com/d/1YQHACyZoa18i95yRl4aZGDfWRPJHVERK=s2000" alt="039">
+        <img src="https://lh3.googleusercontent.com/d/1Zs4ji5mZNjcRGYu0CLovLmsMX1yVPiYY=s2000" alt="040">
+        <img src="https://lh3.googleusercontent.com/d/1RvEkahhJOZAwi0WTjmD0yU0O3ZePTTbp=s2000" alt="041">
+        <img src="https://lh3.googleusercontent.com/d/1GPR4IKuBg7SVHHu-XsMfEYejqcFjmQpx=s2000" alt="042">
+        <img src="https://lh3.googleusercontent.com/d/1ZcTJXi4k__4QBmzv7Q89anOf32Osc9Tl=s2000" alt="043">
+        <img src="https://lh3.googleusercontent.com/d/1Jvrz6fOmzFj3HPz9Bj8BxYILsMJOPfl-=s2000" alt="044">
+        <img src="https://lh3.googleusercontent.com/d/1FM1A6mOcxndCMNqZect4TeeV7WvLv8yE=s2000" alt="045">
+        <img src="https://lh3.googleusercontent.com/d/1Qb6kXIOz5u8o4gJUDrfQ4av4KHnhdMk4=s2000" alt="046">
+        <img src="https://lh3.googleusercontent.com/d/1Y8VuH0Pmn8ySRF2FQ7WGJ79RJU3jiEOQ=s2000" alt="047">
+        <img src="https://lh3.googleusercontent.com/d/1gyz-eqZESYvO_hML8gG2nHv_gnhVPpFH=s2000" alt="048">
+        <img src="https://lh3.googleusercontent.com/d/1dX_q0h_im4_CGM_ERHrnykcyuu8njfji=s2000" alt="049">
+        <img src="https://lh3.googleusercontent.com/d/1quQhrgYDqbv6vnhRwIsBWcldSthQlWP2=s2000" alt="050">
+      </div>
+    </div>    
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script>
+      let player;
+      let intervalo;
+      let imagenes = [];
+      let contenedor = document.getElementById("imagenContenedor");
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player('ytplayer', {
+          playerVars: {
+            listType: 'playlist',
+            list: 'PLTsg_kaNc_ZbIrQvOPmRepLoqmW7ZSnf0',
+            autoplay: 0,
+            controls: 0,
+            modestbranding: 1,
+            rel: 0
+          }
+        });
+      }
+      document.getElementById("activar").addEventListener("click", function() {
+        if (document.documentElement.requestFullscreen) {
+          document.documentElement.requestFullscreen();
+        }
+        document.getElementById("inicio").style.display = "none";
+        document.getElementById("segunda").style.display = "block";
+        imagenes = Array.from(document.querySelectorAll("#pila img"));
+        if (player && player.playVideo) {
+          player.playVideo();
+        }
+      });
+      function efectoAleatorio() {
+        if (intervalo) return;
+        intervalo = setInterval(() => {
+          let random = Math.floor(Math.random() * imagenes.length);
+          contenedor.innerHTML = "";
+          contenedor.appendChild(imagenes[random].cloneNode());
+        }, 60);
+        setTimeout(() => {
+          clearInterval(intervalo);
+          intervalo = null;
+          let finalRandom = Math.floor(Math.random() * imagenes.length);
+          contenedor.innerHTML = "";
+          contenedor.appendChild(imagenes[finalRandom].cloneNode());
+        }, 5000);
+      }
+      document.getElementById("segunda").addEventListener("click", efectoAleatorio);
+    </script>
+  </body>
+</html>
