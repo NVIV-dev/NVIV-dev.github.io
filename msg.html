@@ -216,10 +216,12 @@
           listType: 'playlist',
           list: 'PLTsg_kaNc_ZYtA5KPfaO23LCoV5kUX0Ue'
         });
-        player1.setShuffle(true);
         player1.setLoop(true);
         player1.setVolume(100);
-        player2.setVolume(70);
+        player2.setVolume(80);
+        setTimeout(function() {
+          player1.setShuffle(true);
+        }, 1000);
       }
       function onPlayer1StateChange(event) {
         if (event.data == YT.PlayerState.PLAYING) {
