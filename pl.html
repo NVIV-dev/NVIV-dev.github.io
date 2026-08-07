@@ -1,125 +1,277 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
   <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NVIV/pl</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#010080">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <title>XYZ/NVIV</title>
     <style>
-      body, html { margin: 0; padding: 0; height: 100%; width: 100%; font-size: 15px; color: #FFF; font-family: Arial, sans-serif; background: url('https://lh3.googleusercontent.com/d/1vk2yOWN2yRP6shQTnzZnhSSvVvrBlngE=s2000') no-repeat center center; background-size: cover; }
-    .pantalla { display: none; height: 100%; width: 100%; position: absolute; top: 0; left: 0; }
-    .pantalla.activa { display: flex; flex-direction: column; justify-content: center; align-items: center; }
-    .boton { padding: 15px 30px; margin: 20px; border-radius: 25px; border: none; background-color: #FF0000; color: #000; font-size: 1em; cursor: pointer; }
-    .titulo-inicio { position: absolute; top: 20px; width: 100%; text-align: center; font-size: 0.6em; color: #FF0000; z-index: 2; margin-top: 10em; }
-    .titulo { font-size: 2em; font-weight: bold; color: #FF0000; text-align: center; margin-top: 20px; z-index: 2; position: relative; cursor: pointer; animation: pulsoRojo 0.8s infinite; }
-    @keyframes pulsoRojo { 0% { text-shadow: 0 0 5px #FF0000; } 50% { text-shadow: 0 0 20px #FF0000; } 100% { text-shadow: 0 0 5px #FF0000; } }
-    .mensaje { color: #FF0000; text-align: center; font-size: 0.8em; }
-    .regresar, .siguiente { position: absolute; bottom: 20px; border-radius: 25px; background-color: #FF0000; color: #000; padding: 10px 20px; border: none; cursor: pointer; z-index: 2; }
-    .regresar { left: 20px; }
-    .siguiente { right: 20px; }
-    .firma { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 7px; color: #FF0000; z-index: 2; text-align: center; }
-    .pantalla-negra { background-color: #000; color: #FF0000; justify-content: center; align-items: center; }
-    #youtubePlayer { width: 0; height: 0; border: none; }
-    #videoFondo { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; pointer-events: none; }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html,
+      body { width: 100%; height: 100%; overflow: hidden; background: #010080; font-family: Arial, sans-serif; overscroll-behavior: none; }
+      button { font: inherit; }
+      .intro { position: fixed; inset: 0; z-index: 200; display: grid; place-items: center; background: #000; animation: initialIntro 4s ease-in-out forwards; }
+      .intro img { display: block; width: min(28vw, 130px); height: auto; max-height: 18vh; object-fit: contain; }
+      @keyframes initialIntro { 0% { opacity: 0; } 25%, 70% { opacity: 1; } 100% { opacity: 0; visibility: hidden; } }
+      .app { position: relative; width: 100%; height: 100vh; height: 100dvh; max-width: calc(100dvh * 9 / 16); margin: 0 auto; overflow: hidden; background: #010080; }
+      .entry { position: absolute; inset: 0; z-index: 100; display: grid; place-items: center; padding: 22px; background-color: #111; background-image: linear-gradient(rgba(0, 0, 0, .38), rgba(0, 0, 0, .55)), var(--drive-background); background-position: center; background-size: cover; transition: opacity .55s ease, transform .75s cubic-bezier(.2, .8, .2, 1), visibility .75s; }
+      .entry.waiting { opacity: 0; visibility: hidden; }
+      .entry.exiting { opacity: 0; visibility: hidden; transform: scale(2.35); pointer-events: none; }
+      .xp-window { width: min(88vw, 360px); border: 3px solid #0755d8; border-radius: 8px 8px 3px 3px; overflow: hidden; background: #ece9d8; color: #111; box-shadow: 0 12px 45px rgba(0, 0, 0, .65), inset 0 0 0 1px #fff; transform: translateZ(0); }
+      .xp-title-bar { display: flex; align-items: center; justify-content: space-between; min-height: 34px; padding: 3px 4px 3px 8px; color: #fff; font-family: Tahoma, Arial, sans-serif; font-size: 16px; text-shadow: 1px 1px #003399; background: linear-gradient(180deg, #2c91ff 0%, #0872e8 13%, #0054d8 72%, #1674eb 100%); }
+      .xp-close { display: grid; width: 25px; height: 25px; place-items: center; border: none; border-radius: 4px; color: #fff; font-size: 20px; font-weight: bold; line-height: 1; background: linear-gradient(135deg, #ff9b72, #e33217 55%, #bd1908); box-shadow: inset 1px 1px rgba(255,255,255,.6); padding: 0; font-family: Tahoma, Arial, sans-serif; cursor: pointer; }
+      .xp-close img { width: 100%; height: 100%; object-fit: contain; display: block; }
+      .xp-content { padding: 22px 18px 18px; font-family: Tahoma, Arial, sans-serif; }
+      .xp-question { display: flex; align-items: center; gap: 14px; min-height: 62px; font-size: 14px; font-weight: 600; }
+      .error-icon { flex: 0 0 48px; width: 48px; height: 48px; object-fit: contain; display: block; }
+      .xp-actions { margin-top: 20px; text-align: center; }
+      .xp-button { min-width: 106px; padding: 5px 18px; border: 2px solid #101010; border-radius: 3px; outline: 1px solid #fff; outline-offset: -4px; color: #111; font-family: Tahoma, Arial, sans-serif; font-size: 13px; background: linear-gradient(#fff, #ece9d8 48%, #d8d4c3); box-shadow: 0 0 0 1px #777; cursor: pointer; }
+      .xp-button:active { background: #d8d4c3; transform: translateY(1px); }
+      .container { width: 100%; height: 100%; overflow-y: auto; scroll-snap-type: y mandatory; scroll-behavior: smooth; scrollbar-width: none; opacity: 0; transform: scale(.72); filter: blur(8px); pointer-events: none; }
+      .container.visible { opacity: 1; transform: scale(1); filter: none; pointer-events: auto; transition: opacity .55s .18s, transform .8s cubic-bezier(.1,.75,.15,1), filter .55s .15s; }
+      .container::-webkit-scrollbar { display: none; }
+      .page { position: relative; width: 100%; height: 100vh; height: 100dvh; overflow: hidden; scroll-snap-align: start; scroll-snap-stop: always; background: #000; }
+      .gif-drive { position: absolute; inset: 0; width: 100%; height: 100%; background: #000; object-fit: cover; object-position: center; pointer-events: none; user-select: none; }
+      .gradient { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(to bottom, rgba(0,0,0,.45), transparent 25%, transparent 60%, rgba(0,0,0,.8)); }
+      .top-bar { position: absolute; top: calc(15px + env(safe-area-inset-top)); left: 0; right: 0; z-index: 5; display: flex; justify-content: center; color: #fff; font-size: 12px; font-weight: 800; letter-spacing: 4px; pointer-events: none; }
+      .top-brand { display: grid; place-items: center; padding: 8px 15px; border-radius: 20px; background: rgba(0,0,0,.4); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+      .top-brand img { display: block; width: 70px; height: 16px; object-fit: contain; }
+      .floating-image { position: absolute; top: 50%; left: 50%; z-index: 7; width: min(72%, 320px); max-height: 55%; object-fit: contain; opacity: 1; transform: translate(-50%, -50%) scale(1); filter: drop-shadow(0 8px 22px rgba(0,0,0,.65)); pointer-events: none; }
+      .message { position: absolute; top: 50%; left: 50%; width: 80%; padding: 20px; transform: translate(-50%, -50%); border-radius: 15px; background: rgba(30,30,30,.9); color: #fff; text-align: center; line-height: 1.5; }
+      .hidden-youtube { position: fixed; top: 0; left: -10000px; width: 200px; height: 200px; opacity: 0; pointer-events: none; overflow: hidden; }
+      .random-button { position: absolute; right: 18px; bottom: calc(82px + env(safe-area-inset-bottom)); z-index: 20; display: grid; width: 52px; height: 52px; place-items: center; border: none; border-radius: 50%; background: rgba(0,0,0,.4); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); color: #fff; font-size: 20px; font-weight: 800; cursor: pointer; appearance: none; -webkit-appearance: none; -webkit-tap-highlight-color: transparent; outline: none; opacity: 0; pointer-events: none; box-shadow: none; transition: opacity .35s ease, transform .12s ease, background-color .12s ease; }
+      .song-button { bottom: calc(18px + env(safe-area-inset-bottom)); }
+      .reload-button { top: calc(18px + env(safe-area-inset-top)); bottom: auto; }
+      .random-button.visible { opacity: 1; pointer-events: auto; }
+      .random-button:active { background: rgba(0,0,0,.62); box-shadow: none; transform: translateY(3px) scale(.86); }
+      .random-button:focus,
+      .random-button:focus-visible { outline: none; }
+      @media (min-aspect-ratio: 9/16) { body { background: #111; } .app { box-shadow: 0 0 45px #000; } }
+      @media (prefers-reduced-motion: reduce) { .entry, .container, .floating-image { transition-duration: .01ms !important; } }
     </style>
   </head>
   <body>
-    <div id="pantalla1" class="pantalla activa">
-      <div class="titulo-inicio">/playlists:</div>
-      <button class="boton" onclick="mostrarPantalla(2)">Modo Sexo</button>
-      <button class="boton" onclick="mostrarPantalla(3)">Modo Romántico</button>
-      <button class="boton" onclick="mostrarPantalla(4)">Modo Fiesta</button>
-      <div class="firma">by NVIV</div>
+    <div class="intro" id="intro" aria-hidden="true">
+      <img src="https://lh3.googleusercontent.com/d/1VAMVQPEs-hmb5L-M9DYP0HlsxtdG1TKd=s2000" alt="logo_xyz">
     </div>
-    <div id="pantalla2" class="pantalla">
-      <div class="titulo" onclick="abrirLink()">"Mañana me arrepiento, hoy no pienso"</div>
-      <video id="videoFondo" autoplay muted playsinline></video>
-      <div id="youtubePlayer"></div>
-      <button class="regresar" onclick="regresar()">Regresar</button>
-      <button class="siguiente" onclick="siguienteVideo()">Siguiente</button>
-      <div class="firma">by NVIV</div>
+    <div class="app" id="app">
+      <section class="entry waiting" id="entry" aria-labelledby="entryQuestion">
+        <div class="xp-window" role="dialog" aria-modal="true">
+          <div class="xp-title-bar">
+            <span>Error</span>
+            <button class="xp-close" id="closeError" type="button" aria-label="Close and reload"><img src="https://lh3.googleusercontent.com/d/1b-8RqfPWykU-cUtYl3FGR5P34WbbCZ14=s2000" alt="icon1"></button>
+          </div>
+          <div class="xp-content">
+            <div class="xp-question">
+              <img class="error-icon" src="https://lh3.googleusercontent.com/d/1QGjdlQtfU7dP0ZAPr-mpxJMJpgdNyDt6=s2000" alt="icon2">
+              <p id="entryQuestion">Do you want to go down the rabbit hole? (+18).</p>
+            </div>
+            <div class="xp-actions">
+              <button class="xp-button" id="enterButton" type="button">Oh, shit!</button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <main class="container" id="container" aria-hidden="true"></main>
+      <button class="random-button" id="randomButton" type="button" aria-label="Go to a random GIF"><i class="fa-solid fa-arrows-rotate" style="color: rgb(255, 255, 255);"></i></button>
+      <button class="random-button song-button" id="songButton" type="button" aria-label="Switch to another random song"><i class="fa-solid fa-forward" style="color: rgb(255, 255, 255);"></i></button>
+      <button class="random-button reload-button" id="reloadButton" type="button" aria-label="Reload the page"><i class="fa-solid fa-xmark" style="color: rgb(255, 0, 0);"></i></button>
+      <div class="hidden-youtube" aria-hidden="true"><div id="hiddenYoutube"></div></div>
     </div>
-    <div id="pantalla3" class="pantalla pantalla-negra">
-      <p class="mensaje">El desarrollador aun no está inspirado <br> para hacer este modo. <br> :'(</p>
-      <button class="regresar" onclick="regresar()">Regresar</button>
-    </div>
-    <div id="pantalla4" class="pantalla pantalla-negra">
-      <p class="mensaje">El desarrollador aun no está inspirado <br> para hacer este modo. <br> :'(</p>
-      <button class="regresar" onclick="regresar()">Regresar</button>
-    </div>
-    <script src="https://www.youtube.com/iframe_api"></script>
     <script>
-      let player;
-      const playlistId = "PLTsg_kaNc_ZYWJjttiS6Cyaf14Badw1vc";
-      const videos = [
-        "https://www.pexels.com/es-es/download/video/6893214/",
-        "https://www.pexels.com/es-es/download/video/7569433/",
-        "https://www.pexels.com/es-es/download/video/9757160/",
-        "https://www.pexels.com/es-es/download/video/8113100/",
-        "https://www.pexels.com/es-es/download/video/6835383/",
-        "https://www.pexels.com/es-es/download/video/15713812/",
-        "https://www.pexels.com/es-es/download/video/30428231/"
+      const driveBackgroundId = "1snKAUYEcAUgYCBI0shwtxHmlFAjY86Sf";
+      const gifs = [
+        {
+          id: "166_nYQU1w74LwGbrcjUMH-Vr5FCSuOQY",
+          imageId: "1tpO04x0H3QFr1Vzq_fMSNLSzTMurn3M0"
+        },
+        {
+          id: "1MfvDwVZo5qGun8mAG3bvUl8lqYtcW0C2",
+          imageId: "1NvdBIEZzU5Tmo7SHkh7UcVKONAXGqQWb"
+        },
+        {
+        id: "1QXYTvQLVSttuOf3Kr-2ZZS8orI6jnrbv",
+          imageId: "1qz07JpS1BTW0GQo1qSpB_tygCq5qr18N"
+        },
+        {
+        id: "1N40iRl-SwIW1C8-wtBxZQryF07jxCoPu",
+          imageId: "1C1gY_tHLjtKnmhUW79MtmdwKeOQE4sOy"
+        }
       ];
-      let indiceVideo = 0;
-      const videoElemento = document.getElementById("videoFondo");
-      function reproducirVideo(index) {
-        videoElemento.src = videos[index];
-        videoElemento.play();
-      }
-      videoElemento.addEventListener("ended", () => {
-        indiceVideo = (indiceVideo + 1) % videos.length;
-        reproducirVideo(indiceVideo);
-      });
-      function abrirLink() {
-        window.location.href = "https://x.com/uele06";
-      }
-      function onYouTubeIframeAPIReady() {
-        player = new YT.Player('youtubePlayer', {
-          height: '0',
-          width: '0',
+      const app = document.getElementById("app");
+      const entry = document.getElementById("entry");
+      const enterButton = document.getElementById("enterButton");
+      const randomButton = document.getElementById("randomButton");
+      const songButton = document.getElementById("songButton");
+      const reloadButton = document.getElementById("reloadButton");
+      const container = document.getElementById("container");
+      const youtubePlaylistId = "PLJwGgsoPkndI";
+      const brandImageId = "1jOxieITc7JCN-o2qKtrPWWKEbf87JDUa";
+      let contentActive = false;
+      let youtubePlayer = null;
+      let youtubeReady = false;
+      let youtubeStartRequested = false;
+      let changingSong = false;
+      window.setTimeout(function () {
+        entry.classList.remove("waiting");
+        document.getElementById("intro")?.remove();
+      }, 4000);
+      window.onYouTubeIframeAPIReady = function () {
+        youtubePlayer = new YT.Player("hiddenYoutube", {
+          width: 200,
+          height: 200,
           playerVars: {
-            listType: 'playlist',
-            list: playlistId,
             autoplay: 0,
+            controls: 0,
+            disablekb: 1,
+            fs: 0,
+            iv_load_policy: 3,
+            listType: "playlist",
+            list: youtubePlaylistId,
             loop: 1,
-            shuffle: 1
+            playsinline: 1,
+            rel: 0
           },
           events: {
-            'onReady': (event) => {
+            onReady: function (event) {
+              youtubeReady = true;
+              event.target.setLoop(true);
               event.target.setShuffle(true);
+              if (youtubeStartRequested) event.target.playVideo();
+            },
+            onStateChange: function (event) {
+              if (event.data === YT.PlayerState.ENDED) {
+                event.target.nextVideo();
+                event.target.playVideo();
+              }
             }
           }
         });
+      };
+      function startYoutubePlaylist() {
+        youtubeStartRequested = true;
+        if (!youtubeReady || !youtubePlayer) return;
+        youtubePlayer.setLoop(true);
+        youtubePlayer.setShuffle(true);
+        youtubePlayer.playVideo();
       }
-      function mostrarPantalla(num) {
-        document.querySelectorAll('.pantalla').forEach(p => p.classList.remove('activa'));
-        document.getElementById('pantalla' + num).classList.add('activa');
-        if (num === 1 && player) {
-          player.stopVideo();
+      entry.style.setProperty(
+        "--drive-background",
+        `url("https://drive.google.com/thumbnail?id=${driveBackgroundId}&sz=w1600")`
+      );
+      function createPage(gif, position) {
+        const page = document.createElement("section");
+        page.className = "page";
+        page.dataset.position = position;
+        if (gif.id.trim()) {
+          const driveUrl = `https://lh3.googleusercontent.com/d/${gif.id}=s2000`;
+          const brandUrl = `https://lh3.googleusercontent.com/d/${brandImageId}=s2000`;
+          const floatingImageUrl = gif.imageId && gif.imageId.trim()
+            ? `https://lh3.googleusercontent.com/d/${gif.imageId}=s2000`
+            : "";
+          page.innerHTML = `
+            <img class="gif-drive" data-src="${driveUrl}" alt="GIF" decoding="async">
+            <div class="gradient"></div>
+            <div class="top-bar"><div class="top-brand"><img src="${brandUrl}" alt="NVIV"></div></div>
+            ${floatingImageUrl ? `<img class="floating-image" src="${floatingImageUrl}" alt="Floating image">` : ""}`;
+        } else {
+          page.innerHTML = `
+            <div class="message"><p>Add another Google Drive GIF image ID to the <strong>gifs</strong> array.</p></div>`;
         }
-        if (num === 2 && player) {
-          player.playVideo();
-          reproducirVideo(indiceVideo);
+        return page;
+      }
+      gifs.forEach((gif, position) => container.appendChild(createPage(gif, position)));
+      const pages = document.querySelectorAll(".page");
+      const observer = new IntersectionObserver(function (entries) {
+        if (!contentActive) return;
+        entries.forEach(function (observedEntry) {
+          if (observedEntry.isIntersecting && observedEntry.intersectionRatio >= .75) {
+            deactivateGifsExcept(observedEntry.target);
+            activateGif(observedEntry.target);
+          }
+        });
+      }, { root: container, threshold: .75 });
+      pages.forEach((page) => observer.observe(page));
+      randomButton.addEventListener("click", function () {
+        if (!pages.length) return;
+        const randomIndex = Math.floor(Math.random() * pages.length);
+        pages[randomIndex].scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+      function wait(milliseconds) {
+        return new Promise((resolve) => window.setTimeout(resolve, milliseconds));
+      }
+      async function playNextSongWithEchoOut() {
+        if (!youtubeReady || !youtubePlayer || changingSong) return;
+        changingSong = true;
+        songButton.disabled = true;
+        const originalVolume = youtubePlayer.getVolume();
+        const echoTail = [
+          { level: .62, delay: 130 },
+          { level: .78, delay: 115 },
+          { level: .38, delay: 145 },
+          { level: .52, delay: 130 },
+          { level: .20, delay: 160 },
+          { level: .30, delay: 145 },
+          { level: .08, delay: 170 },
+          { level: 0, delay: 90 }
+        ];
+        try {
+          for (const pulse of echoTail) {
+            youtubePlayer.setVolume(Math.round(originalVolume * pulse.level));
+            await wait(pulse.delay);
+          }
+          youtubePlayer.setShuffle(true);
+          youtubePlayer.nextVideo();
+          youtubePlayer.setVolume(originalVolume);
+          youtubePlayer.playVideo();
+        } finally {
+          youtubePlayer.setVolume(originalVolume);
+          songButton.disabled = false;
+          changingSong = false;
         }
-        if (num !== 1) {
-          activarPantallaCompleta();
-        }
       }
-      function regresar() {
-        mostrarPantalla(1);
+      songButton.addEventListener("click", playNextSongWithEchoOut);
+      reloadButton.addEventListener("click", function () {
+        window.location.reload();
+      });
+      function activateGif(page) {
+        page.classList.add("active");
+        const image = page.querySelector(".gif-drive");
+        if (image && !image.hasAttribute("src")) image.src = image.dataset.src;
       }
-      function siguienteVideo() {
-        if (player) player.nextVideo();
+      function deactivateGifsExcept(activePage) {
+        pages.forEach(function (page) {
+          if (page === activePage) return;
+          page.classList.remove("active");
+          const image = page.querySelector(".gif-drive");
+          if (image) image.removeAttribute("src");
+        });
       }
-      function activarPantallaCompleta() {
-        let elem = document.documentElement;
-        if (elem.requestFullscreen) {
-          elem.requestFullscreen();
-        } else if (elem.webkitRequestFullscreen) {
-          elem.webkitRequestFullscreen();
-        } else if (elem.msRequestFullscreen) {
-          elem.msRequestFullscreen();
-        }
+      async function requestFullScreen() {
+        const request = app.requestFullscreen || app.webkitRequestFullscreen;
+        if (!request || document.fullscreenElement || document.webkitFullscreenElement) return;
+        try { await request.call(app); } catch (error) { }
       }
+      closeError.addEventListener("click", function () {
+        window.location.reload();
+      });
+      enterButton.addEventListener("click", function () {
+        startYoutubePlaylist();
+        contentActive = true;
+        entry.classList.add("exiting");
+        container.classList.add("visible");
+        randomButton.classList.add("visible");
+        songButton.classList.add("visible");
+        reloadButton.classList.add("visible");
+        container.setAttribute("aria-hidden", "false");
+        const activePage = document.elementFromPoint(innerWidth / 2, innerHeight / 2)?.closest(".page") || pages[0];
+        deactivateGifsExcept(activePage);
+        activateGif(activePage);
+        requestFullScreen();
+        window.setTimeout(() => entry.remove(), 850);
+      }, { once: true });
     </script>
+    <script src="https://www.youtube.com/iframe_api"></script>
   </body>
 </html>
