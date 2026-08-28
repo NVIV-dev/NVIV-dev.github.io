@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+    <meta name="theme-color" content="#000000">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <title>NVIV:notes</title>
+    <style>
+      :root { color-scheme: dark; }
+      * { box-sizing: border-box; }
+      html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; background: #000; color: #fff; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .book { display: flex; width: 100%; height: 100vh; height: 100dvh; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scroll-behavior: smooth; overscroll-behavior-x: contain; scrollbar-width: none; }
+      .book::-webkit-scrollbar { display: none; }
+      .page { flex: 0 0 100%; width: 100%; height: 100%; padding-top: max(18px, env(safe-area-inset-top)); padding-right: 16px; padding-bottom: max(82px, env(safe-area-inset-bottom)); padding-left: 16px; overflow-x: hidden; overflow-y: auto; scroll-snap-align: start; scrollbar-width: none; } .page::-webkit-scrollbar { display: none; }
+      .page-title { margin: 0 0 16px; color: #fff; font-size: 20px; font-weight: 800; letter-spacing: 0.16em; text-align: center; text-transform: uppercase; }
+      .note-container { position: relative; width: 100%; margin: 0 0 14px; }
+      .note { display: block; width: 100%; min-height: 118px; margin: 0; padding: 17px 48px 17px 17px; resize: none; overflow: hidden; border: 1px solid #343434; border-radius: 14px; outline: none; background: #111; color: #fff; font-family: inherit; font-size: 10px; line-height: 1.5; caret-color: #fff; transition: border-color 0.18s, background 0.25s, height 0.15s; }
+      .delete-note { position: absolute; z-index: 2; top: 8px; right: 8px; display: grid; place-items: center; width: 30px; height: 30px; padding: 0; border: 0; border-radius: 50%; background: rgba(0, 0, 0, 0.48); color: #fff; font-size: 17px; line-height: 1; cursor: pointer; touch-action: manipulation; }
+      .delete-note:active { transform: scale(0.9); background: rgba(0, 0, 0, 0.72); }
+      .note::placeholder { color: #666; }
+      .note:focus { border-color: #fff; background: #161616; }
+      .note.color-red { --note-color: rgba(255, 0, 0, 0.5); background: var(--note-color); }
+      .note.color-black { --note-color: rgba(0, 0, 0, 0.5); background: var(--note-color); }
+      .note.color-gray { --note-color: rgba(128, 128, 128, 0.5); background: var(--note-color); }
+      .note.color-white { --note-color: rgba(255, 255, 255, 0.5); background: var(--note-color); }
+      .note.color-pink { --note-color: rgba(255, 105, 180, 0.5); background: var(--note-color); }
+      .note.color-blue { --note-color: rgba(135, 206, 235, 0.5); background: var(--note-color); }
+      .note.color-orange { --note-color: rgba(255, 165, 0, 0.5); background: var(--note-color); }  
+      .note.color-green { --note-color: rgba(0, 128, 0, 0.5); background: var(--note-color); }
+      .note.color-yellow { --note-color: rgba(255, 255, 0, 0.5); background: var(--note-color); }
+      .note.color-red:focus,
+      .note.color-black:focus,
+      .note.color-gray:focus,
+      .note.color-white:focus,
+      .note.color-pink:focus,
+      .note.color-blue:focus,
+      .note.color-orange:focus,
+      .note.color-green:focus,
+      .note.color-yellow:focus { background: var(--note-color); }
+      .controls { position: fixed; z-index: 10; right: 16px; bottom: max(18px, env(safe-area-inset-bottom) ); pointer-events: none; }
+      .add-button { width: 48px; height: 48px; border: 1px solid #444; border-radius: 50%; background: #fff; color: #000; font-size: 30px; line-height: 1; cursor: pointer; pointer-events: auto; transition: transform 0.15s; }
+      .add-button:active { transform: scale(0.94); }  
+      .toast { position: fixed; z-index: 20; left: 50%; bottom: max(26px, env(safe-area-inset-bottom) ); padding: 10px 15px; border: 1px solid #333; border-radius: 999px; background: rgba(20, 20, 20, 0.94); color: #fff; font-size: 13px; opacity: 0; transform: translate(-50%, 12px); transition: opacity 0.2s, transform 0.2s; pointer-events: none; }
+      .toast.visible { opacity: 1; transform: translate(-50%, 0); }
+      @media (min-aspect-ratio: 9/16) and (min-width: 700px) { .page { padding-right: max(16px, calc((100vw - 56.25vh) / 2) ); padding-left: max(16px, calc((100vw - 56.25vh) / 2) ); } }
+    </style>
+  </head>
+  <body>
+    <main class="book" id="book" aria-label="Libro de frases NVIV"></main>  
+    <nav class="controls" aria-label="Controles">
+      <button class="add-button" id="addNote" type="button" aria-label="Agregar caja de notas">
+        <i class="fa-solid fa-plus"></i>
+      </button>
+    </nav>
+    <div class="toast" id="toast" role="status" aria-live="polite">
+      Copiado!
+    </div>
+    <script>
+      const DB_NAME = "NVIV_txt";
+      const STORE_NAME = "contenido";
+      const DOCUMENT_KEY = "paginas";  
+      const LEGACY_STORAGE_KEY = "libro-frases-v1";
+      const NOTES_PER_PAGE = 8;
+      const COLOR_TAGS = { "<red>": "red", "<black>": "black", "<gray>": "gray", "<white>": "white", "<pink>": "pink", "<blue>": "blue", "<orange>": "orange", "<green>": "green", "<yellow>": "yellow" };
+      const COLOR_CLASSES =
+        Object.values(COLOR_TAGS).map(
+          color => `color-${color}`
+        );
+      const book =
+        document.getElementById("book");
+      const addNoteButton =
+        document.getElementById("addNote");
+      const toast =
+        document.getElementById("toast");
+      let pages = [emptyPage()];
+      let database;
+      let saveTimer;
+      let toastTimer;
+      function emptyPage() {
+        return Array.from(
+          { length: NOTES_PER_PAGE },
+          () => ({
+            text: "",
+            color: null
+          })
+        );
+      }
+      function openDatabase() {
+        return new Promise((resolve, reject) => {
+          const request = indexedDB.open(
+            DB_NAME,
+            1
+          );
+          request.onupgradeneeded = () => {
+            const currentDatabase =
+              request.result;
+            if (
+              !currentDatabase.objectStoreNames.contains(
+                STORE_NAME
+              )
+            ) {
+              currentDatabase.createObjectStore(
+                STORE_NAME
+              );
+            }
+          };
+          request.onsuccess = () => {
+            resolve(request.result);
+          };
+          request.onerror = () => {
+            reject(request.error);
+          };
+        });
+      }
+      function readFromDatabase() {
+        return new Promise((resolve, reject) => {
+          const transaction =
+            database.transaction(
+              STORE_NAME,
+              "readonly"
+            );
+          const store =
+            transaction.objectStore(
+              STORE_NAME
+            );
+          const request =
+            store.get(DOCUMENT_KEY);
+          request.onsuccess = () => {
+            resolve(request.result);
+          };
+          request.onerror = () => {
+            reject(request.error);
+          };
+        });
+      }
+      function writeToDatabase() {
+        return new Promise((resolve, reject) => {
+          const transaction =
+            database.transaction(
+              STORE_NAME,
+              "readwrite"
+            );
+          const store =
+            transaction.objectStore(
+              STORE_NAME
+            );
+          store.put(
+            pages,
+            DOCUMENT_KEY
+          );
+          transaction.oncomplete = () => {
+            resolve();
+          };
+          transaction.onerror = () => {
+            reject(transaction.error);
+          };
+        });
+      }
+      function savePages() {
+        clearTimeout(saveTimer);
+        saveTimer = setTimeout(() => {
+          if (database) {
+            writeToDatabase().catch(error => {
+              console.error(
+                "Error al guardar:",
+                error
+              );
+            });
+          } else {
+            localStorage.setItem(
+              LEGACY_STORAGE_KEY,
+              JSON.stringify(pages)
+            );
+          }
+        }, 180);
+      }
+      function loadLegacyPages() {
+        try {
+          const savedText =
+            localStorage.getItem(
+              LEGACY_STORAGE_KEY
+            );
+          const savedPages =
+            JSON.parse(savedText);
+          if (
+            Array.isArray(savedPages) &&
+            savedPages.length > 0
+          ) {
+            return savedPages;
+          }
+          return null;
+        } catch (error) {
+          return null;
+        }
+      }
+      function showToast(message) {
+        toast.textContent = message;
+        toast.classList.add("visible");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          toast.classList.remove("visible");
+        }, 1300);
+      }
+      async function copyText(text) {
+        if (!text) {
+          showToast("La caja está vacía");
+          return;
+        }
+        try {
+          await navigator.clipboard.writeText(
+            text
+          );
+        } catch (error) {
+          const helper =
+            document.createElement("textarea");
+          helper.value = text;
+          helper.style.position = "fixed";
+          helper.style.opacity = "0";
+          helper.style.pointerEvents = "none";
+          document.body.appendChild(helper);
+          helper.select();
+          document.execCommand("copy");
+          helper.remove();
+        }
+        if (navigator.vibrate) {
+          navigator.vibrate(35);
+        }
+        showToast("Texto copiado");
+      }
+      function enableDoubleTapCopy(note) {
+        note.addEventListener(
+          "dblclick",
+          event => {
+            event.preventDefault();
+            copyText(note.value);
+          }
+        );
+      }
+      function resizeNote(
+        note,
+        fitToContent = false
+      ) {
+        if (fitToContent) {
+          note.dataset.fitToContent = "true";
+        }
+        const compact =
+          note.dataset.fitToContent === "true";
+        note.style.minHeight =
+          compact
+            ? "0"
+            : "118px";
+        note.style.height = "auto";
+        note.style.height =
+          Math.max(
+            compact ? 0 : 118,
+            note.scrollHeight
+          ) + "px";
+      }
+      function applyNoteColor(
+        note,
+        color
+      ) {
+        note.classList.remove(
+          ...COLOR_CLASSES
+        );
+        if (color) {
+          note.classList.add(
+            `color-${color}`
+          );
+        }
+      }
+      function extractColorCommand(
+        text,
+        currentColor = null
+      ) {
+        const match = text.match(
+          /(?:^|\r?\n)\s*(<(?:red|black|gray|white|pink|blue|orange|green|yellow)>)\s*$/i
+        );
+        if (!match) {
+          return {
+            text: text,
+            color: currentColor,
+            commandFound: false
+          };
+        }
+        const color =
+          COLOR_TAGS[
+            match[1].toLowerCase()
+          ];
+        const cleanText =
+          text
+            .slice(0, match.index)
+            .replace(/[ \t]+$/g, "")
+            .replace(/\r?\n$/, "");
+        return {
+          text: cleanText,
+          color: color,
+          commandFound: true
+        };
+      }
+      function normalizePages(savedPages) {
+        return savedPages.map(page => {
+          return page.map(noteData => {
+            if (
+              noteData &&
+              typeof noteData === "object" &&
+              "text" in noteData
+            ) {
+              const parsed =
+                extractColorCommand(
+                  String(noteData.text || ""),
+                  noteData.color || null
+                );
+              return {
+                text: parsed.text,
+                color: parsed.color
+              };
+            }
+            const parsed =
+              extractColorCommand(
+                String(noteData || "")
+              );
+            return {
+              text: parsed.text,
+              color: parsed.color
+            };
+          });
+        });
+      }
+      function render() {
+        book.innerHTML = "";
+        pages.forEach(
+          (notes, pageIndex) => {
+            const page =
+              document.createElement(
+                "section"
+              );
+            page.className = "page";
+            page.setAttribute(
+              "aria-label",
+              `Página ${pageIndex + 1}`
+            );
+            const title =
+              document.createElement("h2");
+            title.className = "page-title";
+            title.textContent = "N V I V";
+            page.appendChild(title);
+            notes.forEach(
+              (noteData, noteIndex) => {
+                const noteContainer =
+                  document.createElement(
+                    "div"
+                  );
+                noteContainer.className =
+                  "note-container";
+                const note =
+                  document.createElement(
+                    "textarea"
+                  );
+                note.className = "note";
+                note.value = noteData.text;
+                note.placeholder =
+                  "Escribe una frase…";
+                note.setAttribute(
+                  "aria-label",
+                  `Frase ${noteIndex + 1}`
+                );
+                note.addEventListener(
+                  "input",
+                  () => {
+                    const currentColor =
+                      pages[pageIndex][noteIndex]
+                        .color;
+                    const parsed =
+                      extractColorCommand(
+                        note.value,
+                        currentColor
+                      );
+                    if (parsed.commandFound) {
+                      note.value =
+                        parsed.text;
+                      resizeNote(
+                        note,
+                        true
+                      );
+                      if (navigator.vibrate) {
+                        navigator.vibrate(25);
+                      }
+                    }
+                    pages[pageIndex][noteIndex] = {
+                      text: parsed.text,
+                      color: parsed.color
+                    };  
+                    if (!parsed.commandFound) {
+                      resizeNote(note);
+                    }
+                    applyNoteColor(
+                      note,
+                      parsed.color
+                    );
+                    savePages();
+                  }
+                );
+                enableDoubleTapCopy(note);
+                const deleteButton =
+                  document.createElement(
+                    "button"
+                  );
+                deleteButton.className =
+                  "delete-note";
+                deleteButton.type = "button";
+                deleteButton.textContent = "×";
+                deleteButton.setAttribute(
+                  "aria-label",
+                  `Copiar y eliminar frase ${noteIndex + 1}`
+                );
+                deleteButton.addEventListener(
+                  "click",
+                  async event => {
+                    event.stopPropagation();
+                    const currentScrollTop =
+                      page.scrollTop;
+                    const textToCopy =
+                      note.value;
+                    if (textToCopy) {
+                      await copyText(
+                        textToCopy
+                      );
+                    }
+                    pages[pageIndex].splice(
+                      noteIndex,
+                      1
+                    );
+                    savePages();
+                    render();
+                    requestAnimationFrame(() => {
+                      book.scrollLeft =
+                        pageIndex * book.clientWidth;
+                      const restoredPage =
+                        book.children[pageIndex];
+                      if (restoredPage) {
+                        restoredPage.scrollTop =
+                          currentScrollTop;
+                      }
+                    });
+                  }
+                );
+                noteContainer.appendChild(note);
+                noteContainer.appendChild(
+                  deleteButton
+                );
+                page.appendChild(
+                  noteContainer
+                );
+                requestAnimationFrame(() => {
+                  resizeNote(
+                    note,
+                    Boolean(noteData.color)
+                  );
+                  applyNoteColor(
+                    note,
+                    noteData.color
+                  );
+                });
+              }
+            );
+            book.appendChild(page);
+          }
+        );
+      }
+      addNoteButton.addEventListener(
+        "click",
+        () => {
+          const pageIndex = Math.min(
+            pages.length - 1,
+            Math.max(
+              0,
+              Math.round(
+                book.scrollLeft / book.clientWidth
+              )
+            )
+          );
+          pages[pageIndex].push({
+            text: "",
+            color: null
+          });
+          savePages();
+          render();
+          requestAnimationFrame(() => {
+            const currentPage =
+              book.children[pageIndex];
+            book.scrollLeft =
+              pageIndex * book.clientWidth;
+            const allNotes =
+              currentPage.querySelectorAll(
+                ".note"
+              );
+            const newNote =
+              allNotes[allNotes.length - 1];
+            newNote.scrollIntoView({
+              behavior: "smooth",
+              block: "end",
+              inline: "nearest"
+            });
+            newNote.focus({
+              preventScroll: true
+            });
+          });
+        }
+      );
+      async function start() {
+        try {
+          database =
+            await openDatabase();
+          const savedPages =
+            await readFromDatabase();
+          const legacyPages =
+            loadLegacyPages();
+          if (
+            Array.isArray(savedPages) &&
+            savedPages.length > 0
+          ) {
+            pages =
+              normalizePages(savedPages);
+            await writeToDatabase();
+          }  
+          else if (legacyPages) {
+            pages =
+              normalizePages(legacyPages);
+            await writeToDatabase();
+            localStorage.removeItem(
+              LEGACY_STORAGE_KEY
+            );
+          }
+        } catch (error) {
+          console.error(
+            "No fue posible abrir NVIV_txt:",
+            error
+          );
+          const fallbackPages =
+            loadLegacyPages();
+          pages = fallbackPages
+            ? normalizePages(fallbackPages)
+            : [emptyPage()];
+        }
+        render();
+      }
+      start();
+    </script>
+  </body>
+</html>
