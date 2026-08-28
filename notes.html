@@ -13,7 +13,8 @@
       .book { display: flex; width: 100%; height: 100vh; height: 100dvh; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scroll-behavior: smooth; overscroll-behavior-x: contain; scrollbar-width: none; }
       .book::-webkit-scrollbar { display: none; }
       .page { flex: 0 0 100%; width: 100%; height: 100%; padding-top: max(18px, env(safe-area-inset-top)); padding-right: 16px; padding-bottom: max(82px, env(safe-area-inset-bottom)); padding-left: 16px; overflow-x: hidden; overflow-y: auto; scroll-snap-align: start; scrollbar-width: none; } .page::-webkit-scrollbar { display: none; }
-      .page-title { margin: 0 0 16px; color: #fff; font-size: 20px; font-weight: 800; letter-spacing: 0.16em; text-align: center; text-transform: uppercase; }
+      .page-title { margin: 0 0 12px; color: #fff; font-size: 20px; font-weight: 800; letter-spacing: 0.16em; text-align: center; text-transform: uppercase; }
+      .title-divider { width: 50vw; height: 1px; margin: 0 auto 16px; border: 0; background: #fff; }
       .note-container { position: relative; width: 100%; margin: 0 0 14px; }
       .note { display: block; width: 100%; min-height: 118px; margin: 0; padding: 17px 48px 17px 17px; resize: none; overflow: hidden; border: 1px solid #343434; border-radius: 14px; outline: none; background: #111; color: #fff; font-family: inherit; font-size: 10px; line-height: 1.5; caret-color: #fff; transition: border-color 0.18s, background 0.25s, height 0.15s; }
       .delete-note { position: absolute; z-index: 2; top: 8px; right: 8px; display: grid; place-items: center; width: 30px; height: 30px; padding: 0; border: 0; border-radius: 50%; background: rgba(0, 0, 0, 0.48); color: #fff; font-size: 17px; line-height: 1; cursor: pointer; touch-action: manipulation; }
@@ -346,6 +347,15 @@
             title.className = "page-title";
             title.textContent = "N V I V";
             page.appendChild(title);
+            const titleDivider =
+              document.createElement("hr");
+            titleDivider.className =
+              "title-divider";
+            titleDivider.setAttribute(
+              "aria-hidden",
+              "true"
+            );
+            page.appendChild(titleDivider);
             notes.forEach(
               (noteData, noteIndex) => {
                 const noteContainer =
@@ -481,7 +491,7 @@
               )
             )
           );
-          pages[pageIndex].push({
+          pages[pageIndex].unshift({
             text: "",
             color: null
           });
@@ -492,16 +502,13 @@
               book.children[pageIndex];
             book.scrollLeft =
               pageIndex * book.clientWidth;
-            const allNotes =
-              currentPage.querySelectorAll(
+            const newNote =
+              currentPage.querySelector(
                 ".note"
               );
-            const newNote =
-              allNotes[allNotes.length - 1];
-            newNote.scrollIntoView({
-              behavior: "smooth",
-              block: "end",
-              inline: "nearest"
+            currentPage.scrollTo({
+              top: 0,
+              behavior: "smooth"
             });
             newNote.focus({
               preventScroll: true
