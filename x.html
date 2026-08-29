@@ -326,6 +326,7 @@
     .tab-page-header {
       position: sticky;
       top: 0;
+      z-index: 2;
       display: flex;
       align-items: center;
       gap: 22px;
@@ -351,6 +352,34 @@
       color: #fff;
       background: transparent;
       font-size: 20px;
+    }
+
+    /* Feed de imágenes: agrega cada publicación nueva como el primer article. */
+    .image-feed {
+      width: 100%;
+    }
+
+    .image-post {
+      width: 100%;
+      padding: 12px 0;
+      border-bottom: 1px solid #eff3f4;
+    }
+
+    .image-post:first-child { padding-top: 0; }
+
+    .image-post-button {
+      display: block;
+      width: 100%;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      cursor: zoom-in;
+    }
+
+    .image-post-button img {
+      display: block;
+      width: 100%;
+      height: auto;
     }
 
 
@@ -560,6 +589,17 @@
       border-radius: 0;
     }
     .avatar-viewer.is-post #viewer-image-2 { display: block; }
+    .avatar-viewer.is-feed-image .viewer-gallery {
+      width: min(96vw, 1100px);
+      max-height: 90dvh;
+      overflow: auto;
+    }
+    .avatar-viewer.is-feed-image img {
+      width: 100%;
+      max-height: none;
+      border-radius: 0;
+    }
+    .avatar-viewer.is-feed-image #viewer-image-2 { display: none; }
     .viewer-close {
       position: absolute;
       top: max(14px, env(safe-area-inset-top));
@@ -633,7 +673,7 @@
       <article class="profile-page">
         <header class="topbar">
           <button id="back-home" class="back-arrow" type="button" aria-label="Volver al inicio"><i class="fa-solid fa-arrow-left" style="color: rgb(255, 255, 255);"></i></button>
-          <div class="topbar-copy"><img class="name-logo" src="https://lh3.googleusercontent.com/d/1UYbM7Loo-CQw0xbqepgUga-169s36M5S=s600" alt="NVIV"><!-- Cifra de publicaciones del perfil --><small>1 publicación</small></div>
+          <div class="topbar-copy"><img class="name-logo" src="https://lh3.googleusercontent.com/d/1UYbM7Loo-CQw0xbqepgUga-169s36M5S=s600" alt="NVIV"><!-- Cifra de publicaciones del perfil --><small>333 publicaciones</small></div>
         </header>
         <div class="cover" aria-hidden="true"></div>
         <div class="profile-content">
@@ -693,18 +733,32 @@
         <button class="tab-page-back" type="button" aria-label="Volver al perfil"><i class="fa-solid fa-arrow-left" style="color: rgb(255, 255, 255);"></i></button>
         <h2>Respuestas</h2>
       </header>
+      <div class="image-feed" aria-label="Publicaciones de Respuestas">
+        <!-- NUEVAS IMAGENES DE RESPUESTAS: coloca cada article nuevo encima de este. -->
+        <article class="image-post">
+          <button class="image-post-button" type="button" aria-label="Ampliar imagen de Respuestas">
+            <img src="https://drive.google.com/thumbnail?id=1nbp_ahqzrMX6xRH70Y-FNb0xoX2Zygla&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1nbp_ahqzrMX6xRH70Y-FNb0xoX2Zygla=s2400';" alt="Publicación de Respuestas" loading="lazy">
+          </button>
+        </article>
+      </div>
     </section>
     <section id="ads-page" class="tab-page" aria-label="Anuncios" aria-hidden="true">
       <header class="tab-page-header">
         <button class="tab-page-back" type="button" aria-label="Volver al perfil"><i class="fa-solid fa-arrow-left" style="color: rgb(255, 255, 255);"></i></button>
         <h2>Anuncios</h2>
       </header>
+      <div class="image-feed" aria-label="Publicaciones de Anuncios">
+        <!-- NUEVAS IMAGENES DE ANUNCIOS: coloca cada article nuevo aquí arriba. -->
+      </div>
     </section>
     <section id="projects-page" class="tab-page" aria-label="Proyectos" aria-hidden="true">
       <header class="tab-page-header">
         <button class="tab-page-back" type="button" aria-label="Volver al perfil"><i class="fa-solid fa-arrow-left" style="color: rgb(255, 255, 255);"></i></button>
         <h2>Proyectos</h2>
       </header>
+      <div class="image-feed" aria-label="Publicaciones de Proyectos">
+        <!-- NUEVAS IMAGENES DE PROYECTOS: coloca cada article nuevo aquí arriba. -->
+      </div>
     </section>
     <div id="youtube-audio" aria-hidden="true"></div>
     <div id="youtube-audio-secondary" aria-hidden="true"></div>
@@ -738,6 +792,7 @@
       const viewerImage = document.querySelector('#viewer-image');
       const viewerImage2 = document.querySelector('#viewer-image-2');
       const postImages = document.querySelectorAll('#post-image-slot img');
+      const feedImages = document.querySelectorAll('.image-post-button img');
       const profileViewerSrc = viewerImage.src;
       const home = document.querySelector('#home-screen');
       const destination = document.querySelector('#x-screen');
@@ -897,6 +952,7 @@
           viewerImage.alt = 'Imagen de perfil ampliada de NVIV';
         }
         avatarViewer.classList.toggle('is-post', isPost);
+        avatarViewer.classList.remove('is-feed-image');
         avatarViewer.setAttribute('aria-label', isPost ? 'Imágenes de publicación ampliadas' : 'Imagen de perfil ampliada');
         avatarViewer.classList.add('is-open');
         avatarViewer.setAttribute('aria-hidden', 'false');
@@ -905,6 +961,18 @@
       avatarButton.addEventListener('click', () => showImages(false));
       postImages.forEach(image => {
         image.addEventListener('click', () => showImages(true));
+      });
+      feedImages.forEach(image => {
+        image.addEventListener('click', () => {
+          viewerImage.src = image.currentSrc || image.src;
+          viewerImage.alt = `${image.alt} ampliada`;
+          viewerImage2.src = '';
+          avatarViewer.classList.remove('is-post');
+          avatarViewer.classList.add('is-feed-image');
+          avatarViewer.setAttribute('aria-label', 'Imagen de publicación ampliada');
+          avatarViewer.classList.add('is-open');
+          avatarViewer.setAttribute('aria-hidden', 'false');
+        });
       });
       closeAvatar.addEventListener('click', hideAvatar);
       avatarViewer.addEventListener('click', event => {
