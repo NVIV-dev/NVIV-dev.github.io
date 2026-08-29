@@ -8,6 +8,10 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>X</title>
+  <script>
+    const VISUALIZACION_PC = 0; // 0 = desactivada, 1 = activada
+    if (VISUALIZACION_PC === 1) document.documentElement.classList.add('pc-visible');
+  </script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
   <style>
     :root {
@@ -653,6 +657,8 @@
     @media (hover: hover) and (pointer: fine), (min-width: 1024px) {
       #mobile-app { display: none; }
       #desktop-blocker { display: grid; }
+      html.pc-visible #mobile-app { display: block; }
+      html.pc-visible #desktop-blocker { display: none; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -735,6 +741,11 @@
       </header>
       <div class="image-feed" aria-label="Publicaciones de Respuestas">
         <!-- NUEVAS IMAGENES DE RESPUESTAS: coloca cada article nuevo encima de este. -->
+        <article class="image-post">
+          <button class="image-post-button" type="button" aria-label="Ampliar imagen de Respuestas">
+            <img src="https://drive.google.com/thumbnail?id=15wRWglnQyDT33bv-5wdC3MGmorAMsEac&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/15wRWglnQyDT33bv-5wdC3MGmorAMsEac=s2400';" alt="Publicación de Respuestas" loading="lazy">
+          </button>
+        </article>
         <article class="image-post">
           <button class="image-post-button" type="button" aria-label="Ampliar imagen de Respuestas">
             <img src="https://drive.google.com/thumbnail?id=1nbp_ahqzrMX6xRH70Y-FNb0xoX2Zygla&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1nbp_ahqzrMX6xRH70Y-FNb0xoX2Zygla=s2400';" alt="Publicación de Respuestas" loading="lazy">
