@@ -8,10 +8,6 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>X</title>
-  <script>
-    const VISUALIZACION_PC = 1; // 0 = desactivada, 1 = activada
-    if (VISUALIZACION_PC === 1) document.documentElement.classList.add('pc-visible');
-  </script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
   <style>
     :root {
@@ -144,6 +140,7 @@
 
     .profile-page {
       min-height: 100%;
+      padding-bottom: 30px;
       color: #e7e9ea;
       background: #000;
     }
@@ -366,7 +363,7 @@
     .image-post {
       width: 100%;
       padding: 12px 0;
-      border-bottom: 1px solid #7e8186;
+      border-bottom: 1px solid #373B3E;
     }
 
     .image-post:first-child { padding-top: 0; }
@@ -470,14 +467,46 @@
       display: block;
       width: 100%;
     }
-    .post-media img {
+    .post-image-button {
+      display: block;
+      width: 100%;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      cursor: zoom-in;
+    }
+    .post-section-separator {
+      width: calc(100% + 28px);
+      height: 1px;
+      margin: 12px -14px;
+      background: #373B3E;
+    }
+    .post-full-width-image {
+      width: calc(100% + 28px);
+      margin-right: -14px;
+      margin-left: -14px;
+    }
+    .post-image-button img {
       display: block;
       width: 100%;
       height: auto;
       cursor: zoom-in;
     }
-    .post-media img + img {
-      margin-top: 0;
+
+    .page-credit {
+      position: fixed;
+      z-index: 4;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      margin: 0;
+      padding: 7px 16px max(7px, env(safe-area-inset-bottom));
+      color: #373B3E;
+      background: #000;
+      text-align: center;
+      font-size: 9px;
+      font-weight: 700;
+      line-height: 1.2;
     }
 
     .post-actions {
@@ -581,7 +610,8 @@
       display: grid;
       place-items: center;
     }
-    #viewer-image-2 { display: none; }
+    #viewer-image-2,
+    #viewer-image-3 { display: none; }
     .avatar-viewer.is-post .viewer-gallery {
       width: min(94vw, 900px);
       max-height: 88dvh;
@@ -654,11 +684,94 @@
       line-height: 1.45;
     }
 
+    #desktop-scrollbar {
+      display: none;
+    }
+
     @media (hover: hover) and (pointer: fine), (min-width: 1024px) {
-      #mobile-app { display: none; }
-      #desktop-blocker { display: grid; }
-      html.pc-visible #mobile-app { display: block; }
-      html.pc-visible #desktop-blocker { display: none; }
+      body { background: #202327; }
+
+      #mobile-app {
+        left: 50%;
+        right: auto;
+        width: min(100vw, 430px);
+        transform: translateX(-50%);
+        box-shadow: -1px 0 #111, 1px 0 #111;
+      }
+
+      #desktop-blocker { display: none; }
+
+      #toggle-playlist-2 {
+        right: calc((100vw - 430px) / 2 + 16px);
+      }
+
+      #x-screen,
+      .tab-page,
+      .avatar-viewer.is-post .viewer-gallery,
+      .avatar-viewer.is-feed-image .viewer-gallery {
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+
+      #x-screen::-webkit-scrollbar,
+      .tab-page::-webkit-scrollbar,
+      .avatar-viewer.is-post .viewer-gallery::-webkit-scrollbar,
+      .avatar-viewer.is-feed-image .viewer-gallery::-webkit-scrollbar {
+        display: none;
+      }
+
+      .avatar-viewer {
+        padding: 12px;
+      }
+
+      .avatar-viewer .viewer-gallery,
+      .avatar-viewer.is-post .viewer-gallery,
+      .avatar-viewer.is-feed-image .viewer-gallery {
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .avatar-viewer img,
+      .avatar-viewer.is-post img,
+      .avatar-viewer.is-feed-image img {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        object-fit: contain;
+      }
+
+      #desktop-scrollbar {
+        position: fixed;
+        z-index: 2147483647;
+        top: 8px;
+        right: 5px;
+        bottom: 8px;
+        display: block;
+        width: 8px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, .08);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 150ms ease;
+      }
+
+      #desktop-scrollbar.is-visible {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      #desktop-scrollbar-thumb {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        min-height: 38px;
+        border-radius: inherit;
+        background: #71767b;
+        cursor: grab;
+      }
+
+      #desktop-scrollbar-thumb:active { cursor: grabbing; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -688,7 +801,7 @@
           </button>
           <div class="identity">
             <h1><img class="name-logo" src="https://lh3.googleusercontent.com/d/1UYbM7Loo-CQw0xbqepgUga-169s36M5S=s600" alt="NVIV"></h1>
-            <p class="alias">@nviv</p>
+            <p class="alias">@uele06</p>
             <p class="bio">• En el año 323 a.C. murió Diógenes de Sinope.<br>• En el año 2026 d.C. nació D1063N35 de X.<br><picture><source srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/1f595/512.webp" type="image/webp"><img class="animated-emoji" src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f595/512.gif" alt="🖕" width="32" height="32"></picture> <picture><source srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/1f916/512.webp" type="image/webp"><img class="animated-emoji" src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f916/512.gif" alt="🤖" width="32" height="32"></picture> <picture><source srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/1f595/512.webp" type="image/webp"><img class="animated-emoji" src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f595/512.gif" alt="🖕" width="32" height="32"></picture></p>
             <div class="metadata">
               <span><i class="fa-solid fa-location-dot" style="color: rgb(255, 255, 255);"></i><a href="https://www.google.com/maps/place/Darvaza+Gas+Crater/@40.2524182,58.4400071,847m/data=!3m1!1e3!4m6!3m5!1s0x3f62b30826f44305:0x80995b5be672393f!8m2!3d40.2525742!4d58.4396793!16s%2Fm%2F0n5wd09?entry=ttu&amp;g_ep=EgoyMDI2MDgyNS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer">40.2523813577816, 58.43966754945036</a></span>
@@ -709,23 +822,31 @@
             <img class="post-avatar" src="https://lh3.googleusercontent.com/d/1TlKuSlnsDJVuuZrmUhlMDE4FQLcZvXl4=s200" alt="NVIV">
             <div class="post-body">
               <div class="post-heading">
-                <div class="post-author"><img class="post-name-logo" src="https://lh3.googleusercontent.com/d/1UYbM7Loo-CQw0xbqepgUga-169s36M5S=s300" alt="NVIV"><span>@nviv · 13 may.</span></div>
+                <div class="post-author"><img class="post-name-logo" src="https://lh3.googleusercontent.com/d/1UYbM7Loo-CQw0xbqepgUga-169s36M5S=s300" alt="NVIV"><span>@uele06 · 13 may.</span></div>
                 <div class="post-menu" aria-label="Opciones"><span class="icon-slot"><i class="fa-solid fa-ellipsis" style="color: rgb(255, 255, 255);"></i></span></div>
               </div>
               <div id="post-image-slot" class="post-media">
-                <img src="https://drive.google.com/thumbnail?id=1bx_YX2c94SSFmlOlj_L2dDxzxBcuzhUo&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1bx_YX2c94SSFmlOlj_L2dDxzxBcuzhUo=s1600';" alt="Primera imagen de la publicación">
-                <img src="https://lh3.googleusercontent.com/d/1Ucpk3inpDqyKRznVLUiaL0Zz-4IQX_Sx=s1600" alt="Segunda imagen de la publicación">
-              </div>
-              <div class="post-actions" aria-label="Acciones de la publicación">
-                <span class="post-action"><span class="icon-slot"><i class="fa-regular fa-comment" style="color: rgb(255, 255, 255);"></i></span><span>∞</span></span>
-                <span class="post-action"><span class="icon-slot"><i class="fa-solid fa-retweet" style="color: rgb(255, 255, 255);"></i></span><span>∞</span></span>
-                <span class="post-action"><span class="icon-slot"><i class="fa-solid fa-heart" style="color: rgb(255, 0, 0);"></i></span><span>∞</span></span>
-                <span class="post-action"><span class="icon-slot"><i class="fa-solid fa-chart-simple" style="color: rgb(255, 255, 255);"></i></span><span>∞</span></span>
-                <span class="post-actions-end"><span class="icon-slot"><i class="fa-regular fa-bookmark" style="color: rgb(255, 255, 255);"></i></span><span class="icon-slot"><i class="fa-solid fa-arrow-up-from-bracket" style="color: rgb(255, 255, 255);"></i></span></span>
+                <div class="post-image-group" data-post-view="pair">
+                  <button class="post-image-button" type="button" aria-label="Ampliar primera y segunda imagen del Post">
+                    <img src="https://drive.google.com/thumbnail?id=1bx_YX2c94SSFmlOlj_L2dDxzxBcuzhUo&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1bx_YX2c94SSFmlOlj_L2dDxzxBcuzhUo=s1600';" alt="Primera imagen de la publicación">
+                  </button>
+                  <button class="post-image-button" type="button" aria-label="Ampliar primera y segunda imagen del Post">
+                    <img src="https://drive.google.com/thumbnail?id=1Ucpk3inpDqyKRznVLUiaL0Zz-4IQX_Sx&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1Ucpk3inpDqyKRznVLUiaL0Zz-4IQX_Sx=s1600';" alt="Segunda imagen de la publicación" loading="lazy">
+                  </button>
+                </div>
               </div>
             </div>
           </div>
+          <div class="post-section-separator" aria-hidden="true"></div>
+          <button class="post-image-button post-full-width-image" data-post-view="single" type="button" aria-label="Ampliar tercera imagen del Post">
+            <img src="https://drive.google.com/thumbnail?id=19V5i7uAPWIDTAXtY6WON3QYNk4w_q3F4&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/19V5i7uAPWIDTAXtY6WON3QYNk4w_q3F4=s1600';" alt="Tercera imagen de la publicación" loading="lazy">
+          </button>
+          <div class="post-section-separator" aria-hidden="true"></div>
+          <button class="post-image-button post-full-width-image" data-post-view="single" type="button" aria-label="Ampliar cuarta imagen del Post">
+            <img src="https://drive.google.com/thumbnail?id=1qL6XWgp4MRBUAeBwK-pnOQqp2Hyf_2yQ&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1qL6XWgp4MRBUAeBwK-pnOQqp2Hyf_2yQ=s1600';" alt="Cuarta imagen de la publicación" loading="lazy">
+          </button>
         </article>
+        <p class="page-credit">by NVIV (2026).</p>
       </article>
     </section>
     <section id="posts-page" class="tab-page" aria-label="Posts" aria-hidden="true">
@@ -741,6 +862,91 @@
       </header>
       <div class="image-feed" aria-label="Publicaciones de Respuestas">
         <!-- NUEVAS IMAGENES DE RESPUESTAS: coloca cada article nuevo encima de este. -->
+        <article class="image-post response-separator">
+          <button class="image-post-button" type="button" aria-label="Ampliar separador de Respuestas">
+            <img src="https://drive.google.com/thumbnail?id=1f0K-pRkgF8V6m41Oq7-_h3-nOcK6Qgub&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1f0K-pRkgF8V6m41Oq7-_h3-nOcK6Qgub=s2400';" alt="Separador de Respuestas" loading="lazy">
+          </button>
+        </article>
+        <article class="image-post">
+          <button class="image-post-button" type="button" aria-label="Ampliar imagen de Respuestas">
+            <img src="https://drive.google.com/thumbnail?id=1mcqQ5wdrpb90DzEuzLmRItobLnIPXpX7&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1mcqQ5wdrpb90DzEuzLmRItobLnIPXpX7=s2400';" alt="Publicación de Respuestas" loading="lazy">
+          </button>
+        </article>
+        <article class="image-post">
+          <button class="image-post-button" type="button" aria-label="Ampliar imagen de Respuestas">
+            <img src="https://drive.google.com/thumbnail?id=1P-no9GLyF60KYlKLrIR3SiNshAZfQs0I&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1P-no9GLyF60KYlKLrIR3SiNshAZfQs0I=s2400';" alt="Publicación de Respuestas" loading="lazy">
+          </button>
+        </article>
+        <article class="image-post">
+          <button class="image-post-button" type="button" aria-label="Ampliar imagen de Respuestas">
+            <img src="https://drive.google.com/thumbnail?id=1-6J0PM4dj4FAd8rXPOhkBqtAPL8ynQ0o&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1-6J0PM4dj4FAd8rXPOhkBqtAPL8ynQ0o=s2400';" alt="Publicación de Respuestas" loading="lazy">
+          </button>
+        </article>
+        <article class="image-post">
+          <button class="image-post-button" type="button" aria-label="Ampliar imagen de Respuestas">
+            <img src="https://drive.google.com/thumbnail?id=157xR8iN2o5frf6ZuzfcWfMiQHcIMdzrO&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/157xR8iN2o5frf6ZuzfcWfMiQHcIMdzrO=s2400';" alt="Publicación de Respuestas" loading="lazy">
+          </button>
+        </article>
+        <article class="image-post">
+          <button class="image-post-button" type="button" aria-label="Ampliar imagen de Respuestas">
+            <img src="https://drive.google.com/thumbnail?id=1yD5hITPg3VdgROsoaxrftI_rFleh2kda&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1yD5hITPg3VdgROsoaxrftI_rFleh2kda=s2400';" alt="Publicación de Respuestas" loading="lazy">
+          </button>
+        </article>
+        <article class="image-post">
+          <button class="image-post-button" type="button" aria-label="Ampliar imagen de Respuestas">
+            <img src="https://drive.google.com/thumbnail?id=1uVK1Qf7ii650kC_V-RnL2EKAN-9Q5UdH&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1uVK1Qf7ii650kC_V-RnL2EKAN-9Q5UdH=s2400';" alt="Publicación de Respuestas" loading="lazy">
+          </button>
+        </article>
+        <article class="image-post">
+          <button class="image-post-button" type="button" aria-label="Ampliar imagen de Respuestas">
+            <img src="https://drive.google.com/thumbnail?id=1sWNraYC2Ifm6Us8lLFKmtRcK1YhXUYFm&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1sWNraYC2Ifm6Us8lLFKmtRcK1YhXUYFm=s2400';" alt="Publicación de Respuestas" loading="lazy">
+          </button>
+        </article>
+        <article class="image-post">
+          <button class="image-post-button" type="button" aria-label="Ampliar imagen de Respuestas">
+            <img src="https://drive.google.com/thumbnail?id=1Q2vngVyGr2LmvccL3xiLJfnxj4DPS9Cw&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1Q2vngVyGr2LmvccL3xiLJfnxj4DPS9Cw=s2400';" alt="Publicación de Respuestas" loading="lazy">
+          </button>
+        </article>
+        <article class="image-post response-separator">
+          <button class="image-post-button" type="button" aria-label="Ampliar separador de Respuestas">
+            <img src="https://drive.google.com/thumbnail?id=1f0K-pRkgF8V6m41Oq7-_h3-nOcK6Qgub&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1f0K-pRkgF8V6m41Oq7-_h3-nOcK6Qgub=s2400';" alt="Separador de Respuestas" loading="lazy">
+          </button>
+        </article>
+        <article class="image-post">
+          <button class="image-post-button" type="button" aria-label="Ampliar imagen de Respuestas">
+            <img src="https://drive.google.com/thumbnail?id=1sXiS5HAiMtMqEsTUb09gsK5nJuOTHpWl&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1sXiS5HAiMtMqEsTUb09gsK5nJuOTHpWl=s2400';" alt="Publicación de Respuestas" loading="lazy">
+          </button>
+        </article>
+        <article class="image-post">
+          <button class="image-post-button" type="button" aria-label="Ampliar imagen de Respuestas">
+            <img src="https://drive.google.com/thumbnail?id=1DP3PfuA1_gk1ylOYL8jiz7mqZlL4agFq&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1DP3PfuA1_gk1ylOYL8jiz7mqZlL4agFq=s2400';" alt="Publicación de Respuestas" loading="lazy">
+          </button>
+        </article>
+        <article class="image-post">
+          <button class="image-post-button" type="button" aria-label="Ampliar imagen de Respuestas">
+            <img src="https://drive.google.com/thumbnail?id=1_wrmTe6XSiQrt4E0aDsVjJ1zA4suc4UZ&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1_wrmTe6XSiQrt4E0aDsVjJ1zA4suc4UZ=s2400';" alt="Publicación de Respuestas" loading="lazy">
+          </button>
+        </article>
+        <article class="image-post">
+          <button class="image-post-button" type="button" aria-label="Ampliar imagen de Respuestas">
+            <img src="https://drive.google.com/thumbnail?id=1f0K-pRkgF8V6m41Oq7-_h3-nOcK6Qgub&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1f0K-pRkgF8V6m41Oq7-_h3-nOcK6Qgub=s2400';" alt="Publicación de Respuestas" loading="lazy">
+          </button>
+        </article>
+        <article class="image-post">
+          <button class="image-post-button" type="button" aria-label="Ampliar imagen de Respuestas">
+            <img src="https://drive.google.com/thumbnail?id=1qDZ03WYhZMV0hEW41jS6I4IRc6TyqnaM&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1qDZ03WYhZMV0hEW41jS6I4IRc6TyqnaM=s2400';" alt="Publicación de Respuestas" loading="lazy">
+          </button>
+        </article>
+        <article class="image-post">
+          <button class="image-post-button" type="button" aria-label="Ampliar imagen de Respuestas">
+            <img src="https://drive.google.com/thumbnail?id=1_mm7hmCnSSnFHWPUfgGguJr16Bb6UPKm&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1_mm7hmCnSSnFHWPUfgGguJr16Bb6UPKm=s2400';" alt="Publicación de Respuestas" loading="lazy">
+          </button>
+        </article>
+        <article class="image-post">
+          <button class="image-post-button" type="button" aria-label="Ampliar imagen de Respuestas">
+            <img src="https://drive.google.com/thumbnail?id=1ElXIlUiwF_kftIaLV9LWhTIkmXjflcCm&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1ElXIlUiwF_kftIaLV9LWhTIkmXjflcCm=s2400';" alt="Publicación de Respuestas" loading="lazy">
+          </button>
+        </article>
         <article class="image-post">
           <button class="image-post-button" type="button" aria-label="Ampliar imagen de Respuestas">
             <img src="https://drive.google.com/thumbnail?id=15wRWglnQyDT33bv-5wdC3MGmorAMsEac&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/15wRWglnQyDT33bv-5wdC3MGmorAMsEac=s2400';" alt="Publicación de Respuestas" loading="lazy">
@@ -760,6 +966,11 @@
       </header>
       <div class="image-feed" aria-label="Publicaciones de Anuncios">
         <!-- NUEVAS IMAGENES DE ANUNCIOS: coloca cada article nuevo aquí arriba. -->
+        <article class="image-post">
+          <button class="image-post-button" type="button" aria-label="Ampliar imagen de Anuncios">
+            <img src="https://drive.google.com/thumbnail?id=1ZdqToeVQvEkt1TK2PnS412VBHRWEwsKK&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1ZdqToeVQvEkt1TK2PnS412VBHRWEwsKK=s2400';" alt="Publicación de Anuncios" loading="lazy">
+          </button>
+        </article>
       </div>
     </section>
     <section id="projects-page" class="tab-page" aria-label="Proyectos" aria-hidden="true">
@@ -769,6 +980,11 @@
       </header>
       <div class="image-feed" aria-label="Publicaciones de Proyectos">
         <!-- NUEVAS IMAGENES DE PROYECTOS: coloca cada article nuevo aquí arriba. -->
+        <article class="image-post">
+          <button class="image-post-button" type="button" aria-label="Ampliar imagen de Proyectos">
+            <img src="https://drive.google.com/thumbnail?id=1oyNPX5zbLn-68mKZm0pg5fkywzVN2CXh&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1oyNPX5zbLn-68mKZm0pg5fkywzVN2CXh=s2400';" alt="Publicación de Proyectos" loading="lazy">
+          </button>
+        </article>
       </div>
     </section>
     <div id="youtube-audio" aria-hidden="true"></div>
@@ -778,9 +994,12 @@
       <div class="viewer-gallery">
         <img id="viewer-image" src="https://lh3.googleusercontent.com/d/1TlKuSlnsDJVuuZrmUhlMDE4FQLcZvXl4=s1600" alt="Imagen de perfil ampliada de NVIV">
         <img id="viewer-image-2" src="" alt="Segunda imagen de la publicación ampliada">
+        <img id="viewer-image-3" src="" alt="Tercera imagen de la publicación ampliada">
       </div>
     </div>
   </main>
+
+  <div id="desktop-scrollbar" aria-hidden="true"><div id="desktop-scrollbar-thumb"></div></div>
 
   <button id="toggle-playlist-2" type="button" aria-label="Pausar playlist 2" aria-pressed="false"><i class="fa-solid fa-volume-xmark" style="color: rgb(255, 255, 255);" aria-hidden="true"></i></button>
 
@@ -802,7 +1021,8 @@
       const closeAvatar = document.querySelector('#close-avatar');
       const viewerImage = document.querySelector('#viewer-image');
       const viewerImage2 = document.querySelector('#viewer-image-2');
-      const postImages = document.querySelectorAll('#post-image-slot img');
+      const viewerImage3 = document.querySelector('#viewer-image-3');
+      const postImages = document.querySelectorAll('.profile-post .post-image-button img');
       const feedImages = document.querySelectorAll('.image-post-button img');
       const profileViewerSrc = viewerImage.src;
       const home = document.querySelector('#home-screen');
@@ -811,11 +1031,63 @@
       const tabPages = document.querySelectorAll('.tab-page');
       const tabPageBackButtons = document.querySelectorAll('.tab-page-back');
       const playlist2Button = document.querySelector('#toggle-playlist-2');
+      const desktopScrollbar = document.querySelector('#desktop-scrollbar');
+      const desktopScrollbarThumb = document.querySelector('#desktop-scrollbar-thumb');
       let opening = false;
       let musicRequested = false;
       let youtubePlayer = null;
       let secondaryYoutubePlayer = null;
       let playlist2Paused = false;
+      let activeScrollArea = destination;
+
+      function updateDesktopScrollbar() {
+        if (!matchMedia('(hover: hover) and (pointer: fine), (min-width: 1024px)').matches) return;
+        const area = activeScrollArea;
+        const trackHeight = desktopScrollbar.clientHeight;
+        const canScroll = area && area.scrollHeight > area.clientHeight + 1;
+        desktopScrollbar.classList.toggle('is-visible', canScroll);
+        if (!canScroll) return;
+        const thumbHeight = Math.max(38, trackHeight * area.clientHeight / area.scrollHeight);
+        const maxThumbTop = trackHeight - thumbHeight;
+        const maxScroll = area.scrollHeight - area.clientHeight;
+        desktopScrollbarThumb.style.height = `${thumbHeight}px`;
+        desktopScrollbarThumb.style.transform = `translateY(${maxScroll ? area.scrollTop / maxScroll * maxThumbTop : 0}px)`;
+      }
+
+      function useScrollArea(area) {
+        activeScrollArea = area;
+        requestAnimationFrame(updateDesktopScrollbar);
+      }
+
+      [destination, ...tabPages].forEach(area => area.addEventListener('scroll', updateDesktopScrollbar, { passive: true }));
+      window.addEventListener('resize', updateDesktopScrollbar);
+
+      desktopScrollbar.addEventListener('click', event => {
+        if (event.target === desktopScrollbarThumb || !activeScrollArea) return;
+        const rect = desktopScrollbar.getBoundingClientRect();
+        activeScrollArea.scrollTop = (event.clientY - rect.top) / rect.height * activeScrollArea.scrollHeight - activeScrollArea.clientHeight / 2;
+      });
+
+      desktopScrollbarThumb.addEventListener('pointerdown', event => {
+        if (!activeScrollArea) return;
+        event.preventDefault();
+        desktopScrollbarThumb.setPointerCapture(event.pointerId);
+        const startY = event.clientY;
+        const startScroll = activeScrollArea.scrollTop;
+        const availableTrack = desktopScrollbar.clientHeight - desktopScrollbarThumb.offsetHeight;
+        const availableScroll = activeScrollArea.scrollHeight - activeScrollArea.clientHeight;
+        const move = moveEvent => {
+          activeScrollArea.scrollTop = startScroll + (moveEvent.clientY - startY) / availableTrack * availableScroll;
+        };
+        const stop = () => {
+          desktopScrollbarThumb.removeEventListener('pointermove', move);
+          desktopScrollbarThumb.removeEventListener('pointerup', stop);
+          desktopScrollbarThumb.removeEventListener('pointercancel', stop);
+        };
+        desktopScrollbarThumb.addEventListener('pointermove', move);
+        desktopScrollbarThumb.addEventListener('pointerup', stop);
+        desktopScrollbarThumb.addEventListener('pointercancel', stop);
+      });
 
       function updatePlaylist2Button() {
         playlist2Button.setAttribute('aria-pressed', String(playlist2Paused));
@@ -916,6 +1188,7 @@
             destination.classList.add('is-visible');
             destination.setAttribute('aria-hidden', 'false');
             playlist2Button.classList.add('is-visible');
+            useScrollArea(destination);
             layer.classList.add('is-fading');
             layer.addEventListener('transitionend', () => layer.remove(), { once: true });
           }, 3000);
@@ -944,9 +1217,13 @@
           const page = document.querySelector(`#${tab.dataset.tabPage}`);
           page.classList.add('is-visible');
           page.setAttribute('aria-hidden', 'false');
+          useScrollArea(page);
         });
       });
-      tabPageBackButtons.forEach(back => back.addEventListener('click', closeTabPages));
+      tabPageBackButtons.forEach(back => back.addEventListener('click', () => {
+        closeTabPages();
+        useScrollArea(destination);
+      }));
 
       function hideAvatar() {
         avatarViewer.classList.remove('is-open');
@@ -958,6 +1235,7 @@
           viewerImage.src = postImages[0].src;
           viewerImage.alt = 'Primera imagen de la publicación ampliada';
           viewerImage2.src = postImages[1].src;
+          viewerImage3.src = postImages[2].src;
         } else {
           viewerImage.src = profileViewerSrc;
           viewerImage.alt = 'Imagen de perfil ampliada de NVIV';
@@ -971,13 +1249,39 @@
 
       avatarButton.addEventListener('click', () => showImages(false));
       postImages.forEach(image => {
-        image.addEventListener('click', () => showImages(true));
+        image.addEventListener('click', () => {
+          const pair = image.closest('[data-post-view="pair"]');
+          if (pair) {
+            const pairImages = pair.querySelectorAll('img');
+            viewerImage.src = pairImages[0].currentSrc || pairImages[0].src;
+            viewerImage.alt = 'Primera imagen de la publicación ampliada';
+            viewerImage2.src = pairImages[1].currentSrc || pairImages[1].src;
+            viewerImage2.alt = 'Segunda imagen de la publicación ampliada';
+            viewerImage3.src = '';
+            avatarViewer.classList.add('is-post');
+            avatarViewer.classList.remove('is-feed-image');
+            avatarViewer.setAttribute('aria-label', 'Primera y segunda imagen del Post ampliadas');
+            avatarViewer.classList.add('is-open');
+            avatarViewer.setAttribute('aria-hidden', 'false');
+            return;
+          }
+          viewerImage.src = image.currentSrc || image.src;
+          viewerImage.alt = `${image.alt} ampliada`;
+          viewerImage2.src = '';
+          viewerImage3.src = '';
+          avatarViewer.classList.remove('is-post');
+          avatarViewer.classList.add('is-feed-image');
+          avatarViewer.setAttribute('aria-label', 'Imagen del Post ampliada');
+          avatarViewer.classList.add('is-open');
+          avatarViewer.setAttribute('aria-hidden', 'false');
+        });
       });
       feedImages.forEach(image => {
         image.addEventListener('click', () => {
           viewerImage.src = image.currentSrc || image.src;
           viewerImage.alt = `${image.alt} ampliada`;
           viewerImage2.src = '';
+          viewerImage3.src = '';
           avatarViewer.classList.remove('is-post');
           avatarViewer.classList.add('is-feed-image');
           avatarViewer.setAttribute('aria-label', 'Imagen de publicación ampliada');
