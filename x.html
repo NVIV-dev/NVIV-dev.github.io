@@ -546,7 +546,8 @@
       pointer-events: none;
     }
 
-    #toggle-playlist-2 {
+    #toggle-playlist-2,
+    #scroll-to-top {
       position: fixed;
       z-index: 2147483647;
       right: max(20px, calc(env(safe-area-inset-right) + 16px));
@@ -570,18 +571,25 @@
       transition: transform 110ms ease, filter 110ms ease, opacity 180ms ease, visibility 180ms ease;
     }
 
-    #toggle-playlist-2.is-visible {
+    #scroll-to-top {
+      bottom: max(88px, calc(env(safe-area-inset-bottom) + 84px));
+    }
+
+    #toggle-playlist-2.is-visible,
+    #scroll-to-top.is-visible {
       opacity: 1;
       visibility: visible;
       pointer-events: auto;
     }
 
-    #toggle-playlist-2:active {
+    #toggle-playlist-2:active,
+    #scroll-to-top:active {
       transform: scale(.92);
       filter: brightness(.88);
     }
 
-    #toggle-playlist-2:focus-visible {
+    #toggle-playlist-2:focus-visible,
+    #scroll-to-top:focus-visible {
       outline: 2px solid #fff;
       outline-offset: 3px;
     }
@@ -706,7 +714,8 @@
 
       #desktop-blocker { display: none; }
 
-      #toggle-playlist-2 {
+      #toggle-playlist-2,
+      #scroll-to-top {
         right: calc((100vw - 430px) / 2 + 16px);
       }
 
@@ -844,6 +853,18 @@
           </div>
           <div class="post-section-separator" aria-hidden="true"></div>
           <!-- NUEVAS IMAGENES DE LA PAGINA 1: coloca cada botón nuevo encima de este. -->
+          <button class="post-image-button post-full-width-image" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
+            <img src="https://drive.google.com/thumbnail?id=1jA0E9LBP4u9a41nV4AC4D0UdvNdYOK-H&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1jA0E9LBP4u9a41nV4AC4D0UdvNdYOK-H=s1600';" alt="Imagen de la publicación" loading="lazy">
+          </button>
+          <div class="post-section-separator" aria-hidden="true"></div>
+          <button class="post-image-button post-full-width-image" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
+            <img src="https://drive.google.com/thumbnail?id=1jtFUfm-q7xDsYBvks8Vic4LxC974k6MW&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1jtFUfm-q7xDsYBvks8Vic4LxC974k6MW=s1600';" alt="Imagen de la publicación" loading="lazy">
+          </button>
+          <div class="post-section-separator" aria-hidden="true"></div>
+          <button class="post-image-button post-full-width-image" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
+            <img src="https://drive.google.com/thumbnail?id=1rI6UhdCYbHOe15Ew_IvY19Dx0pQdBgCr&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1rI6UhdCYbHOe15Ew_IvY19Dx0pQdBgCr=s1600';" alt="Imagen de la publicación" loading="lazy">
+          </button>
+          <div class="post-section-separator" aria-hidden="true"></div>
           <button class="post-image-button post-full-width-image" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
             <img src="https://drive.google.com/thumbnail?id=1ujF7YSV83wM_o4MtOnErinjOO6gN0SXi&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1ujF7YSV83wM_o4MtOnErinjOO6gN0SXi=s1600';" alt="Imagen de la publicación" loading="lazy">
           </button>
@@ -1084,6 +1105,7 @@
 
   <div id="desktop-scrollbar" aria-hidden="true"><div id="desktop-scrollbar-thumb"></div></div>
 
+  <button id="scroll-to-top" type="button" aria-label="Ir al principio de la página"><i class="fa-solid fa-circle-chevron-up" style="color: rgb(255, 255, 255);" aria-hidden="true"></i></button>
   <button id="toggle-playlist-2" type="button" aria-label="Pausar playlist 2" aria-pressed="false"><i class="fa-solid fa-volume-xmark" style="color: rgb(255, 255, 255);" aria-hidden="true"></i></button>
 
   <aside id="desktop-blocker" aria-label="Disponible solo en móvil">
@@ -1114,14 +1136,18 @@
       const tabPages = document.querySelectorAll('.tab-page');
       const tabPageBackButtons = document.querySelectorAll('.tab-page-back');
       const playlist2Button = document.querySelector('#toggle-playlist-2');
+      const scrollToTopButton = document.querySelector('#scroll-to-top');
       const desktopScrollbar = document.querySelector('#desktop-scrollbar');
       const desktopScrollbarThumb = document.querySelector('#desktop-scrollbar-thumb');
       let opening = false;
       let musicRequested = false;
       let youtubePlayer = null;
       let secondaryYoutubePlayer = null;
+      let youtubePlayerReady = false;
+      let secondaryYoutubePlayerReady = false;
       let playlist2Paused = false;
       let activeScrollArea = destination;
+      let scrollToTopRevealed = false;
 
       function updateDesktopScrollbar() {
         if (!matchMedia('(hover: hover) and (pointer: fine), (min-width: 1024px)').matches) return;
@@ -1137,13 +1163,36 @@
         desktopScrollbarThumb.style.transform = `translateY(${maxScroll ? area.scrollTop / maxScroll * maxThumbTop : 0}px)`;
       }
 
-      function useScrollArea(area) {
-        activeScrollArea = area;
-        requestAnimationFrame(updateDesktopScrollbar);
+      function updateScrollToTopButton() {
+        const area = activeScrollArea;
+        if (!area || !destination.classList.contains('is-visible')) {
+          scrollToTopButton.classList.remove('is-visible');
+          return;
+        }
+        const revealThreshold = Math.max(180, area.clientHeight * .4);
+        if (area.scrollTop <= 1) scrollToTopRevealed = false;
+        else if (area.scrollTop >= revealThreshold) scrollToTopRevealed = true;
+        scrollToTopButton.classList.toggle('is-visible', scrollToTopRevealed);
       }
 
-      [destination, ...tabPages].forEach(area => area.addEventListener('scroll', updateDesktopScrollbar, { passive: true }));
-      window.addEventListener('resize', updateDesktopScrollbar);
+      function useScrollArea(area) {
+        activeScrollArea = area;
+        const revealThreshold = Math.max(180, area.clientHeight * .4);
+        scrollToTopRevealed = area.scrollTop >= revealThreshold;
+        requestAnimationFrame(() => {
+          updateDesktopScrollbar();
+          updateScrollToTopButton();
+        });
+      }
+
+      [destination, ...tabPages].forEach(area => area.addEventListener('scroll', () => {
+        updateDesktopScrollbar();
+        updateScrollToTopButton();
+      }, { passive: true }));
+      window.addEventListener('resize', () => {
+        updateDesktopScrollbar();
+        updateScrollToTopButton();
+      });
 
       desktopScrollbar.addEventListener('click', event => {
         if (event.target === desktopScrollbarThumb || !activeScrollArea) return;
@@ -1177,8 +1226,23 @@
         playlist2Button.setAttribute('aria-label', playlist2Paused ? 'Reanudar playlist 2' : 'Pausar playlist 2');
       }
 
-      function startMusic() {
-        musicRequested = true;
+      function playPrimaryPlaylist() {
+        if (!youtubePlayerReady) return;
+        youtubePlayer.unMute();
+        youtubePlayer.setVolume(50);
+        youtubePlayer.playVideo();
+      }
+
+      function playSecondaryPlaylist() {
+        if (!secondaryYoutubePlayerReady || playlist2Paused) return;
+        secondaryYoutubePlayer.unMute();
+        secondaryYoutubePlayer.setVolume(85);
+        secondaryYoutubePlayer.setLoop(true);
+        secondaryYoutubePlayer.setShuffle(true);
+        secondaryYoutubePlayer.playVideo();
+      }
+
+      function prepareMusicPlayers() {
         if (!window.YT || !window.YT.Player) return;
 
         if (!youtubePlayer) {
@@ -1187,7 +1251,7 @@
             height: '1',
             videoId: 'mIrt5MkGpy0',
             playerVars: {
-              autoplay: 1,
+              autoplay: 0,
               controls: 0,
               listType: 'playlist',
               list: 'PLW9yvYUhb5W8',
@@ -1195,14 +1259,12 @@
             },
             events: {
               onReady(event) {
-                event.target.setVolume(50);
-                event.target.playVideo();
+                youtubePlayerReady = true;
+                event.target.mute();
+                if (musicRequested) playPrimaryPlaylist();
               }
             }
           });
-        } else {
-          youtubePlayer.setVolume(50);
-          youtubePlayer.playVideo();
         }
 
         if (!secondaryYoutubePlayer) {
@@ -1210,7 +1272,7 @@
             width: '1',
             height: '1',
             playerVars: {
-              autoplay: 1,
+              autoplay: 0,
               controls: 0,
               listType: 'playlist',
               list: 'PLc4UybqDdI9E',
@@ -1219,23 +1281,26 @@
             },
             events: {
               onReady(event) {
-                event.target.setVolume(85);
+                secondaryYoutubePlayerReady = true;
+                event.target.mute();
                 event.target.setLoop(true);
                 event.target.setShuffle(true);
-                event.target.playVideo();
+                if (musicRequested) playSecondaryPlaylist();
               }
             }
           });
-        } else {
-          secondaryYoutubePlayer.setVolume(85);
-          secondaryYoutubePlayer.setLoop(true);
-          secondaryYoutubePlayer.setShuffle(true);
-          if (!playlist2Paused) secondaryYoutubePlayer.playVideo();
         }
       }
 
+      function startMusic() {
+        musicRequested = true;
+        prepareMusicPlayers();
+        playPrimaryPlaylist();
+        playSecondaryPlaylist();
+      }
+
       window.onYouTubeIframeAPIReady = () => {
-        if (musicRequested) startMusic();
+        prepareMusicPlayers();
       };
 
       playlist2Button.addEventListener('click', () => {
@@ -1250,6 +1315,11 @@
         }
       });
 
+      scrollToTopButton.addEventListener('click', () => {
+        if (!activeScrollArea) return;
+        activeScrollArea.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
       function enterFullscreen() {
         const fullscreenTarget = document.documentElement;
         const request = fullscreenTarget.requestFullscreen || fullscreenTarget.webkitRequestFullscreen;
@@ -1261,8 +1331,8 @@
       button.addEventListener('click', () => {
         if (opening) return;
         opening = true;
-        enterFullscreen();
         startMusic();
+        enterFullscreen();
 
         const rect = button.getBoundingClientRect();
         const layer = document.createElement('div');
@@ -1291,6 +1361,7 @@
         destination.classList.remove('is-visible');
         destination.setAttribute('aria-hidden', 'true');
         playlist2Button.classList.remove('is-visible');
+        scrollToTopButton.classList.remove('is-visible');
         home.style.visibility = 'visible';
         home.style.opacity = '1';
         opening = false;
