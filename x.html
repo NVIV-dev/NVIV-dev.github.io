@@ -1358,13 +1358,7 @@
       });
 
       backButton.addEventListener('click', () => {
-        destination.classList.remove('is-visible');
-        destination.setAttribute('aria-hidden', 'true');
-        playlist2Button.classList.remove('is-visible');
-        scrollToTopButton.classList.remove('is-visible');
-        home.style.visibility = 'visible';
-        home.style.opacity = '1';
-        opening = false;
+        window.location.reload();
       });
 
       function closeTabPages() {
