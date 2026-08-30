@@ -1250,9 +1250,18 @@
         }
       });
 
+      function enterFullscreen() {
+        const fullscreenTarget = document.documentElement;
+        const request = fullscreenTarget.requestFullscreen || fullscreenTarget.webkitRequestFullscreen;
+        if (!request || document.fullscreenElement || document.webkitFullscreenElement) return;
+        const result = request.call(fullscreenTarget);
+        if (result && typeof result.catch === 'function') result.catch(() => {});
+      }
+
       button.addEventListener('click', () => {
         if (opening) return;
         opening = true;
+        enterFullscreen();
         startMusic();
 
         const rect = button.getBoundingClientRect();
