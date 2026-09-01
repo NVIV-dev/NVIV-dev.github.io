@@ -69,6 +69,8 @@
       .tab-page-header h2 { margin: 0; font-size: 20px; }
       .tab-page-back { display: grid; place-items: center; width: 34px; height: 34px; padding: 0; border: 0; border-radius: 50%; color: #fff; background: transparent; font-size: 20px; }
       .image-feed { width: 100%; }
+      #ads-page .image-feed { display: flex; flex-direction: column-reverse; }
+      #ads-page .image-post { padding: 12px 0; border: 0; }
       .image-feed-separator { width: 100%; height: 1px; background: #373B3E; }
       .image-post { width: 100%; padding: 12px 0; border-bottom: 1px solid #373B3E; }
       .image-post:first-child { padding-top: 0; }  
@@ -168,7 +170,7 @@
           <nav class="tabs" aria-label="Contenido del perfil">
             <button class="tab active" type="button" data-tab-page="posts-page">Posts</button>
             <button class="tab" type="button" data-tab-page="replies-page">Respuestas</button>
-            <button class="tab" type="button" data-tab-page="ads-page">Anuncios</button>
+            <button class="tab" type="button" data-tab-page="ads-page">CdH</button>
             <button class="tab" type="button" data-tab-page="projects-page">Proyectos</button>
           </nav>
           <article class="profile-post">
@@ -260,6 +262,12 @@
           <h2>Respuestas</h2>
         </header>
         <div class="image-feed" aria-label="Publicaciones de Respuestas">
+          <div class="image-feed-separator" aria-hidden="true"></div>
+          <article class="image-post pinned-response-image">
+            <button class="image-post-button" type="button" aria-label="Ampliar imagen fijada de Respuestas">
+              <img src="https://drive.google.com/thumbnail?id=1TkB0wGLNCqeAMCWyxDke1wt0OfKDvBCg&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1TkB0wGLNCqeAMCWyxDke1wt0OfKDvBCg=s2400';" alt="Imagen fijada de Respuestas" loading="eager">
+            </button>
+          </article>
           <article class="image-post response-separator">
             <button class="image-post-button" type="button" aria-label="Separador de Respuestas">
               <img class="img_private" src="https://drive.google.com/thumbnail?id=1f0K-pRkgF8V6m41Oq7-_h3-nOcK6Qgub&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1f0K-pRkgF8V6m41Oq7-_h3-nOcK6Qgub=s2400';" alt="Separador de Respuestas" loading="lazy">
@@ -402,17 +410,36 @@
           </article>
         </div>
       </section>
-      <section id="ads-page" class="tab-page" aria-label="Anuncios" aria-hidden="true">
+      <section id="ads-page" class="tab-page" aria-label="Cuadro de Horror" aria-hidden="true">
         <header class="tab-page-header">
           <button class="tab-page-back" type="button" aria-label="Volver al perfil"><i class="fa-solid fa-arrow-left" style="color: rgb(255, 255, 255);"></i></button>
-          <h2>Anuncios</h2>
+          <h2>Cuadro de Horror</h2>
         </header>
-        <div class="image-feed" aria-label="Publicaciones de Anuncios">
+        <div class="image-feed" aria-label="Imágenes del Cuadro de Horror">
           <article class="image-post">
-            <button class="image-post-button" type="button" aria-label="Ampliar imagen de Anuncios">
-              <img src="https://drive.google.com/thumbnail?id=1ZdqToeVQvEkt1TK2PnS412VBHRWEwsKK&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1ZdqToeVQvEkt1TK2PnS412VBHRWEwsKK=s2400';" alt="Publicación de Anuncios" loading="lazy">
+            <button class="image-post-button" type="button" aria-label="Ampliar imagen del Cuadro de Horror">
+              <img src="https://drive.google.com/thumbnail?id=1P7oSSnjiZXyOXtfMB453WWUF3xlBeTzA&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1P7oSSnjiZXyOXtfMB453WWUF3xlBeTzA=s2400';" alt="Imagen del Cuadro de Horror" loading="lazy">
             </button>
           </article>
+          <div class="image-feed-separator" aria-hidden="true"></div>
+          <article class="image-post">
+            <button class="image-post-button" type="button" aria-label="Ampliar imagen del Cuadro de Horror">
+              <img src="https://drive.google.com/thumbnail?id=1yKHH6noJ1POszYh3bILbHjqhzsLlRMS4&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1yKHH6noJ1POszYh3bILbHjqhzsLlRMS4=s2400';" alt="Imagen del Cuadro de Horror" loading="lazy">
+            </button>
+          </article>
+          <div class="image-feed-separator" aria-hidden="true"></div>
+          <article class="image-post">
+            <button class="image-post-button" type="button" aria-label="Ampliar imagen del Cuadro de Horror">
+              <img src="https://drive.google.com/thumbnail?id=10R4VMgEgFc3_eYSNmo5I6PjKvO2WaWwG&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/10R4VMgEgFc3_eYSNmo5I6PjKvO2WaWwG=s2400';" alt="Imagen del Cuadro de Horror" loading="lazy">
+            </button>
+          </article>
+          <div class="image-feed-separator" aria-hidden="true"></div>
+          <article class="image-post">
+            <button class="image-post-button" type="button" aria-label="Ampliar imagen del Cuadro de Horror">
+              <img src="https://drive.google.com/thumbnail?id=13QVahIiKYe46zYG6-kQIel2GMpyq-Y2R&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/13QVahIiKYe46zYG6-kQIel2GMpyq-Y2R=s2400';" alt="Imagen del Cuadro de Horror" loading="lazy">
+            </button>
+          </article>
+          <div class="image-feed-separator" aria-hidden="true"></div>
         </div>
       </section>
       <section id="projects-page" class="tab-page" aria-label="Proyectos" aria-hidden="true">
