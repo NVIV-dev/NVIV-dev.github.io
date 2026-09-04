@@ -164,7 +164,7 @@
                 <span><i class="fa-solid fa-location-dot" style="color: rgb(255, 255, 255);"></i><a href="https://www.google.com/maps/place/Darvaza+Gas+Crater/@40.2524182,58.4400071,847m/data=!3m1!1e3!4m6!3m5!1s0x3f62b30826f44305:0x80995b5be672393f!8m2!3d40.2525742!4d58.4396793!16s%2Fm%2F0n5wd09?entry=ttu&amp;g_ep=EgoyMDI2MDgyNS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer">40.2523813577816, 58.43966754945036</a></span>
                 <span><i class="fa-regular fa-calendar" style="color: rgb(255, 255, 255);"></i>Se unió en mayo de 2026</span>
               </div>
-              <p class="follow-stats"><span><strong>0</strong> Siguiendo</span><span><strong>333</strong> Seguidores</span></p>
+              <p class="follow-stats"><span><strong>0</strong> Siguiendo</span><span><strong>17</strong> Seguidores</span></p>
             </div>
           </div>
           <nav class="tabs" aria-label="Contenido del perfil">
@@ -194,6 +194,10 @@
                 </div>
               </div>
             </div>
+            <div class="post-section-separator" aria-hidden="true"></div>
+            <button class="post-image-button post-full-width-image" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
+              <img src="https://drive.google.com/thumbnail?id=11Tf6-yJhFoOvNp3lXLXejNvOL1uM93Ik&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/11Tf6-yJhFoOvNp3lXLXejNvOL1uM93Ik=s1600';" alt="Imagen de la publicación" loading="lazy">
+            </button>
             <div class="post-section-separator" aria-hidden="true"></div>
             <button class="post-image-button post-full-width-image" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
               <img src="https://drive.google.com/thumbnail?id=1qIxxX3hVHXaCnX2AYVZjDNFbJoBKfw0M&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1qIxxX3hVHXaCnX2AYVZjDNFbJoBKfw0M=s1600';" alt="Imagen de la publicación" loading="lazy">
@@ -272,9 +276,9 @@
         <div class="image-feed" aria-label="Publicaciones de Respuestas">
           <div class="image-feed-separator" aria-hidden="true"></div>
           <article class="image-post pinned-response-image">
-            <button class="image-post-button" type="button" aria-label="Ampliar imagen fijada de Respuestas">
-              <img src="https://drive.google.com/thumbnail?id=1TkB0wGLNCqeAMCWyxDke1wt0OfKDvBCg&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1TkB0wGLNCqeAMCWyxDke1wt0OfKDvBCg=s2400';" alt="Imagen fijada de Respuestas" loading="eager">
-            </button>
+            <div class="image-post-button" aria-label="Título fijado de Respuestas">
+              <img class="img_private" src="https://drive.google.com/thumbnail?id=1TkB0wGLNCqeAMCWyxDke1wt0OfKDvBCg&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1TkB0wGLNCqeAMCWyxDke1wt0OfKDvBCg=s2400';" alt="Título fijado de Respuestas" loading="eager">
+            </div>
           </article>
           <article class="image-post response-separator">
             <button class="image-post-button" type="button" aria-label="Separador de Respuestas">
@@ -514,6 +518,12 @@
           <div class="image-feed-separator" aria-hidden="true"></div>
           <article class="image-post">
             <button class="image-post-button" type="button" aria-label="Ampliar imagen del Cuadro de Horror">
+              <img src="https://drive.google.com/thumbnail?id=1VkXWTdCfJWBLeNfVVNi4TbPTHalFZhrQ&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1VkXWTdCfJWBLeNfVVNi4TbPTHalFZhrQ=s2400';" alt="Imagen del Cuadro de Horror" loading="lazy">
+            </button>
+          </article>
+          <div class="image-feed-separator" aria-hidden="true"></div>
+          <article class="image-post">
+            <button class="image-post-button" type="button" aria-label="Ampliar imagen del Cuadro de Horror">
               <img src="https://drive.google.com/thumbnail?id=10R4VMgEgFc3_eYSNmo5I6PjKvO2WaWwG&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/10R4VMgEgFc3_eYSNmo5I6PjKvO2WaWwG=s2400';" alt="Imagen del Cuadro de Horror" loading="lazy">
             </button>
           </article>
@@ -632,7 +642,6 @@
         let secondaryYoutubePlayerReady = false;
         let playlist2Paused = false;
         let activeScrollArea = destination;
-        let scrollToTopRevealed = false;
         function updateDesktopScrollbar() {
           if (!matchMedia('(hover: hover) and (pointer: fine), (min-width: 1024px)').matches) return;
           const area = activeScrollArea;
@@ -648,19 +657,15 @@
         }
         function updateScrollToTopButton() {
           const area = activeScrollArea;
-          if (!area || !destination.classList.contains('is-visible')) {
+          if (!area || !destination.classList.contains('is-visible') || avatarViewer.classList.contains('is-open')) {
             scrollToTopButton.classList.remove('is-visible');
             return;
           }
           const revealThreshold = Math.max(180, area.clientHeight * .4);
-          if (area.scrollTop <= 1) scrollToTopRevealed = false;
-          else if (area.scrollTop >= revealThreshold) scrollToTopRevealed = true;
-          scrollToTopButton.classList.toggle('is-visible', scrollToTopRevealed);
+          scrollToTopButton.classList.toggle('is-visible', area.scrollTop >= revealThreshold);
         }
         function useScrollArea(area) {
           activeScrollArea = area;
-          const revealThreshold = Math.max(180, area.clientHeight * .4);
-          scrollToTopRevealed = area.scrollTop >= revealThreshold;
           requestAnimationFrame(() => {
             updateDesktopScrollbar();
             updateScrollToTopButton();
@@ -845,6 +850,7 @@
         function hideAvatar() {
           avatarViewer.classList.remove('is-open');
           avatarViewer.setAttribute('aria-hidden', 'true');
+          updateScrollToTopButton();
         }
         function showImages(isPost) {
           if (isPost) {
@@ -861,6 +867,7 @@
           avatarViewer.setAttribute('aria-label', isPost ? 'Imágenes de publicación ampliadas' : 'Imagen de perfil ampliada');
           avatarViewer.classList.add('is-open');
           avatarViewer.setAttribute('aria-hidden', 'false');
+          updateScrollToTopButton();
         }
         avatarButton.addEventListener('click', () => showImages(false));
         postImages.forEach(image => {
@@ -878,6 +885,7 @@
               avatarViewer.setAttribute('aria-label', 'Primera y segunda imagen del Post ampliadas');
               avatarViewer.classList.add('is-open');
               avatarViewer.setAttribute('aria-hidden', 'false');
+              updateScrollToTopButton();
               return;
             }
             viewerImage.src = image.currentSrc || image.src;
@@ -889,6 +897,7 @@
             avatarViewer.setAttribute('aria-label', 'Imagen del Post ampliada');
             avatarViewer.classList.add('is-open');
             avatarViewer.setAttribute('aria-hidden', 'false');
+            updateScrollToTopButton();
           });
         });
         feedImages.forEach(image => {
@@ -902,6 +911,7 @@
             avatarViewer.setAttribute('aria-label', 'Imagen de publicación ampliada');
             avatarViewer.classList.add('is-open');
             avatarViewer.setAttribute('aria-hidden', 'false');
+            updateScrollToTopButton();
           });
         });
         closeAvatar.addEventListener('click', hideAvatar);
