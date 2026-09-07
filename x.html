@@ -76,6 +76,12 @@
       .image-post:first-child { padding-top: 0; }  
       .image-post-button { display: block; width: 100%; padding: 0; border: 0; background: transparent; cursor: zoom-in; }
       .image-post-button img { display: block; width: 100%; height: auto; }
+      #profile-images-page { scroll-snap-type: y mandatory; scroll-padding-top: 53px; overscroll-behavior-y: contain; }
+      #profile-images-page .image-post { display: grid; place-items: center; height: calc(100dvh - 53px); padding: 0; border: 0; scroll-snap-align: start; scroll-snap-stop: always; overflow: hidden; }
+      #profile-images-page .image-post-button { width: min(100%, calc((100dvh - 53px) * 9 / 16)); aspect-ratio: 9 / 16; overflow: hidden; }
+      #profile-images-page .image-post-button img { width: 100%; height: 100%; aspect-ratio: 9 / 16; object-fit: cover; }
+      #profile-images-page .image-post + .image-post { position: relative; }
+      #profile-images-page .image-post + .image-post::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 1px; background: #373B3E; pointer-events: none; }
       .img_private { pointer-events: none; touch-action: none; }
       .profile-post { padding: 9px 14px 8px; border-bottom: 1px solid #2f3336; }
       .pinned-label { margin: 0 0 5px 30px; color: #71767b; font-size: 13px; font-weight: 700; }
@@ -171,7 +177,7 @@
             <button class="tab active" type="button" data-tab-page="posts-page">Posts</button>
             <button class="tab" type="button" data-tab-page="replies-page">Respuestas</button>
             <button class="tab" type="button" data-tab-page="ads-page">CdH</button>
-            <button class="tab" type="button" data-tab-page="projects-page">Proyectos</button>
+            <button class="tab" type="button" data-tab-page="profile-images-page">Perfil</button>
           </nav>
           <article class="profile-post">
             <p class="pinned-label"><span class="icon-slot"><i class="fa-solid fa-thumbtack" style="color: rgb(255, 255, 255);"></i></span>Fijado</p>
@@ -669,15 +675,20 @@
           <div class="image-feed-separator" aria-hidden="true"></div>
         </div>
       </section>
-      <section id="projects-page" class="tab-page" aria-label="Proyectos" aria-hidden="true">
+      <section id="profile-images-page" class="tab-page" aria-label="Perfil" aria-hidden="true">
         <header class="tab-page-header">
           <button class="tab-page-back" type="button" aria-label="Volver al perfil"><i class="fa-solid fa-arrow-left" style="color: rgb(255, 255, 255);"></i></button>
-          <h2>Proyectos</h2>
+          <h2>Perfil</h2>
         </header>
-        <div class="image-feed" aria-label="Publicaciones de Proyectos">
+        <div class="image-feed" aria-label="Publicaciones de Perfil">
           <article class="image-post">
-            <button class="image-post-button" type="button" aria-label="Ampliar imagen de Proyectos">
-              <img src="https://drive.google.com/thumbnail?id=1oyNPX5zbLn-68mKZm0pg5fkywzVN2CXh&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1oyNPX5zbLn-68mKZm0pg5fkywzVN2CXh=s2400';" alt="Publicación de Proyectos" loading="lazy">
+            <button class="image-post-button" type="button" aria-label="Ampliar primera imagen de Perfil">
+              <img src="https://drive.google.com/thumbnail?id=1G1xxNdj5rk7SGkzCaxRWkmrki8DI6eOK&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1G1xxNdj5rk7SGkzCaxRWkmrki8DI6eOK=s2400';" alt="Primera publicación de Perfil" loading="lazy">
+            </button>
+          </article>
+          <article class="image-post">
+            <button class="image-post-button" type="button" aria-label="Ampliar imagen de Perfil">
+              <img src="https://drive.google.com/thumbnail?id=1zUx-ccXLk9-Xyu_DUQlOqEGB0Dt0pC4z&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1zUx-ccXLk9-Xyu_DUQlOqEGB0Dt0pC4z=s2400';" alt="Publicación de Perfil" loading="lazy">
             </button>
           </article>
         </div>
