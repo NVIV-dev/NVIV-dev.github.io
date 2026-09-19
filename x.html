@@ -66,6 +66,11 @@
       .tab-page { position: absolute; z-index: 75; inset: 0; overflow-y: auto; color: #e7e9ea; background: #000; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 180ms ease, visibility 180ms ease; }
       .tab-page.is-visible { opacity: 1; visibility: visible; pointer-events: auto; }
       .tab-page-header { position: sticky; top: 0; z-index: 2; display: flex; align-items: center; gap: 22px; height: 53px; padding: 0 16px; border-bottom: 1px solid #2f3336; background: rgba(0, 0, 0, .94); }
+      #posts-page .tab-page-header { margin-bottom: 16px; }
+      #posts-page .tab-page-header::after { content: ""; position: absolute; top: 100%; left: 0; right: 0; height: 16px; border-top: 1px solid #373B3E; background: #000; pointer-events: none; }
+      .post-avatar-button { display: block; flex: 0 0 42px; width: 42px; height: 42px; padding: 0; border: 0; border-radius: 50%; background: transparent; cursor: pointer; }
+      .post-avatar-button .post-avatar { display: block; }
+      .response-separator .image-post-button { cursor: default; }
       .tab-page-header h2 { margin: 0; font-size: 20px; }
       .tab-page-back { display: grid; place-items: center; width: 34px; height: 34px; padding: 0; border: 0; border-radius: 50%; color: #fff; background: transparent; font-size: 20px; }
       .image-feed { width: 100%; }
@@ -77,6 +82,9 @@
       #replies-page .image-post:has(+ .response-separator) { border-bottom: 0; }
       .image-post:first-child { padding-top: 0; }  
       .image-post-button { display: block; width: 100%; padding: 0; border: 0; background: transparent; cursor: zoom-in; }
+      #posts-page .gif-preview { display: block; width: 100%; height: auto; pointer-events: none; }
+      #posts-page .gif-paused img { display: none; }
+      #posts-page .gif-playing .gif-preview { display: none; }
       .image-post-button img { display: block; width: 100%; height: auto; }
       #profile-images-page { scroll-snap-type: y mandatory; scroll-padding-top: 53px; overscroll-behavior-y: contain; }
       #profile-images-page .image-post { display: grid; place-items: center; height: calc(100dvh - 53px); padding: 0; border: 0; scroll-snap-align: start; scroll-snap-stop: always; overflow: hidden; }
@@ -133,7 +141,7 @@
       .avatar-viewer.is-feed-image .viewer-gallery { width: min(100%, 1100px); max-height: 90dvh; overflow-x: hidden; overflow-y: auto; }
       .avatar-viewer.is-feed-image img { width: 100%; max-height: none; border-radius: 0; }
       .avatar-viewer.is-feed-image #viewer-image-2 { display: none; }
-      .viewer-close { position: absolute; top: max(14px, env(safe-area-inset-top)); left: 14px; width: 42px; height: 42px; border: 0; border-radius: 50%; color: #fff; background: rgba(32, 35, 39, .8); font-size: 28px; line-height: 1; }
+      .viewer-close { position: absolute; top: max(14px, env(safe-area-inset-top)); left: 14px; width: 42px; height: 42px; border: 0; border-radius: 50%; color: #fff; background: #FF0000; font-size: 28px; line-height: 1; }
       @keyframes open-app { 0% { inset: var(--top) var(--right) var(--bottom) var(--left); border-radius: 22%; } 100% { inset: 0; border-radius: 0; } }
       #desktop-blocker { display: none; position: fixed; z-index: 100; inset: 0; place-items: center; padding: 32px; color: #e7e9ea; background: #000; text-align: center; }
       #desktop-blocker svg { width: 42px; margin-bottom: 18px; }
@@ -141,6 +149,16 @@
       #desktop-scrollbar { display: none; }
       @media (hover: hover) and (pointer: fine), (min-width: 1024px) { body { background: #202327; } #mobile-app { left: 50%; right: auto; width: min(100vw, 430px); transform: translateX(-50%); box-shadow: -1px 0 #111, 1px 0 #111;
         } #desktop-blocker { display: none; } #toggle-playlist-2, #scroll-to-top { right: calc((100vw - 430px) / 2 + 16px); } #switch-playlist { left: calc((100vw - min(100vw, 430px)) / 2 + 16px); } #x-screen, .tab-page, .avatar-viewer.is-post .viewer-gallery, .avatar-viewer.is-feed-image .viewer-gallery { scrollbar-width: none; -ms-overflow-style: none; } #x-screen::-webkit-scrollbar, .tab-page::-webkit-scrollbar, .avatar-viewer.is-post .viewer-gallery::-webkit-scrollbar, .avatar-viewer.is-feed-image .viewer-gallery::-webkit-scrollbar { display: none; } .avatar-viewer { padding: 12px; } .avatar-viewer .viewer-gallery, .avatar-viewer.is-post .viewer-gallery, .avatar-viewer.is-feed-image .viewer-gallery { width: 100%; max-width: 100%; } .avatar-viewer img, .avatar-viewer.is-post img, .avatar-viewer.is-feed-image img { width: 100%; max-width: 100%; height: auto; object-fit: contain; } #desktop-scrollbar { position: fixed; z-index: 2147483647; top: 8px; right: 5px; bottom: 8px; display: block; width: 8px; border-radius: 999px; background: rgba(255, 255, 255, .08); opacity: 0; pointer-events: none; transition: opacity 150ms ease; } #desktop-scrollbar.is-visible { opacity: 1; pointer-events: auto; } #desktop-scrollbar-thumb { position: absolute; top: 0; left: 0; width: 100%; min-height: 38px; border-radius: inherit; background: #71767b; cursor: grab; } #desktop-scrollbar-thumb:active { cursor: grabbing; } }  
+      .avatar-viewer.is-gif-view .viewer-gallery { max-height: calc(100dvh - 150px); }
+      .avatar-viewer.is-gif-view #viewer-image { max-height: calc(100dvh - 150px); width: auto; max-width: 100%; object-fit: contain; }
+      .avatar-viewer.is-open.is-gif-view { z-index: 2147483647; }
+      #gif-next { position: absolute; z-index: 2147483647; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); display: none; place-items: center; width: 56px; height: 56px; padding: 0; border: 0; border-radius: 50%; background: #1DA1F2; color: #fff; font-size: 24px; cursor: pointer; }
+      .avatar-viewer.is-open.is-gif-view #gif-next { display: grid; }
+      #gif-next:disabled { opacity: .6; cursor: wait; }
+      #gif-next:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+      #book-email { position: absolute; z-index: 2147483647; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); display: none; place-items: center; width: 56px; height: 56px; padding: 0; border: 0; border-radius: 50%; background: #1DA1F2; color: #fff; font-size: 22px; cursor: pointer; }
+      .avatar-viewer.is-open.is-book-view #book-email { display: grid; }
+      #book-email:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
       @media (prefers-reduced-motion: reduce) { .launch-layer { animation-duration: 1ms; } #x-screen, .launch-layer.is-fading { transition-duration: 1ms; } }
     </style>
   </head>
@@ -160,7 +178,7 @@
         <article class="profile-page">
           <header class="topbar">
             <button id="back-home" class="back-arrow" type="button" aria-label="Volver al inicio"><i class="fa-solid fa-arrow-left" style="color: rgb(255, 255, 255);"></i></button>
-            <div class="topbar-copy"><img draggable="false" class="name-logo" src="https://lh3.googleusercontent.com/d/1UYbM7Loo-CQw0xbqepgUga-169s36M5S=s600" alt="NVIV"><small>3333 publicaciones</small></div>
+            <div class="topbar-copy"><img draggable="false" class="name-logo" src="https://lh3.googleusercontent.com/d/1UYbM7Loo-CQw0xbqepgUga-169s36M5S=s600" alt="NVIV"><small>333333 publicaciones</small></div>
           </header>
           <div class="cover" aria-hidden="true"></div>
           <div class="profile-content">
@@ -187,7 +205,11 @@
           <article class="profile-post">
             <p class="pinned-label"><span class="icon-slot"><i class="fa-solid fa-thumbtack" style="color: rgb(255, 255, 255);"></i></span>Fijado</p>
             <div class="post-row">
+              <button class="post-avatar-button" type="button" aria-label="Ampliar imagen de perfil">
+
               <img draggable="false" class="post-avatar" src="https://lh3.googleusercontent.com/d/1jbg0PQuv_HRVH6PdmS_YzKgG1l0WOc0h=s200" alt="NVIV">
+
+              </button>
               <div class="post-body">
                 <div class="post-heading">
                   <div class="post-author"><img draggable="false" class="post-name-logo" src="https://lh3.googleusercontent.com/d/1UYbM7Loo-CQw0xbqepgUga-169s36M5S=s300" alt="NVIV"><span>@uele06 · 13 may.</span></div>
@@ -209,140 +231,165 @@
           <p class="page-credit">by NVIV (2026).</p>
         </article>
       </section>
-<section id="posts-page" class="tab-page" aria-label="Post" aria-hidden="true">
+<section id="posts-page" class="tab-page" aria-label="Posts" aria-hidden="true">
         <header class="tab-page-header">
           <button class="tab-page-back" type="button" aria-label="Volver al perfil"><i class="fa-solid fa-arrow-left" style="color: rgb(255, 255, 255);"></i></button>
-          <h2>Post</h2>
+          <h2>Posts</h2>
         </header>
         <div class="image-feed" aria-label="Imágenes de Posts, de la más reciente a la más antigua">
           <article class="image-post">
             <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
-              <img draggable="false" src="https://drive.google.com/thumbnail?id=1dpN1o_dnLnUZwKHRF72dPpKlYr3JHqSI&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1dpN1o_dnLnUZwKHRF72dPpKlYr3JHqSI=s1600';" alt="Imagen de la publicación" loading="lazy">
+              <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=1wnEH9FJ6cDKMoEp31GPuIbiOi2gI-_O6&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1wnEH9FJ6cDKMoEp31GPuIbiOi2gI-_O6=s1600';" alt="gif" loading="lazy">
             </button>
           </article>
           <article class="image-post">
             <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
-              <img draggable="false" src="https://drive.google.com/thumbnail?id=1OOgV3Z76mL2o_AD1D5jaMVzl-MTpn2_u&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1OOgV3Z76mL2o_AD1D5jaMVzl-MTpn2_u=s1600';" alt="Imagen de la publicación" loading="lazy">
+              <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=1flLxn32CrDkupkY1Nqktxj7x24Nbg7Jy&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1flLxn32CrDkupkY1Nqktxj7x24Nbg7Jy=s1600';" alt="gif" loading="lazy">
             </button>
           </article>
           <article class="image-post">
             <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
-              <img draggable="false" src="https://drive.google.com/thumbnail?id=1qzU3lB2FUeQMNRgD-jd0Kp4GyBBUHN34&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1qzU3lB2FUeQMNRgD-jd0Kp4GyBBUHN34=s1600';" alt="Imagen de la publicación" loading="lazy">
+              <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=1sOzoCzN8qpeMVYTRMSEe_6bJr-6gAEWl&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1sOzoCzN8qpeMVYTRMSEe_6bJr-6gAEWl=s1600';" alt="gif" loading="lazy">
             </button>
           </article>
           <article class="image-post">
             <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
-              <img draggable="false" src="https://drive.google.com/thumbnail?id=1xO7pJLuYm9w3bzCpnZ37aTP8uNp-g8z9&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1xO7pJLuYm9w3bzCpnZ37aTP8uNp-g8z9=s1600';" alt="Imagen de la publicación" loading="lazy">
+              <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=19gPQ2yDFEH6pzQeRC5nTKq8wTLF4RPE_&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/19gPQ2yDFEH6pzQeRC5nTKq8wTLF4RPE_=s1600';" alt="gif" loading="lazy">
             </button>
           </article>
           <article class="image-post">
             <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
-              <img draggable="false" src="https://drive.google.com/thumbnail?id=1EVFPoRMvLFC0ZHVOf6YQRjBSkbHlerVf&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1EVFPoRMvLFC0ZHVOf6YQRjBSkbHlerVf=s1600';" alt="Imagen de la publicación" loading="lazy">
+              <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=1dePC1JCgPORXq0tG2yWQv9b-t789El_L&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1dePC1JCgPORXq0tG2yWQv9b-t789El_L=s1600';" alt="gif" loading="lazy">
             </button>
           </article>
           <article class="image-post">
             <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
-              <img draggable="false" src="https://drive.google.com/thumbnail?id=1VtWzYigU9zjlb42RiHWrm8OiWeZyXrpw&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1VtWzYigU9zjlb42RiHWrm8OiWeZyXrpw=s1600';" alt="Imagen de la publicación" loading="lazy">
+              <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=1dpN1o_dnLnUZwKHRF72dPpKlYr3JHqSI&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1dpN1o_dnLnUZwKHRF72dPpKlYr3JHqSI=s1600';" alt="Imagen de la publicación" loading="lazy">
             </button>
           </article>
           <article class="image-post">
             <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
-              <img draggable="false" src="https://drive.google.com/thumbnail?id=1NlIjw8o5j61RsU0hNqS0VcI2qUZgYgXK&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1NlIjw8o5j61RsU0hNqS0VcI2qUZgYgXK=s1600';" alt="Imagen de la publicación" loading="lazy">
+              <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=1OOgV3Z76mL2o_AD1D5jaMVzl-MTpn2_u&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1OOgV3Z76mL2o_AD1D5jaMVzl-MTpn2_u=s1600';" alt="Imagen de la publicación" loading="lazy">
             </button>
           </article>
           <article class="image-post">
             <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
-              <img draggable="false" src="https://drive.google.com/thumbnail?id=1ajukZHZX0wMYdaVjEujpBnVZxqTYvoig&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1ajukZHZX0wMYdaVjEujpBnVZxqTYvoig=s1600';" alt="Imagen de la publicación" loading="lazy">
+              <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=1qzU3lB2FUeQMNRgD-jd0Kp4GyBBUHN34&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1qzU3lB2FUeQMNRgD-jd0Kp4GyBBUHN34=s1600';" alt="Imagen de la publicación" loading="lazy">
             </button>
           </article>
           <article class="image-post">
             <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
-              <img draggable="false" src="https://drive.google.com/thumbnail?id=1elbem8rQAUeasThylFpFNzMVaiDm4U8o&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1elbem8rQAUeasThylFpFNzMVaiDm4U8o=s1600';" alt="Imagen de la publicación" loading="lazy">
+              <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=1xO7pJLuYm9w3bzCpnZ37aTP8uNp-g8z9&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1xO7pJLuYm9w3bzCpnZ37aTP8uNp-g8z9=s1600';" alt="Imagen de la publicación" loading="lazy">
             </button>
           </article>
           <article class="image-post">
             <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
-              <img draggable="false" src="https://drive.google.com/thumbnail?id=1i5dc9jwBMYZK_opEM_EHV9UrLA2gs968&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1i5dc9jwBMYZK_opEM_EHV9UrLA2gs968=s1600';" alt="Imagen de la publicación" loading="lazy">
+              <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=1EVFPoRMvLFC0ZHVOf6YQRjBSkbHlerVf&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1EVFPoRMvLFC0ZHVOf6YQRjBSkbHlerVf=s1600';" alt="Imagen de la publicación" loading="lazy">
             </button>
           </article>
           <article class="image-post">
             <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
-              <img draggable="false" src="https://drive.google.com/thumbnail?id=11Tf6-yJhFoOvNp3lXLXejNvOL1uM93Ik&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/11Tf6-yJhFoOvNp3lXLXejNvOL1uM93Ik=s1600';" alt="Imagen de la publicación" loading="lazy">
+              <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=1VtWzYigU9zjlb42RiHWrm8OiWeZyXrpw&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1VtWzYigU9zjlb42RiHWrm8OiWeZyXrpw=s1600';" alt="Imagen de la publicación" loading="lazy">
             </button>
           </article>
           <article class="image-post">
             <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
-              <img draggable="false" src="https://drive.google.com/thumbnail?id=1qIxxX3hVHXaCnX2AYVZjDNFbJoBKfw0M&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1qIxxX3hVHXaCnX2AYVZjDNFbJoBKfw0M=s1600';" alt="Imagen de la publicación" loading="lazy">
+              <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=1NlIjw8o5j61RsU0hNqS0VcI2qUZgYgXK&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1NlIjw8o5j61RsU0hNqS0VcI2qUZgYgXK=s1600';" alt="Imagen de la publicación" loading="lazy">
             </button>
           </article>
           <article class="image-post">
             <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
-              <img draggable="false" src="https://drive.google.com/thumbnail?id=1BOALl7dxbFhRuT-J5ejOwO9Rasjky80a&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1BOALl7dxbFhRuT-J5ejOwO9Rasjky80a=s1600';" alt="Imagen de la publicaciÃ³n" loading="lazy">
+              <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=1ajukZHZX0wMYdaVjEujpBnVZxqTYvoig&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1ajukZHZX0wMYdaVjEujpBnVZxqTYvoig=s1600';" alt="Imagen de la publicación" loading="lazy">
             </button>
           </article>
           <article class="image-post">
             <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
-              <img draggable="false" src="https://drive.google.com/thumbnail?id=1jtFUfm-q7xDsYBvks8Vic4LxC974k6MW&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1jtFUfm-q7xDsYBvks8Vic4LxC974k6MW=s1600';" alt="Imagen de la publicaciÃ³n" loading="lazy">
+              <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=1elbem8rQAUeasThylFpFNzMVaiDm4U8o&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1elbem8rQAUeasThylFpFNzMVaiDm4U8o=s1600';" alt="Imagen de la publicación" loading="lazy">
             </button>
           </article>
           <article class="image-post">
             <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
-              <img draggable="false" src="https://drive.google.com/thumbnail?id=1jA0E9LBP4u9a41nV4AC4D0UdvNdYOK-H&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1jA0E9LBP4u9a41nV4AC4D0UdvNdYOK-H=s1600';" alt="Imagen de la publicación" loading="lazy">
+              <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=1i5dc9jwBMYZK_opEM_EHV9UrLA2gs968&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1i5dc9jwBMYZK_opEM_EHV9UrLA2gs968=s1600';" alt="Imagen de la publicación" loading="lazy">
             </button>
           </article>
           <article class="image-post">
             <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
-              <img draggable="false" src="https://drive.google.com/thumbnail?id=1rI6UhdCYbHOe15Ew_IvY19Dx0pQdBgCr&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1rI6UhdCYbHOe15Ew_IvY19Dx0pQdBgCr=s1600';" alt="Imagen de la publicación" loading="lazy">
+              <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=11Tf6-yJhFoOvNp3lXLXejNvOL1uM93Ik&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/11Tf6-yJhFoOvNp3lXLXejNvOL1uM93Ik=s1600';" alt="Imagen de la publicación" loading="lazy">
             </button>
           </article>
           <article class="image-post">
             <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
-              <img draggable="false" src="https://drive.google.com/thumbnail?id=1ujF7YSV83wM_o4MtOnErinjOO6gN0SXi&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1ujF7YSV83wM_o4MtOnErinjOO6gN0SXi=s1600';" alt="Imagen de la publicación" loading="lazy">
+              <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=1qIxxX3hVHXaCnX2AYVZjDNFbJoBKfw0M&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1qIxxX3hVHXaCnX2AYVZjDNFbJoBKfw0M=s1600';" alt="Imagen de la publicación" loading="lazy">
             </button>
           </article>
           <article class="image-post">
             <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
-              <img draggable="false" src="https://drive.google.com/thumbnail?id=1z0x3ey_Sp-YDLlToFqUxI-0UcGqyF2Jj&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1z0x3ey_Sp-YDLlToFqUxI-0UcGqyF2Jj=s1600';" alt="Imagen de la publicación" loading="lazy">
+              <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=1BOALl7dxbFhRuT-J5ejOwO9Rasjky80a&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1BOALl7dxbFhRuT-J5ejOwO9Rasjky80a=s1600';" alt="Imagen de la publicaciÃ³n" loading="lazy">
             </button>
           </article>
           <article class="image-post">
             <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
-              <img draggable="false" src="https://drive.google.com/thumbnail?id=1TcxZBpk5ydVVEzmiLs755VAnPD2aN3E1&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1TcxZBpk5ydVVEzmiLs755VAnPD2aN3E1=s1600';" alt="Imagen de la publicación" loading="lazy">
+              <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=1jtFUfm-q7xDsYBvks8Vic4LxC974k6MW&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1jtFUfm-q7xDsYBvks8Vic4LxC974k6MW=s1600';" alt="Imagen de la publicaciÃ³n" loading="lazy">
             </button>
           </article>
           <article class="image-post">
             <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
-              <img draggable="false" src="https://drive.google.com/thumbnail?id=1-lDl74L4S2ZWRDTtkAzwOitmV2GXPLbx&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1-lDl74L4S2ZWRDTtkAzwOitmV2GXPLbx=s1600';" alt="Imagen de la publicación" loading="lazy">
+              <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=1jA0E9LBP4u9a41nV4AC4D0UdvNdYOK-H&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1jA0E9LBP4u9a41nV4AC4D0UdvNdYOK-H=s1600';" alt="Imagen de la publicación" loading="lazy">
             </button>
           </article>
           <article class="image-post">
             <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
-              <img draggable="false" src="https://drive.google.com/thumbnail?id=1eQfGTUEM9RVG6drsMr6vPmeDp2eAXcnv&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1eQfGTUEM9RVG6drsMr6vPmeDp2eAXcnv=s1600';" alt="Imagen de la publicación" loading="lazy">
+              <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=1rI6UhdCYbHOe15Ew_IvY19Dx0pQdBgCr&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1rI6UhdCYbHOe15Ew_IvY19Dx0pQdBgCr=s1600';" alt="Imagen de la publicación" loading="lazy">
             </button>
           </article>
           <article class="image-post">
             <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
-              <img draggable="false" src="https://drive.google.com/thumbnail?id=1jVpuS08vmEahjgYk9SNMg3j4mZjC158k&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1jVpuS08vmEahjgYk9SNMg3j4mZjC158k=s1600';" alt="Imagen de la publicación" loading="lazy">
+              <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=1ujF7YSV83wM_o4MtOnErinjOO6gN0SXi&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1ujF7YSV83wM_o4MtOnErinjOO6gN0SXi=s1600';" alt="Imagen de la publicación" loading="lazy">
             </button>
           </article>
           <article class="image-post">
             <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
-              <img draggable="false" src="https://drive.google.com/thumbnail?id=13Fq7D0i2RjyL7DXPm4bNDC1_Sxt_4CEE&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/13Fq7D0i2RjyL7DXPm4bNDC1_Sxt_4CEE=s1600';" alt="Imagen de la publicación" loading="lazy">
+              <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=1z0x3ey_Sp-YDLlToFqUxI-0UcGqyF2Jj&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1z0x3ey_Sp-YDLlToFqUxI-0UcGqyF2Jj=s1600';" alt="Imagen de la publicación" loading="lazy">
             </button>
           </article>
           <article class="image-post">
             <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
-              <img draggable="false" src="https://drive.google.com/thumbnail?id=1UpK2WXhvOdrV894qG8snstG2B3VqK_e6&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1UpK2WXhvOdrV894qG8snstG2B3VqK_e6=s1600';" alt="Imagen de la publicación" loading="lazy">
+              <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=1TcxZBpk5ydVVEzmiLs755VAnPD2aN3E1&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1TcxZBpk5ydVVEzmiLs755VAnPD2aN3E1=s1600';" alt="Imagen de la publicación" loading="lazy">
             </button>
           </article>
           <article class="image-post">
             <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
-              <img draggable="false" src="https://drive.google.com/thumbnail?id=1qL6XWgp4MRBUAeBwK-pnOQqp2Hyf_2yQ&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1qL6XWgp4MRBUAeBwK-pnOQqp2Hyf_2yQ=s1600';" alt="Imagen de la publicación" loading="lazy">
+              <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=1-lDl74L4S2ZWRDTtkAzwOitmV2GXPLbx&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1-lDl74L4S2ZWRDTtkAzwOitmV2GXPLbx=s1600';" alt="Imagen de la publicación" loading="lazy">
             </button>
           </article>
           <article class="image-post">
             <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
-              <img draggable="false" src="https://drive.google.com/thumbnail?id=19V5i7uAPWIDTAXtY6WON3QYNk4w_q3F4&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/19V5i7uAPWIDTAXtY6WON3QYNk4w_q3F4=s1600';" alt="Imagen de la publicación" loading="lazy">
+              <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=1eQfGTUEM9RVG6drsMr6vPmeDp2eAXcnv&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1eQfGTUEM9RVG6drsMr6vPmeDp2eAXcnv=s1600';" alt="Imagen de la publicación" loading="lazy">
+            </button>
+          </article>
+          <article class="image-post">
+            <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
+              <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=1jVpuS08vmEahjgYk9SNMg3j4mZjC158k&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1jVpuS08vmEahjgYk9SNMg3j4mZjC158k=s1600';" alt="Imagen de la publicación" loading="lazy">
+            </button>
+          </article>
+          <article class="image-post">
+            <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
+              <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=13Fq7D0i2RjyL7DXPm4bNDC1_Sxt_4CEE&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/13Fq7D0i2RjyL7DXPm4bNDC1_Sxt_4CEE=s1600';" alt="Imagen de la publicación" loading="lazy">
+            </button>
+          </article>
+          <article class="image-post">
+            <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
+              <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=1UpK2WXhvOdrV894qG8snstG2B3VqK_e6&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1UpK2WXhvOdrV894qG8snstG2B3VqK_e6=s1600';" alt="Imagen de la publicación" loading="lazy">
+            </button>
+          </article>
+          <article class="image-post">
+            <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
+              <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=1qL6XWgp4MRBUAeBwK-pnOQqp2Hyf_2yQ&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1qL6XWgp4MRBUAeBwK-pnOQqp2Hyf_2yQ=s1600';" alt="Imagen de la publicación" loading="lazy">
+            </button>
+          </article>
+          <article class="image-post">
+            <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
+              <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=19V5i7uAPWIDTAXtY6WON3QYNk4w_q3F4&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/19V5i7uAPWIDTAXtY6WON3QYNk4w_q3F4=s1600';" alt="Imagen de la publicación" loading="lazy">
             </button>
           </article>
         </div>
@@ -360,9 +407,9 @@
             </div>
           </article>
           <article class="image-post response-separator">
-            <button class="image-post-button" type="button" aria-label="Separador de Respuestas">
+            <div class="image-post-button" aria-label="Separador de imágenes">
               <img draggable="false" class="img_private" src="https://drive.google.com/thumbnail?id=1f0K-pRkgF8V6m41Oq7-_h3-nOcK6Qgub&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1f0K-pRkgF8V6m41Oq7-_h3-nOcK6Qgub=s2400';" alt="Separador de Respuestas" loading="lazy">
-            </button>
+            </div>
           </article>
           <article class="image-post">
             <button class="image-post-button" type="button" aria-label="Ampliar imagen de Respuestas">
@@ -425,9 +472,9 @@
             </button>
           </article>
           <article class="image-post response-separator">
-            <button class="image-post-button" type="button" aria-label="Separador de Respuestas">
+            <div class="image-post-button" aria-label="Separador de imágenes">
               <img draggable="false" class="img_private" src="https://drive.google.com/thumbnail?id=1f0K-pRkgF8V6m41Oq7-_h3-nOcK6Qgub&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1f0K-pRkgF8V6m41Oq7-_h3-nOcK6Qgub=s2400';" alt="Separador de Respuestas" loading="lazy">
-            </button>
+            </div>
           </article>
           <article class="image-post">
             <button class="image-post-button" type="button" aria-label="Ampliar imagen de Respuestas">
@@ -500,9 +547,9 @@
             </button>
           </article>
           <article class="image-post response-separator">
-            <button class="image-post-button" type="button" aria-label="Separador de Respuestas">
+            <div class="image-post-button" aria-label="Separador de imágenes">
               <img draggable="false" class="img_private" src="https://drive.google.com/thumbnail?id=1f0K-pRkgF8V6m41Oq7-_h3-nOcK6Qgub&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1f0K-pRkgF8V6m41Oq7-_h3-nOcK6Qgub=s2400';" alt="Separador de Respuestas" loading="lazy">
-            </button>
+            </div>
           </article>
           <article class="image-post">
             <button class="image-post-button" type="button" aria-label="Ampliar imagen de Respuestas">
@@ -515,9 +562,9 @@
             </button>
           </article>
           <article class="image-post response-separator">
-            <button class="image-post-button" type="button" aria-label="Separador de Respuestas">
+            <div class="image-post-button" aria-label="Separador de imágenes">
               <img draggable="false" class="img_private" src="https://drive.google.com/thumbnail?id=1f0K-pRkgF8V6m41Oq7-_h3-nOcK6Qgub&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1f0K-pRkgF8V6m41Oq7-_h3-nOcK6Qgub=s2400';" alt="Separador de Respuestas" loading="lazy">
-            </button>
+            </div>
           </article>
           <article class="image-post">
             <button class="image-post-button" type="button" aria-label="Ampliar imagen de Respuestas">
@@ -525,9 +572,9 @@
             </button>
           </article>
           <article class="image-post response-separator">
-            <button class="image-post-button" type="button" aria-label="Separador de Respuestas">
+            <div class="image-post-button" aria-label="Separador de imágenes">
               <img draggable="false" class="img_private" src="https://drive.google.com/thumbnail?id=1f0K-pRkgF8V6m41Oq7-_h3-nOcK6Qgub&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1f0K-pRkgF8V6m41Oq7-_h3-nOcK6Qgub=s2400';" alt="Separador de Respuestas" loading="lazy">
-            </button>
+            </div>
           </article>
           <article class="image-post">
             <button class="image-post-button" type="button" aria-label="Ampliar imagen de Respuestas">
@@ -535,9 +582,9 @@
             </button>
           </article>
           <article class="image-post response-separator">
-            <button class="image-post-button" type="button" aria-label="Separador de Respuestas">
+            <div class="image-post-button" aria-label="Separador de imágenes">
               <img draggable="false" class="img_private" src="https://drive.google.com/thumbnail?id=1f0K-pRkgF8V6m41Oq7-_h3-nOcK6Qgub&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1f0K-pRkgF8V6m41Oq7-_h3-nOcK6Qgub=s2400';" alt="Separador de Respuestas" loading="lazy">
-            </button>
+            </div>
           </article>
           <article class="image-post">
             <button class="image-post-button" type="button" aria-label="Ampliar imagen de Respuestas">
@@ -545,9 +592,9 @@
             </button>
           </article>
           <article class="image-post response-separator">
-            <button class="image-post-button" type="button" aria-label="Separador de Respuestas">
+            <div class="image-post-button" aria-label="Separador de imágenes">
               <img draggable="false" class="img_private" src="https://drive.google.com/thumbnail?id=1f0K-pRkgF8V6m41Oq7-_h3-nOcK6Qgub&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1f0K-pRkgF8V6m41Oq7-_h3-nOcK6Qgub=s2400';" alt="Separador de Respuestas" loading="lazy">
-            </button>
+            </div>
           </article>
           <article class="image-post">
             <button class="image-post-button" type="button" aria-label="Ampliar imagen de Respuestas">
@@ -570,9 +617,9 @@
             </button>
           </article>
           <article class="image-post response-separator">
-            <button class="image-post-button" type="button" aria-label="Separador de Respuestas">
+            <div class="image-post-button" aria-label="Separador de imágenes">
               <img draggable="false" class="img_private" src="https://drive.google.com/thumbnail?id=1f0K-pRkgF8V6m41Oq7-_h3-nOcK6Qgub&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1f0K-pRkgF8V6m41Oq7-_h3-nOcK6Qgub=s2400';" alt="Separador de Respuestas" loading="lazy">
-            </button>
+            </div>
           </article>
           <article class="image-post">
             <button class="image-post-button" type="button" aria-label="Ampliar imagen de Respuestas">
@@ -615,9 +662,9 @@
             </button>
           </article>
           <article class="image-post response-separator">
-            <button class="image-post-button" type="button" aria-label="Ampliar separador de Respuestas">
+            <div class="image-post-button" aria-label="Separador de imágenes">
               <img draggable="false" class="img_private" src="https://drive.google.com/thumbnail?id=1f0K-pRkgF8V6m41Oq7-_h3-nOcK6Qgub&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1f0K-pRkgF8V6m41Oq7-_h3-nOcK6Qgub=s2400';" alt="Separador de Respuestas" loading="lazy">
-            </button>
+            </div>
           </article>
           <article class="image-post">
             <button class="image-post-button" type="button" aria-label="Ampliar imagen de Respuestas">
@@ -660,9 +707,9 @@
             </button>
           </article>
           <article class="image-post response-separator">
-            <button class="image-post-button" type="button" aria-label="Ampliar separador de Respuestas">
+            <div class="image-post-button" aria-label="Separador de imágenes">
               <img draggable="false" class="img_private" src="https://drive.google.com/thumbnail?id=1f0K-pRkgF8V6m41Oq7-_h3-nOcK6Qgub&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1f0K-pRkgF8V6m41Oq7-_h3-nOcK6Qgub=s2400';" alt="Separador de Respuestas" loading="lazy">
-            </button>
+            </div>
           </article>
           <article class="image-post">
             <button class="image-post-button" type="button" aria-label="Ampliar imagen de Respuestas">
@@ -680,9 +727,9 @@
             </button>
           </article>
           <article class="image-post response-separator">
-            <button class="image-post-button" type="button" aria-label="Ampliar imagen de Respuestas">
+            <div class="image-post-button" aria-label="Separador de imágenes">
               <img draggable="false" class="img_private" src="https://drive.google.com/thumbnail?id=1f0K-pRkgF8V6m41Oq7-_h3-nOcK6Qgub&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1f0K-pRkgF8V6m41Oq7-_h3-nOcK6Qgub=s2400';" alt="Publicación de Respuestas" loading="lazy">
-            </button>
+            </div>
           </article>
           <article class="image-post">
             <button class="image-post-button" type="button" aria-label="Ampliar imagen de Respuestas">
@@ -769,6 +816,11 @@
         <div class="image-feed" aria-label="Publicaciones de Perfil">
           <article class="image-post">
             <button class="image-post-button" type="button" aria-label="Ampliar imagen de Perfil">
+              <img draggable="false" src="https://drive.google.com/thumbnail?id=1IDYtwBWz8mndGwRAdYLpSb4YA6iE2L6N&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1IDYtwBWz8mndGwRAdYLpSb4YA6iE2L6N=s2400';" alt="libro" loading="lazy">
+            </button>
+          </article>
+          <article class="image-post">
+            <button class="image-post-button" type="button" aria-label="Ampliar imagen de Perfil">
               <img draggable="false" src="https://drive.google.com/thumbnail?id=1RKB28wXq75iO9oeVV6sCmsgAUzU2JFNQ&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1RKB28wXq75iO9oeVV6sCmsgAUzU2JFNQ=s2400';" alt="Publicación de Perfil" loading="lazy">
             </button>
           </article>
@@ -787,6 +839,8 @@
       <div id="youtube-audio" aria-hidden="true"></div>
       <div id="youtube-audio-secondary" aria-hidden="true"></div>
       <div id="avatar-viewer" class="avatar-viewer" role="dialog" aria-modal="true" aria-label="Imagen de perfil ampliada" aria-hidden="true">
+        <button id="book-email" type="button" aria-label="Abrir página del libro"><i class="fa-solid fa-cart-plus" style="color: rgb(255, 255, 255);" aria-hidden="true"></i></button>
+        <button id="gif-next" type="button" aria-label="Siguiente GIF"><i class="fa-solid fa-angle-right" style="color: rgb(255, 255, 255);" aria-hidden="true"></i></button>
         <button id="close-avatar" class="viewer-close" type="button" aria-label="Cerrar"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
         <div class="viewer-gallery">
           <img draggable="false" id="viewer-image" src="https://lh3.googleusercontent.com/d/1jbg0PQuv_HRVH6PdmS_YzKgG1l0WOc0h=s1600" alt="Imagen de perfil ampliada de NVIV">
@@ -818,7 +872,8 @@
         const viewerImage2 = document.querySelector('#viewer-image-2');
         const viewerImage3 = document.querySelector('#viewer-image-3');
         const postImages = document.querySelectorAll('.profile-post .post-image-button img');
-        const feedImages = Array.from(document.querySelectorAll('img')).filter(image => !image.closest('#open-avatar, .profile-post .post-image-button, .avatar-viewer'));
+        const bookEmailButton = document.querySelector('#book-email');
+        const feedImages = Array.from(document.querySelectorAll('img')).filter(image => !image.closest('#open-avatar, .post-avatar-button, .profile-post .post-image-button, .avatar-viewer') && !image.src.includes('1f0K-pRkgF8V6m41Oq7-_h3-nOcK6Qgub'));
         const profileViewerSrc = viewerImage.src;
         const home = document.querySelector('#home-screen');
         const clock = document.querySelector('#device-clock');
@@ -967,7 +1022,7 @@
         function playAlternativePlaylist() {
           if (!youtubePlayerReady || !alternativePlaylistActive) return;
           youtubePlayer.unMute();
-          youtubePlayer.setVolume(50);
+          youtubePlayer.setVolume(75);
           if (!alternativePlaylistLoaded) {
             youtubePlayer.loadPlaylist({ listType: 'playlist', list: 'PLIi9KIGSrANk', index: pendingAlternativeSkips });
             pendingAlternativeSkips = 0;
@@ -1120,6 +1175,7 @@
         }
         tabLaunchers.forEach(tab => {
           tab.addEventListener('click', () => {
+            enterFullscreen();
             closeTabPages();
             const page = document.querySelector(`#${tab.dataset.tabPage}`);
             page.classList.add('is-visible');
@@ -1132,7 +1188,8 @@
           useScrollArea(destination);
         }));
         function hideAvatar() {
-          avatarViewer.classList.remove('is-open');
+          stopGifSlideshow();
+          avatarViewer.classList.remove('is-open', 'is-book-view');
           avatarViewer.setAttribute('aria-hidden', 'true');
           updateScrollToTopButton();
         }
@@ -1154,6 +1211,9 @@
           updateScrollToTopButton();
         }
         avatarButton.addEventListener('click', () => showImages(false));
+        document.querySelectorAll('.post-avatar-button').forEach(button => {
+          button.addEventListener('click', () => showImages(false));
+        });
         postImages.forEach(image => {
           image.addEventListener('click', () => {
             const pair = image.closest('[data-post-view="pair"]');
@@ -1190,8 +1250,197 @@
         document.addEventListener('dragstart', event => {
           if (event.target.closest('img')) event.preventDefault();
         }, true);
+        let gifSlideshowActive = false;
+        let gifViewerUrl = null;
+        let gifSlideshowSession = 0;
+        let gifDiscoveryPromise = Promise.resolve();
+        const gifNextButton = document.querySelector('#gif-next');
+        let gifRound = null;
+        function gifCycleDuration(bytes) {
+          if (bytes.length < 13 || !String.fromCharCode(...bytes.slice(0, 6)).startsWith('GIF8')) return null;
+          let offset = 13 + ((bytes[10] & 128) ? 3 * (1 << ((bytes[10] & 7) + 1)) : 0);
+          let duration = 0, delay = 100;
+          function skipBlocks() {
+            while (offset < bytes.length) {
+              const size = bytes[offset++];
+              if (!size) return;
+              offset += size;
+            }
+          }
+          while (offset < bytes.length) {
+            const block = bytes[offset++];
+            if (block === 59) break;
+            if (block === 33) {
+              const label = bytes[offset++];
+              if (label === 249 && bytes[offset] === 4) {
+                const milliseconds = (bytes[offset + 2] | (bytes[offset + 3] << 8)) * 10;
+                delay = milliseconds < 20 ? 100 : milliseconds;
+              }
+              skipBlocks();
+            } else if (block === 44) {
+              if (offset + 9 > bytes.length) return null;
+              const packed = bytes[offset + 8];
+              offset += 9 + ((packed & 128) ? 3 * (1 << ((packed & 7) + 1)) : 0);
+              offset++;
+              skipBlocks();
+              duration += delay;
+              delay = 100;
+            } else return null;
+          }
+          return duration || null;
+        }
+        function stopGifSlideshow() {
+          gifSlideshowActive = false;
+          gifSlideshowSession++;
+          gifRound = null;
+          gifNextButton.disabled = false;
+          currentViewerGif = null;
+          avatarViewer.classList.remove('is-gif-view');
+          if (gifViewerUrl) { viewerImage.removeAttribute('src'); URL.revokeObjectURL(gifViewerUrl); gifViewerUrl = null; }
+        }
+        let currentViewerGif = null;
+        function showSlideshowGif(state) {
+          if (!gifSlideshowActive) return;
+          currentViewerGif = state;
+          viewerImage.removeAttribute('src');
+          if (gifViewerUrl) URL.revokeObjectURL(gifViewerUrl);
+          gifViewerUrl = state.blob ? URL.createObjectURL(state.blob) : null;
+          viewerImage.alt = state.image.alt + ' ampliada';
+          viewerImage.src = gifViewerUrl || state.source;
+        }
+        function shuffledGifRound(states, previous) {
+          const round = states.slice();
+          for (let index = round.length - 1; index > 0; index--) {
+            const random = Math.floor(Math.random() * (index + 1));
+            [round[index], round[random]] = [round[random], round[index]];
+          }
+          if (round.length > 1 && round[0] === previous) [round[0], round[1]] = [round[1], round[0]];
+          return round;
+        }
+        gifNextButton.addEventListener('click', async event => {
+          event.stopPropagation();
+          if (!gifSlideshowActive || !currentViewerGif || gifNextButton.disabled) return;
+          const session = gifSlideshowSession;
+          gifNextButton.disabled = true;
+          try {
+            await gifDiscoveryPromise;
+            if (!gifSlideshowActive || session !== gifSlideshowSession) return;
+            const states = [...document.querySelectorAll('#posts-page img[data-post-src]')].map(image => postGifStates.get(image)).filter(state => state && state.source);
+            if (!states.length) return;
+            if (gifRound === null) gifRound = states.slice(states.indexOf(currentViewerGif) + 1);
+            if (!gifRound.length) gifRound = shuffledGifRound(states, currentViewerGif);
+            showSlideshowGif(gifRound.shift());
+          } finally {
+            if (session === gifSlideshowSession) gifNextButton.disabled = false;
+          }
+        });
+        function startGifSlideshow(state) {
+          if (!state.ready) return;
+          stopGifSlideshow();
+          for (const other of postGifStates.values()) {
+            other.button.classList.remove('gif-playing');
+            other.button.classList.add('gif-paused');
+            if (other.ready) other.image.removeAttribute('src');
+          }
+          viewerImage2.src = '';
+          viewerImage3.src = '';
+          avatarViewer.classList.remove('is-post');
+          avatarViewer.classList.add('is-feed-image', 'is-open', 'is-gif-view');
+          avatarViewer.setAttribute('aria-hidden', 'false');
+          avatarViewer.setAttribute('aria-label', 'GIF ampliado: botón para avanzar al siguiente');
+          updateScrollToTopButton();
+          gifSlideshowActive = true;
+          showSlideshowGif(state);
+          const remaining = [...document.querySelectorAll('#posts-page img[data-post-src]')];
+          async function discoverGifs() {
+            while (gifSlideshowActive && remaining.length) await preparePostImage(remaining.shift());
+          }
+          gifDiscoveryPromise = Promise.all([discoverGifs(), discoverGifs(), discoverGifs()]);
+        }
+        const postGifStates = new Map();
+        async function preparePostImage(image) {
+          if (image.dataset.postPreparing) return;
+          image.dataset.postPreparing = 'true';
+          image.loading = 'eager';
+          const source = image.dataset.postSrc;
+          const markedGif = image.alt.trim().toLowerCase() === 'gif';
+          const fallback = (image.getAttribute('onerror') || '').match(/this.src='([^']+)'/);
+          const driveId = source.match(/[?&]id=([^&]+)/);
+          const originalSource = driveId ? 'https://lh3.googleusercontent.com/d/' + driveId[1] + '=s0' : null;
+          let blob;
+          for (const url of [...new Set([originalSource, fallback && fallback[1], source].filter(Boolean))]) {
+            try {
+              const response = await fetch(url);
+              if (!response.ok) continue;
+              const candidate = await response.blob();
+              if (!candidate.type.startsWith('image/')) continue;
+              if (markedGif) {
+                const header = new Uint8Array(await candidate.slice(0, 6).arrayBuffer());
+                if (!String.fromCharCode(...header).startsWith('GIF8')) continue;
+              }
+              blob = candidate;
+              break;
+            } catch (error) {}
+          }
+          const signature = blob ? new Uint8Array(await blob.slice(0, 6).arrayBuffer()) : [];
+          const isGif = markedGif || String.fromCharCode(...signature).startsWith('GIF8') || /\.gif(?:[?#]|$)/i.test(source) || (blob && blob.type === 'image/gif');
+          if (!isGif) { image.src = blob ? URL.createObjectURL(blob) : source; return; }
+          const button = image.closest('.image-post-button');
+          const animationSource = blob ? URL.createObjectURL(blob) : (originalSource || source);
+          const canvas = document.createElement('canvas');
+          canvas.className = 'gif-preview';
+          canvas.setAttribute('aria-hidden', 'true');
+          button.classList.add('gif-paused');
+          button.append(canvas);
+          const duration = blob ? gifCycleDuration(new Uint8Array(await blob.arrayBuffer())) : null;
+          const state = { image, button, canvas, source: animationSource, blob, duration, ready: false };
+          postGifStates.set(image, state);
+          button.setAttribute('aria-label', 'Ampliar GIF');
+          image.removeAttribute('onerror');
+          const previewSources = [...new Set([animationSource, source, fallback && fallback[1]].filter(Boolean))];
+          let previewIndex = 0;
+          image.addEventListener('error', () => {
+            previewIndex++;
+            if (previewIndex < previewSources.length) image.src = previewSources[previewIndex];
+          });
+          image.addEventListener('load', function capturePreview() {
+            canvas.width = image.naturalWidth;
+            canvas.height = image.naturalHeight;
+            canvas.getContext('2d').drawImage(image, 0, 0);
+            state.ready = true;
+            image.removeAttribute('src');
+          }, { once: true });
+          image.src = animationSource;
+        }
+        function playPostGif(state) {
+          if (!state.ready) return;
+          for (const other of postGifStates.values()) {
+            other.button.classList.remove('gif-playing');
+            other.button.classList.add('gif-paused');
+            other.button.setAttribute('aria-label', 'Reproducir GIF');
+            if (other.ready) other.image.removeAttribute('src');
+          }
+          state.button.classList.remove('gif-paused');
+          state.button.classList.add('gif-playing');
+          state.button.setAttribute('aria-label', 'GIF en reproducción');
+          state.image.src = state.source;
+        }
+        document.querySelectorAll('#posts-page .image-post-button').forEach(button => {
+          button.addEventListener('click', event => {
+            const image = button.querySelector('img');
+            const state = postGifStates.get(image);
+            if (state) { event.stopImmediatePropagation(); startGifSlideshow(state); }
+          }, true);
+        });
+        const postImageObserver = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) { preparePostImage(entry.target.querySelector('img')); postImageObserver.unobserve(entry.target); }
+          });
+        }, { root: document.querySelector('#posts-page'), rootMargin: '500px' });
+        document.querySelectorAll('#posts-page img[data-post-src]').forEach(image => postImageObserver.observe(image.closest('.image-post')));
         feedImages.forEach(image => {
           image.addEventListener('click', () => {
+            avatarViewer.classList.toggle('is-book-view', image.alt.trim().toLowerCase() === 'libro');
             viewerImage.src = image.currentSrc || image.src;
             viewerImage.alt = `${image.alt} ampliada`;
             viewerImage2.src = '';
@@ -1203,6 +1452,10 @@
             avatarViewer.setAttribute('aria-hidden', 'false');
             updateScrollToTopButton();
           });
+        });
+        bookEmailButton.addEventListener('click', event => {
+          event.stopPropagation();
+          window.open('https://g-store.neocities.org/test/librogratis', '_blank', 'noopener,noreferrer');
         });
         closeAvatar.addEventListener('click', hideAvatar);
         avatarViewer.addEventListener('click', event => {
