@@ -126,7 +126,7 @@
       #switch-playlist { right: auto; left: max(20px, calc(env(safe-area-inset-left) + 16px)); }
       #scroll-to-top { bottom: max(88px, calc(env(safe-area-inset-bottom) + 84px)); }
       #switch-playlist.is-visible, #toggle-playlist-2.is-visible, #scroll-to-top.is-visible { opacity: 1; visibility: visible; pointer-events: auto; }
-      body.is-viewing-image #toggle-playlist-2, body.is-viewing-image #switch-playlist, body.is-viewing-image #scroll-to-top, body.is-viewing-image #desktop-scrollbar { display: none; }
+      body.is-viewing-image #toggle-playlist-2, body.is-viewing-image #scroll-to-top, body.is-viewing-image #desktop-scrollbar { display: none; }
       #switch-playlist:active, #toggle-playlist-2:active, #scroll-to-top:active { transform: scale(.92); filter: brightness(.88); }
       #switch-playlist:focus-visible, #toggle-playlist-2:focus-visible, #scroll-to-top:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
       .avatar-viewer { position: fixed; z-index: 80; inset: 0; display: grid; grid-template-columns: minmax(0, 1fr); place-items: center; padding: 24px; border: 0; opacity: 0; visibility: hidden; background: rgba(0, 0, 0, .96); transition: opacity 220ms ease, visibility 220ms ease; }
@@ -237,6 +237,31 @@
           <h2>Posts</h2>
         </header>
         <div class="image-feed" aria-label="Imágenes de Posts, de la más reciente a la más antigua">
+          <article class="image-post">
+            <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
+              <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=1V-NovUT4oBBebtHw-X_Dl56P6xSwiZQ9&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1V-NovUT4oBBebtHw-X_Dl56P6xSwiZQ9=s1600';" alt="gif" loading="lazy">
+            </button>
+          </article>
+          <article class="image-post">
+            <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
+              <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=1UGNFxp-YyNCnz91CmNyp7QiM8kkdiDuh&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1UGNFxp-YyNCnz91CmNyp7QiM8kkdiDuh=s1600';" alt="gif" loading="lazy">
+            </button>
+          </article>
+          <article class="image-post">
+            <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
+              <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=1KpELuRYG5KW4WCOKINuow7yDPsQ9m4IR&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1KpELuRYG5KW4WCOKINuow7yDPsQ9m4IR=s1600';" alt="gif" loading="lazy">
+            </button>
+          </article>
+          <article class="image-post">
+            <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
+              <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=1wJGcm3YGf1O7ZGBO97BJmex8nYpGzCv5&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1wJGcm3YGf1O7ZGBO97BJmex8nYpGzCv5=s1600';" alt="gif" loading="lazy">
+            </button>
+          </article>
+          <article class="image-post">
+            <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
+              <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=19q513ywET581vtQSuRvK8IIAC5n4ES9L&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/19q513ywET581vtQSuRvK8IIAC5n4ES9L=s1600';" alt="gif" loading="lazy">
+            </button>
+          </article>
           <article class="image-post">
             <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
               <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=1wnEH9FJ6cDKMoEp31GPuIbiOi2gI-_O6&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1wnEH9FJ6cDKMoEp31GPuIbiOi2gI-_O6=s1600';" alt="gif" loading="lazy">
@@ -935,6 +960,9 @@
         let alternativePlaylistActive = false;
         let alternativePlaylistLoaded = false;
         let pendingAlternativeSkips = 0;
+        let alternativeAdvanceTimer = null;
+        let alternativeFadeTimer = null;
+        let alternativeFadeStartTimer = null;
         let playlist2Paused = false;
         let activeScrollArea = destination;
         function updateDesktopScrollbar() {
@@ -1022,7 +1050,7 @@
         function playAlternativePlaylist() {
           if (!youtubePlayerReady || !alternativePlaylistActive) return;
           youtubePlayer.unMute();
-          youtubePlayer.setVolume(75);
+          youtubePlayer.setVolume(90);
           if (!alternativePlaylistLoaded) {
             youtubePlayer.loadPlaylist({ listType: 'playlist', list: 'PLIi9KIGSrANk', index: pendingAlternativeSkips });
             pendingAlternativeSkips = 0;
@@ -1038,6 +1066,13 @@
           switchPlaylistButton.style.setProperty('background', '#1DA1F2');
         }
         switchPlaylistButton.addEventListener('click', () => {
+          clearTimeout(alternativeAdvanceTimer);
+          clearInterval(alternativeFadeTimer);
+          clearTimeout(alternativeFadeStartTimer);
+          alternativeAdvanceTimer = null;
+          alternativeFadeTimer = null;
+          alternativeFadeStartTimer = null;
+          if (youtubePlayerReady) youtubePlayer.setVolume(90);
           if (alternativePlaylistActive) {
             if (youtubePlayerReady && alternativePlaylistLoaded) {
               youtubePlayer.setShuffle(true);
@@ -1079,6 +1114,44 @@
                   youtubePlayerReady = true;
                   event.target.mute();
                   if (musicRequested) playPrimaryPlaylist();
+                },
+                onStateChange(event) {
+                  if (!alternativePlaylistActive) return;
+                  clearTimeout(alternativeAdvanceTimer);
+                  clearInterval(alternativeFadeTimer);
+                  clearTimeout(alternativeFadeStartTimer);
+                  alternativeAdvanceTimer = null;
+                  alternativeFadeTimer = null;
+                  alternativeFadeStartTimer = null;
+                  if (event.data === YT.PlayerState.PLAYING) {
+                    event.target.setVolume(90);
+                    const remainingSeconds = event.target.getDuration() - event.target.getCurrentTime();
+                    const transitionInMilliseconds = Math.max(0, (remainingSeconds - 5) * 1000);
+                    const fadeDuration = Math.min(5000, transitionInMilliseconds);
+                    const fadeStart = Math.max(0, transitionInMilliseconds - fadeDuration);
+                    alternativeAdvanceTimer = setTimeout(() => {
+                      alternativeAdvanceTimer = null;
+                      clearInterval(alternativeFadeTimer);
+                      alternativeFadeTimer = null;
+                      if (!alternativePlaylistActive || !youtubePlayerReady) return;
+                      event.target.setShuffle(true);
+                      event.target.setLoop(true);
+                      event.target.nextVideo();
+                      event.target.setVolume(90);
+                    }, transitionInMilliseconds);
+                    alternativeFadeStartTimer = setTimeout(() => {
+                      if (!alternativePlaylistActive || event.data !== YT.PlayerState.PLAYING) return;
+                      const startedAt = performance.now();
+                      alternativeFadeTimer = setInterval(() => {
+                        const progress = fadeDuration ? Math.min(1, (performance.now() - startedAt) / fadeDuration) : 1;
+                        event.target.setVolume(Math.round(90 * (1 - progress)));
+                        if (progress >= 1) { clearInterval(alternativeFadeTimer); alternativeFadeTimer = null; }
+                      }, 50);
+                    }, fadeStart);
+                  } else if (event.data === YT.PlayerState.ENDED) {
+                    event.target.nextVideo();
+                    event.target.setVolume(90);
+                  }
                 }
               }
             });
@@ -1327,9 +1400,9 @@
             if (!gifSlideshowActive || session !== gifSlideshowSession) return;
             const states = [...document.querySelectorAll('#posts-page img[data-post-src]')].map(image => postGifStates.get(image)).filter(state => state && state.source);
             if (!states.length) return;
-            if (gifRound === null) gifRound = states.slice(states.indexOf(currentViewerGif) + 1);
-            if (!gifRound.length) gifRound = shuffledGifRound(states, currentViewerGif);
-            showSlideshowGif(gifRound.shift());
+            const candidates = states.filter(state => state !== currentViewerGif);
+            const nextState = candidates.length ? candidates[Math.floor(Math.random() * candidates.length)] : states[0];
+            showSlideshowGif(nextState);
           } finally {
             if (session === gifSlideshowSession) gifNextButton.disabled = false;
           }
