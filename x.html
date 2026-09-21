@@ -159,6 +159,9 @@
       #book-email { position: absolute; z-index: 2147483647; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); display: none; place-items: center; width: 56px; height: 56px; padding: 0; border: 0; border-radius: 50%; background: #1DA1F2; color: #fff; font-size: 22px; cursor: pointer; }
       .avatar-viewer.is-open.is-book-view #book-email { display: grid; }
       #book-email:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+      .viewer-close, #gif-next, #book-email, #toggle-playlist-2, #switch-playlist, #scroll-to-top { width: 56px; height: 56px; min-width: 56px; min-height: 56px; border: 1px solid rgba(255, 255, 255, .12); border-radius: 50%; color: #fff; background: rgba(29, 161, 242, .25) !important; box-shadow: 0 4px 14px rgba(0, 0, 0, .22), inset 0 1px 0 rgba(255, 255, 255, .08); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); }
+      .viewer-close, #toggle-playlist-2[aria-pressed="true"] { background: rgba(255, 0, 0, .25) !important; }
+      .viewer-close:active, #gif-next:active, #book-email:active, #toggle-playlist-2:active, #switch-playlist:active, #scroll-to-top:active { background: rgba(255, 255, 255, .12) !important; -webkit-backdrop-filter: blur(5px); backdrop-filter: blur(5px); }
       @media (prefers-reduced-motion: reduce) { .launch-layer { animation-duration: 1ms; } #x-screen, .launch-layer.is-fading { transition-duration: 1ms; } }
     </style>
   </head>
@@ -841,22 +844,22 @@
         <div class="image-feed" aria-label="Publicaciones de Perfil">
           <article class="image-post">
             <button class="image-post-button" type="button" aria-label="Ampliar imagen de Perfil">
-              <img draggable="false" src="https://drive.google.com/thumbnail?id=1IDYtwBWz8mndGwRAdYLpSb4YA6iE2L6N&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1IDYtwBWz8mndGwRAdYLpSb4YA6iE2L6N=s2400';" alt="libro" loading="lazy">
+              <img draggable="false" src="https://drive.google.com/thumbnail?id=1vM9-X5140UqFj0QERqaqjiJF8UJs7O9-&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1vM9-X5140UqFj0QERqaqjiJF8UJs7O9-=s2400';" alt="libro" loading="lazy">
             </button>
           </article>
           <article class="image-post">
             <button class="image-post-button" type="button" aria-label="Ampliar imagen de Perfil">
-              <img draggable="false" src="https://drive.google.com/thumbnail?id=1RKB28wXq75iO9oeVV6sCmsgAUzU2JFNQ&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1RKB28wXq75iO9oeVV6sCmsgAUzU2JFNQ=s2400';" alt="Publicación de Perfil" loading="lazy">
+              <img draggable="false" src="https://drive.google.com/thumbnail?id=1aINRQPckLt9ANJuox4Q6Cx-DuU0FmV9Z&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1aINRQPckLt9ANJuox4Q6Cx-DuU0FmV9Z=s2400';" alt="Publicación de Perfil" loading="lazy">
             </button>
           </article>
           <article class="image-post">
             <button class="image-post-button" type="button" aria-label="Ampliar imagen de Perfil">
-              <img draggable="false" src="https://drive.google.com/thumbnail?id=1G1xxNdj5rk7SGkzCaxRWkmrki8DI6eOK&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1G1xxNdj5rk7SGkzCaxRWkmrki8DI6eOK=s2400';" alt="Primera publicación de Perfil" loading="lazy">
+              <img draggable="false" src="https://drive.google.com/thumbnail?id=10ONM74ZGAiFmdrPTK7dayOm4e2W2_hfX&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/10ONM74ZGAiFmdrPTK7dayOm4e2W2_hfX=s2400';" alt="Primera publicación de Perfil" loading="lazy">
             </button>
           </article>
           <article class="image-post">
             <button class="image-post-button" type="button" aria-label="Ampliar imagen de Perfil">
-              <img draggable="false" src="https://drive.google.com/thumbnail?id=1zUx-ccXLk9-Xyu_DUQlOqEGB0Dt0pC4z&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1zUx-ccXLk9-Xyu_DUQlOqEGB0Dt0pC4z=s2400';" alt="Publicación de Perfil" loading="lazy">
+              <img draggable="false" src="https://drive.google.com/thumbnail?id=1Bna7jGUOeMFMXOeKKLEql8HsTeHEiFJf&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1Bna7jGUOeMFMXOeKKLEql8HsTeHEiFJf=s2400';" alt="Publicación de Perfil" loading="lazy">
             </button>
           </article>
         </div>
