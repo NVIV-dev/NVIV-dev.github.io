@@ -51,7 +51,8 @@
       .alias, .metadata { color: #71767b; }
       .alias { margin: 1px 0 15px; font-size: 15px; }
       .bio { margin: 0 0 14px; font-size: 15px; line-height: 1.35; }
-      .animated-emoji { display: inline-block; width: 1em; height: 1em; vertical-align: -0.12em; }
+      .animated-emoji { display: inline-block; width: 1em; height: 1em; vertical-align: -0.12em; cursor: zoom-in; }
+      .animated-emoji[alt="🖕"] { filter: grayscale(100%); }
       .follow-stats { display: flex; gap: 20px; margin: 0 0 16px; color: #71767b; font-size: 14px; }
       .follow-stats strong { color: #e7e9ea; font-weight: 700; }
       .metadata { display: flex; flex-direction: column; flex-wrap: wrap; gap: 7px 16px; margin-top: 12px; margin-bottom: 16px; font-size: 14px; }
@@ -141,6 +142,12 @@
       .avatar-viewer.is-feed-image .viewer-gallery { width: min(100%, 1100px); max-height: 90dvh; overflow-x: hidden; overflow-y: auto; }
       .avatar-viewer.is-feed-image img { width: 100%; max-height: none; border-radius: 0; }
       .avatar-viewer.is-feed-image #viewer-image-2 { display: none; }
+      .avatar-viewer.is-emoji-view .viewer-gallery { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; width: min(100%, 900px); }
+      .avatar-viewer.is-emoji-view #viewer-image-2, .avatar-viewer.is-emoji-view #viewer-image-3 { display: block; }
+      .avatar-viewer.is-emoji-view img { width: 100%; height: auto; max-height: 70dvh; aspect-ratio: 1; border: 0; border-radius: 0; background: transparent; object-fit: contain; filter: none; }
+      .avatar-viewer.is-emoji-view img.is-gray-emoji { filter: grayscale(100%); }
+      #emoji-viewer-caption { display: none; }
+      .avatar-viewer.is-emoji-view #emoji-viewer-caption { display: block; grid-column: 1 / -1; width: 100%; margin: 2px 0 0; color: #fff; font-size: 9px; font-style: italic; line-height: 1.35; text-align: center; }
       .viewer-close { position: absolute; top: max(14px, env(safe-area-inset-top)); left: 14px; width: 42px; height: 42px; border: 0; border-radius: 50%; color: #fff; background: #FF0000; font-size: 28px; line-height: 1; }
       @keyframes open-app { 0% { inset: var(--top) var(--right) var(--bottom) var(--left); border-radius: 22%; } 100% { inset: 0; border-radius: 0; } }
       #desktop-blocker { display: none; position: fixed; z-index: 100; inset: 0; place-items: center; padding: 32px; color: #e7e9ea; background: #000; text-align: center; }
@@ -241,6 +248,46 @@
           <h2>Posts</h2>
         </header>
         <div class="image-feed" aria-label="Imágenes de Posts, de la más reciente a la más antigua">
+          <article class="image-post">
+            <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
+              <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=1SpAw0CSpZROtg0YY-Ihkl0ZuBwHqMaSV&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1SpAw0CSpZROtg0YY-Ihkl0ZuBwHqMaSV=s1600';" alt="Imagen de la publicación" loading="lazy">
+            </button>
+          </article>
+          <article class="image-post">
+            <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
+              <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=1xNlTkt6b9cPPJrNbhXpd4vcykpuCv0An&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1xNlTkt6b9cPPJrNbhXpd4vcykpuCv0An=s1600';" alt="Imagen de la publicación" loading="lazy">
+            </button>
+          </article>
+          <article class="image-post">
+            <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
+              <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=1eh9D9bPW45ip8dlYEhOCg-4I8KP_fpk5&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1eh9D9bPW45ip8dlYEhOCg-4I8KP_fpk5=s1600';" alt="Imagen de la publicación" loading="lazy">
+            </button>
+          </article>
+          <article class="image-post">
+            <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
+              <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=1cckt9UQtZGNFEsZPLvRK_OoSo3of3jtT&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1cckt9UQtZGNFEsZPLvRK_OoSo3of3jtT=s1600';" alt="Imagen de la publicación" loading="lazy">
+            </button>
+          </article>
+          <article class="image-post">
+            <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
+              <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=1Nis8xZOFQXVxUJafCcaLvatSwTGt1nLy&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1Nis8xZOFQXVxUJafCcaLvatSwTGt1nLy=s1600';" alt="Imagen de la publicación" loading="lazy">
+            </button>
+          </article>
+          <article class="image-post">
+            <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
+              <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=1FBJuUaCd0VnJq8zxqe8Ypl-8FqFJq92w&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1FBJuUaCd0VnJq8zxqe8Ypl-8FqFJq92w=s1600';" alt="Imagen de la publicación" loading="lazy">
+            </button>
+          </article>
+          <article class="image-post">
+            <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
+              <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=1mdddIhSSvp0v64o6cYzpY2r9AWCBXcKw&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1mdddIhSSvp0v64o6cYzpY2r9AWCBXcKw=s1600';" alt="Imagen de la publicación" loading="lazy">
+            </button>
+          </article>
+          <article class="image-post">
+            <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
+              <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=19jfT2KizyrzUEc-kdixoYTBbB1-lMXEK&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/19jfT2KizyrzUEc-kdixoYTBbB1-lMXEK=s1600';" alt="Imagen de la publicación" loading="lazy">
+            </button>
+          </article>
           <article class="image-post">
             <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
               <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=1oe06lDINs-N-Ptm5NBjPpxbeMCNyQWU-&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1oe06lDINs-N-Ptm5NBjPpxbeMCNyQWU-=s1600';" alt="Imagen de la publicación" loading="lazy">
@@ -891,6 +938,7 @@
           <img draggable="false" id="viewer-image" src="https://lh3.googleusercontent.com/d/1jbg0PQuv_HRVH6PdmS_YzKgG1l0WOc0h=s1600" alt="Imagen de perfil ampliada de NVIV">
           <img draggable="false" id="viewer-image-2" src="" alt="Segunda imagen de la publicación ampliada">
           <img draggable="false" id="viewer-image-3" src="" alt="Tercera imagen de la publicación ampliada">
+          <p id="emoji-viewer-caption">&quot;Cuando estoy entre listos, me hago el tonto; <br> y cuando estoy entre los estúpidos, me hago el loco&quot;.</p>
         </div>
       </div>
     </main>
@@ -917,8 +965,9 @@
         const viewerImage2 = document.querySelector('#viewer-image-2');
         const viewerImage3 = document.querySelector('#viewer-image-3');
         const postImages = document.querySelectorAll('.profile-post .post-image-button img');
+        const animatedEmojis = Array.from(document.querySelectorAll('.animated-emoji'));
         const bookEmailButton = document.querySelector('#book-email');
-        const feedImages = Array.from(document.querySelectorAll('img')).filter(image => !image.closest('#open-avatar, .post-avatar-button, .profile-post .post-image-button, .avatar-viewer') && !image.src.includes('1f0K-pRkgF8V6m41Oq7-_h3-nOcK6Qgub') && !image.src.includes('1UYbM7Loo-CQw0xbqepgUga-169s36M5S') && !image.src.includes('1TkB0wGLNCqeAMCWyxDke1wt0OfKDvBCg'));
+        const feedImages = Array.from(document.querySelectorAll('img')).filter(image => !image.classList.contains('animated-emoji') && !image.closest('#open-avatar, .post-avatar-button, .profile-post .post-image-button, .avatar-viewer') && !image.src.includes('1f0K-pRkgF8V6m41Oq7-_h3-nOcK6Qgub') && !image.src.includes('1UYbM7Loo-CQw0xbqepgUga-169s36M5S') && !image.src.includes('1TkB0wGLNCqeAMCWyxDke1wt0OfKDvBCg'));
         const profileViewerSrc = viewerImage.src;
         const home = document.querySelector('#home-screen');
         const clock = document.querySelector('#device-clock');
@@ -1327,7 +1376,7 @@
         }));
         function hideAvatar() {
           stopGifSlideshow();
-          avatarViewer.classList.remove('is-open', 'is-book-view');
+          avatarViewer.classList.remove('is-open', 'is-book-view', 'is-emoji-view');
           avatarViewer.setAttribute('aria-hidden', 'true');
           updateScrollToTopButton();
         }
@@ -1349,6 +1398,23 @@
           updateScrollToTopButton();
         }
         avatarButton.addEventListener('click', () => showImages(false));
+        animatedEmojis.forEach(emoji => {
+          emoji.addEventListener('click', event => {
+            event.stopPropagation();
+            stopGifSlideshow();
+            [viewerImage, viewerImage2, viewerImage3].forEach((viewer, index) => {
+              const source = animatedEmojis[index];
+              viewer.src = source ? source.src : '';
+              viewer.alt = source ? `${source.alt} ampliado` : '';
+              viewer.classList.toggle('is-gray-emoji', Boolean(source && source.alt === '🖕'));
+            });
+            avatarViewer.classList.remove('is-post', 'is-feed-image', 'is-book-view');
+            avatarViewer.classList.add('is-emoji-view', 'is-open');
+            avatarViewer.setAttribute('aria-label', 'Tres iconos ampliados');
+            avatarViewer.setAttribute('aria-hidden', 'false');
+            updateScrollToTopButton();
+          });
+        });
         document.querySelectorAll('.post-avatar-button').forEach(button => {
           button.addEventListener('click', () => showImages(false));
         });
