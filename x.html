@@ -120,7 +120,7 @@
       .post-actions { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; padding-right: 2px; padding-bottom: 10px; color: #71767b; font-size: 12px; }
       .post-action { display: flex; align-items: center; gap: 4px; min-width: 30px; } 
       .post-actions-end { display: flex; gap: 13px; }
-      #youtube-audio, #youtube-audio-secondary { position: fixed; width: 1px; height: 1px; left: -9999px; bottom: 0; overflow: hidden; opacity: .01; pointer-events: none; }
+      #youtube-audio, #youtube-audio-parallel, #youtube-audio-secondary { position: fixed; width: 1px; height: 1px; left: -9999px; bottom: 0; overflow: hidden; opacity: .01; pointer-events: none; }
       #toggle-playlist-2, #switch-playlist, #scroll-to-top { position: fixed; z-index: 2147483647; right: max(20px, calc(env(safe-area-inset-right) + 16px)); bottom: max(20px, calc(env(safe-area-inset-bottom) + 16px)); display: grid; place-items: center; width: 56px; height: 56px; padding: 0; border: 0; border-radius: 50%; color: #fff; background: #1DA1F2; box-shadow: 0 5px 16px rgba(0, 0, 0, .4); font-size: 21px; cursor: pointer; transform: translateZ(0); opacity: 0; visibility: hidden; pointer-events: none; transition: transform 110ms ease, filter 110ms ease, opacity 180ms ease, visibility 180ms ease; }  
       #toggle-playlist-2[aria-pressed="true"] { background: #FF0000; }
       #switch-playlist { right: auto; left: max(20px, calc(env(safe-area-inset-left) + 16px)); }
@@ -161,6 +161,7 @@
       #book-email:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
       .viewer-close, #gif-next, #book-email, #toggle-playlist-2, #switch-playlist, #scroll-to-top { width: 56px; height: 56px; min-width: 56px; min-height: 56px; border: 1px solid rgba(255, 255, 255, .12); border-radius: 50%; color: #fff; background: rgba(29, 161, 242, .25) !important; box-shadow: 0 4px 14px rgba(0, 0, 0, .22), inset 0 1px 0 rgba(255, 255, 255, .08); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); }
       .viewer-close, #toggle-playlist-2[aria-pressed="true"] { background: rgba(255, 0, 0, .25) !important; }
+      #book-email { background: rgba(255, 215, 0, .25) !important; }
       .viewer-close:active, #gif-next:active, #book-email:active, #toggle-playlist-2:active, #switch-playlist:active, #scroll-to-top:active { background: rgba(255, 255, 255, .12) !important; -webkit-backdrop-filter: blur(5px); backdrop-filter: blur(5px); }
       @media (prefers-reduced-motion: reduce) { .launch-layer { animation-duration: 1ms; } #x-screen, .launch-layer.is-fading { transition-duration: 1ms; } }
     </style>
@@ -240,6 +241,11 @@
           <h2>Posts</h2>
         </header>
         <div class="image-feed" aria-label="Imágenes de Posts, de la más reciente a la más antigua">
+          <article class="image-post">
+            <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
+              <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=1oe06lDINs-N-Ptm5NBjPpxbeMCNyQWU-&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1oe06lDINs-N-Ptm5NBjPpxbeMCNyQWU-=s1600';" alt="Imagen de la publicación" loading="lazy">
+            </button>
+          </article>
           <article class="image-post">
             <button class="image-post-button" data-post-view="single" type="button" aria-label="Ampliar imagen del Post">
               <img draggable="false" data-post-src="https://drive.google.com/thumbnail?id=1V-NovUT4oBBebtHw-X_Dl56P6xSwiZQ9&amp;sz=w1600" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1V-NovUT4oBBebtHw-X_Dl56P6xSwiZQ9=s1600';" alt="gif" loading="lazy">
@@ -844,6 +850,16 @@
         <div class="image-feed" aria-label="Publicaciones de Perfil">
           <article class="image-post">
             <button class="image-post-button" type="button" aria-label="Ampliar imagen de Perfil">
+              <img draggable="false" src="https://drive.google.com/thumbnail?id=1icuBO1b2yh4IeacBwQ-UCDEB0yhCO5Tn&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1icuBO1b2yh4IeacBwQ-UCDEB0yhCO5Tn=s2400';" alt="Publicación de Perfil" loading="lazy">
+            </button>
+          </article>
+          <article class="image-post">
+            <button class="image-post-button" type="button" aria-label="Ampliar imagen de Perfil">
+              <img draggable="false" src="https://drive.google.com/thumbnail?id=1zPPCZZIqn-hKVmlji10cMfwk8mILXOUh&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1zPPCZZIqn-hKVmlji10cMfwk8mILXOUh=s2400';" alt="Publicación de Perfil" loading="lazy">
+            </button>
+          </article>
+          <article class="image-post">
+            <button class="image-post-button" type="button" aria-label="Ampliar imagen de Perfil">
               <img draggable="false" src="https://drive.google.com/thumbnail?id=1vM9-X5140UqFj0QERqaqjiJF8UJs7O9-&amp;sz=w2400" onerror="this.onerror=null;this.src='https://lh3.googleusercontent.com/d/1vM9-X5140UqFj0QERqaqjiJF8UJs7O9-=s2400';" alt="libro" loading="lazy">
             </button>
           </article>
@@ -865,6 +881,7 @@
         </div>
       </section>
       <div id="youtube-audio" aria-hidden="true"></div>
+      <div id="youtube-audio-parallel" aria-hidden="true"></div>
       <div id="youtube-audio-secondary" aria-hidden="true"></div>
       <div id="avatar-viewer" class="avatar-viewer" role="dialog" aria-modal="true" aria-label="Imagen de perfil ampliada" aria-hidden="true">
         <button id="book-email" type="button" aria-label="Abrir página del libro"><i class="fa-solid fa-cart-plus" style="color: rgb(255, 255, 255);" aria-hidden="true"></i></button>
@@ -901,7 +918,7 @@
         const viewerImage3 = document.querySelector('#viewer-image-3');
         const postImages = document.querySelectorAll('.profile-post .post-image-button img');
         const bookEmailButton = document.querySelector('#book-email');
-        const feedImages = Array.from(document.querySelectorAll('img')).filter(image => !image.closest('#open-avatar, .post-avatar-button, .profile-post .post-image-button, .avatar-viewer') && !image.src.includes('1f0K-pRkgF8V6m41Oq7-_h3-nOcK6Qgub'));
+        const feedImages = Array.from(document.querySelectorAll('img')).filter(image => !image.closest('#open-avatar, .post-avatar-button, .profile-post .post-image-button, .avatar-viewer') && !image.src.includes('1f0K-pRkgF8V6m41Oq7-_h3-nOcK6Qgub') && !image.src.includes('1UYbM7Loo-CQw0xbqepgUga-169s36M5S') && !image.src.includes('1TkB0wGLNCqeAMCWyxDke1wt0OfKDvBCg'));
         const profileViewerSrc = viewerImage.src;
         const home = document.querySelector('#home-screen');
         const clock = document.querySelector('#device-clock');
@@ -957,15 +974,17 @@
         let opening = false;
         let musicRequested = false;
         let youtubePlayer = null;
+        let parallelYoutubePlayer = null;
         let secondaryYoutubePlayer = null;
         let youtubePlayerReady = false;
+        let parallelYoutubePlayerReady = false;
         let secondaryYoutubePlayerReady = false;
         let alternativePlaylistActive = false;
-        let alternativePlaylistLoaded = false;
-        let pendingAlternativeSkips = 0;
-        let alternativeAdvanceTimer = null;
-        let alternativeFadeTimer = null;
-        let alternativeFadeStartTimer = null;
+        let alternativePlayersLoaded = false;
+        let activeAlternativePlayerIndex = 0;
+        let alternativeTransitionTimer = null;
+        let alternativeCrossfadeTimer = null;
+        let alternativeTransitioning = false;
         let playlist2Paused = false;
         let activeScrollArea = destination;
         function updateDesktopScrollbar() {
@@ -1051,48 +1070,101 @@
           secondaryYoutubePlayer.playVideo();
         }
         function playAlternativePlaylist() {
-          if (!youtubePlayerReady || !alternativePlaylistActive) return;
-          youtubePlayer.unMute();
-          youtubePlayer.setVolume(90);
-          if (!alternativePlaylistLoaded) {
-            youtubePlayer.loadPlaylist({ listType: 'playlist', list: 'PLIi9KIGSrANk', index: pendingAlternativeSkips });
-            pendingAlternativeSkips = 0;
-            alternativePlaylistLoaded = true;
+          if (!alternativePlaylistActive || !youtubePlayerReady || !parallelYoutubePlayerReady) return;
+          clearAlternativeTransition();
+          const players = [youtubePlayer, parallelYoutubePlayer];
+          activeAlternativePlayerIndex = 0;
+          alternativeTransitioning = false;
+          players.forEach((player, index) => {
+            player.unMute();
+            player.setLoop(true);
+            player.setVolume(index === 0 ? 100 : 0);
+          });
+          if (!alternativePlayersLoaded) {
+            youtubePlayer.loadPlaylist({ listType: 'playlist', list: 'PLIi9KIGSrANk' });
+            parallelYoutubePlayer.cuePlaylist({ listType: 'playlist', list: 'PLIi9KIGSrANk' });
             youtubePlayer.setShuffle(true);
-          } else {
-            youtubePlayer.playVideo();
+            parallelYoutubePlayer.setShuffle(true);
+            youtubePlayer.nextVideo();
+            alternativePlayersLoaded = true;
           }
-          youtubePlayer.setLoop(true);
+          youtubePlayer.playVideo();
+        }
+        function clearAlternativeTransition() {
+          clearTimeout(alternativeTransitionTimer);
+          clearInterval(alternativeCrossfadeTimer);
+          alternativeTransitionTimer = null;
+          alternativeCrossfadeTimer = null;
+        }
+        function scheduleAlternativeTransition(player, playerIndex) {
+          clearTimeout(alternativeTransitionTimer);
+          alternativeTransitionTimer = null;
+          if (!alternativePlaylistActive || alternativeTransitioning || playerIndex !== activeAlternativePlayerIndex) return;
+          const duration = player.getDuration();
+          if (!Number.isFinite(duration) || duration <= 0) {
+            alternativeTransitionTimer = setTimeout(() => scheduleAlternativeTransition(player, playerIndex), 250);
+            return;
+          }
+          const remainingSeconds = Math.max(0, duration - player.getCurrentTime());
+          alternativeTransitionTimer = setTimeout(beginAlternativeCrossfade, Math.max(0, (remainingSeconds - 5) * 1000));
+        }
+        function handleAlternativePlayerState(event, playerIndex) {
+          if (!alternativePlaylistActive) return;
+          if (event.data === YT.PlayerState.PLAYING && playerIndex === activeAlternativePlayerIndex && !alternativeTransitioning) {
+            event.target.setVolume(100);
+            scheduleAlternativeTransition(event.target, playerIndex);
+          } else if (event.data === YT.PlayerState.ENDED && playerIndex === activeAlternativePlayerIndex && !alternativeTransitioning) {
+            beginAlternativeCrossfade();
+          }
+        }
+        function beginAlternativeCrossfade() {
+          if (!alternativePlaylistActive || alternativeTransitioning || !youtubePlayerReady || !parallelYoutubePlayerReady) return;
+          clearAlternativeTransition();
+          alternativeTransitioning = true;
+          const players = [youtubePlayer, parallelYoutubePlayer];
+          const outgoingIndex = activeAlternativePlayerIndex;
+          const incomingIndex = outgoingIndex === 0 ? 1 : 0;
+          const outgoing = players[outgoingIndex];
+          const incoming = players[incomingIndex];
+          incoming.unMute();
+          incoming.setLoop(true);
+          incoming.setShuffle(true);
+          incoming.setVolume(0);
+          incoming.nextVideo();
+          incoming.playVideo();
+          const startedAt = performance.now();
+          alternativeCrossfadeTimer = setInterval(() => {
+            const progress = Math.min(1, (performance.now() - startedAt) / 5000);
+            outgoing.setVolume(Math.round(100 * (1 - progress)));
+            incoming.setVolume(Math.round(100 * progress));
+            if (progress < 1) return;
+            clearInterval(alternativeCrossfadeTimer);
+            alternativeCrossfadeTimer = null;
+            outgoing.pauseVideo();
+            outgoing.setVolume(0);
+            incoming.setVolume(100);
+            activeAlternativePlayerIndex = incomingIndex;
+            alternativeTransitioning = false;
+            scheduleAlternativeTransition(incoming, incomingIndex);
+          }, 50);
         }
         function updateDiscButton(active) {
           switchPlaylistButton.setAttribute('aria-pressed', String(active));
           switchPlaylistButton.style.setProperty('background', '#1DA1F2');
         }
         switchPlaylistButton.addEventListener('click', () => {
-          clearTimeout(alternativeAdvanceTimer);
-          clearInterval(alternativeFadeTimer);
-          clearTimeout(alternativeFadeStartTimer);
-          alternativeAdvanceTimer = null;
-          alternativeFadeTimer = null;
-          alternativeFadeStartTimer = null;
-          if (youtubePlayerReady) youtubePlayer.setVolume(90);
           if (alternativePlaylistActive) {
-            if (youtubePlayerReady && alternativePlaylistLoaded) {
-              youtubePlayer.setShuffle(true);
-              youtubePlayer.setLoop(true);
-              youtubePlayer.nextVideo();
-            } else {
-              pendingAlternativeSkips++;
-            }
+            beginAlternativeCrossfade();
             return;
           }
+          clearAlternativeTransition();
           alternativePlaylistActive = true;
           musicRequested = true;
           updateDiscButton(true);
           playlist2Paused = true;
           updatePlaylist2Button();
           switchPlaylistButton.setAttribute('aria-label', 'Siguiente video aleatorio de la playlist alternativa');
-          for (const player of [youtubePlayer, secondaryYoutubePlayer]) {
+          for (const player of [youtubePlayer, parallelYoutubePlayer, secondaryYoutubePlayer]) {
             if (player && typeof player.stopVideo === 'function') player.stopVideo();
           }
           prepareMusicPlayers();
@@ -1119,42 +1191,32 @@
                   if (musicRequested) playPrimaryPlaylist();
                 },
                 onStateChange(event) {
-                  if (!alternativePlaylistActive) return;
-                  clearTimeout(alternativeAdvanceTimer);
-                  clearInterval(alternativeFadeTimer);
-                  clearTimeout(alternativeFadeStartTimer);
-                  alternativeAdvanceTimer = null;
-                  alternativeFadeTimer = null;
-                  alternativeFadeStartTimer = null;
-                  if (event.data === YT.PlayerState.PLAYING) {
-                    event.target.setVolume(90);
-                    const remainingSeconds = event.target.getDuration() - event.target.getCurrentTime();
-                    const transitionInMilliseconds = Math.max(0, (remainingSeconds - 5) * 1000);
-                    const fadeDuration = Math.min(5000, transitionInMilliseconds);
-                    const fadeStart = Math.max(0, transitionInMilliseconds - fadeDuration);
-                    alternativeAdvanceTimer = setTimeout(() => {
-                      alternativeAdvanceTimer = null;
-                      clearInterval(alternativeFadeTimer);
-                      alternativeFadeTimer = null;
-                      if (!alternativePlaylistActive || !youtubePlayerReady) return;
-                      event.target.setShuffle(true);
-                      event.target.setLoop(true);
-                      event.target.nextVideo();
-                      event.target.setVolume(90);
-                    }, transitionInMilliseconds);
-                    alternativeFadeStartTimer = setTimeout(() => {
-                      if (!alternativePlaylistActive || event.data !== YT.PlayerState.PLAYING) return;
-                      const startedAt = performance.now();
-                      alternativeFadeTimer = setInterval(() => {
-                        const progress = fadeDuration ? Math.min(1, (performance.now() - startedAt) / fadeDuration) : 1;
-                        event.target.setVolume(Math.round(90 * (1 - progress)));
-                        if (progress >= 1) { clearInterval(alternativeFadeTimer); alternativeFadeTimer = null; }
-                      }, 50);
-                    }, fadeStart);
-                  } else if (event.data === YT.PlayerState.ENDED) {
-                    event.target.nextVideo();
-                    event.target.setVolume(90);
-                  }
+                  handleAlternativePlayerState(event, 0);
+                }
+              }
+            });
+          }
+          if (!parallelYoutubePlayer) {
+            parallelYoutubePlayer = new YT.Player('youtube-audio-parallel', {
+              width: '1',
+              height: '1',
+              playerVars: {
+                autoplay: 0,
+                controls: 0,
+                listType: 'playlist',
+                list: 'PLIi9KIGSrANk',
+                loop: 1,
+                playsinline: 1
+              },
+              events: {
+                onReady(event) {
+                  parallelYoutubePlayerReady = true;
+                  event.target.mute();
+                  event.target.setVolume(0);
+                  if (alternativePlaylistActive) playAlternativePlaylist();
+                },
+                onStateChange(event) {
+                  handleAlternativePlayerState(event, 1);
                 }
               }
             });
@@ -1401,7 +1463,10 @@
           try {
             await gifDiscoveryPromise;
             if (!gifSlideshowActive || session !== gifSlideshowSession) return;
-            const states = [...document.querySelectorAll('#posts-page img[data-post-src]')].map(image => postGifStates.get(image)).filter(state => state && state.source);
+            const states = [...document.querySelectorAll('#posts-page img[data-post-src]')]
+              .filter(image => image.alt.trim().toLowerCase().startsWith('gif'))
+              .map(image => postGifStates.get(image))
+              .filter(state => state && state.source);
             if (!states.length) return;
             const candidates = states.filter(state => state !== currentViewerGif);
             const nextState = candidates.length ? candidates[Math.floor(Math.random() * candidates.length)] : states[0];
@@ -1439,7 +1504,11 @@
           image.dataset.postPreparing = 'true';
           image.loading = 'eager';
           const source = image.dataset.postSrc;
-          const markedGif = image.alt.trim().toLowerCase() === 'gif';
+          const markedGif = image.alt.trim().toLowerCase().startsWith('gif');
+          if (!markedGif) {
+            image.src = source;
+            return;
+          }
           const fallback = (image.getAttribute('onerror') || '').match(/this.src='([^']+)'/);
           const driveId = source.match(/[?&]id=([^&]+)/);
           const originalSource = driveId ? 'https://lh3.googleusercontent.com/d/' + driveId[1] + '=s0' : null;
@@ -1459,7 +1528,7 @@
             } catch (error) {}
           }
           const signature = blob ? new Uint8Array(await blob.slice(0, 6).arrayBuffer()) : [];
-          const isGif = markedGif || String.fromCharCode(...signature).startsWith('GIF8') || /\.gif(?:[?#]|$)/i.test(source) || (blob && blob.type === 'image/gif');
+          const isGif = markedGif;
           if (!isGif) { image.src = blob ? URL.createObjectURL(blob) : source; return; }
           const button = image.closest('.image-post-button');
           const animationSource = blob ? URL.createObjectURL(blob) : (originalSource || source);
