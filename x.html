@@ -201,7 +201,8 @@
               <p class="alias">@uele06</p>
               <p class="bio">• En el año 323 a.C. murió Diógenes de Sinope.<br>• En el año 2026 d.C. nació D1063N35 de X.<br><picture><source srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/1f595/512.webp" type="image/webp"><img draggable="false" class="animated-emoji" src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f595/512.gif" alt="🖕" width="32" height="32"></picture> <picture><source srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/1f916/512.webp" type="image/webp"><img draggable="false" class="animated-emoji" src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f916/512.gif" alt="🤖" width="32" height="32"></picture> <picture><source srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/1f595/512.webp" type="image/webp"><img draggable="false" class="animated-emoji" src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f595/512.gif" alt="🖕" width="32" height="32"></picture></p>
               <div class="metadata">
-                <span><i class="fa-solid fa-location-dot" style="color: rgb(255, 255, 255);"></i><a href="https://www.google.com/maps/place/Darvaza+Gas+Crater/@40.2524182,58.4400071,847m/data=!3m1!1e3!4m6!3m5!1s0x3f62b30826f44305:0x80995b5be672393f!8m2!3d40.2525742!4d58.4396793!16s%2Fm%2F0n5wd09?entry=ttu&amp;g_ep=EgoyMDI2MDgyNS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer">40.2523813577816, 58.43966754945036</a></span>
+                <span><i class="fa-solid fa-location-dot" style="color: rgb(255, 255, 255);"></i><a href="https://maps.app.goo.gl/zfoGJoDMr3xJLKXM6" target="_blank" rel="noopener noreferrer">-72.010000, 168.577778</a></span>
+                <span><i class="fa-solid fa-link" style="color: rgb(255, 255, 255);"></i><a href="https://n9.cl/4oppe" target="_blank" rel="noopener noreferrer">Hello World!</a></span>
                 <span><i class="fa-regular fa-calendar" style="color: rgb(255, 255, 255);"></i>Se unió en mayo de 2026</span>
               </div>
               <p class="follow-stats"><span><strong>0</strong> Siguiendo</span><span><strong>17</strong> Seguidores</span></p>
@@ -217,9 +218,7 @@
             <p class="pinned-label"><span class="icon-slot"><i class="fa-solid fa-thumbtack" style="color: rgb(255, 255, 255);"></i></span>Fijado</p>
             <div class="post-row">
               <button class="post-avatar-button" type="button" aria-label="Ampliar imagen de perfil">
-
               <img draggable="false" class="post-avatar" src="https://lh3.googleusercontent.com/d/1jbg0PQuv_HRVH6PdmS_YzKgG1l0WOc0h=s200" alt="NVIV">
-
               </button>
               <div class="post-body">
                 <div class="post-heading">
@@ -242,7 +241,7 @@
           <p class="page-credit">by NVIV (2026).</p>
         </article>
       </section>
-<section id="posts-page" class="tab-page" aria-label="Posts" aria-hidden="true">
+      <section id="posts-page" class="tab-page" aria-label="Posts" aria-hidden="true">
         <header class="tab-page-header">
           <button class="tab-page-back" type="button" aria-label="Volver al perfil"><i class="fa-solid fa-arrow-left" style="color: rgb(255, 255, 255);"></i></button>
           <h2>Posts</h2>
@@ -1221,6 +1220,19 @@
           alternativeTransitionTimer = null;
           alternativeCrossfadeTimer = null;
         }
+        function stopAllActivePlaylists() {
+          clearAlternativeTransition();
+          alternativeTransitioning = false;
+          alternativePlaylistActive = false;
+          alternativePlayersLoaded = false;
+          musicRequested = false;
+          playlist2Paused = true;
+          updateDiscButton(false);
+          updatePlaylist2Button();
+          [youtubePlayer, parallelYoutubePlayer, secondaryYoutubePlayer].forEach(player => {
+            if (player && typeof player.stopVideo === 'function') player.stopVideo();
+          });
+        }
         function scheduleAlternativeTransition(player, playerIndex) {
           clearTimeout(alternativeTransitionTimer);
           alternativeTransitionTimer = null;
@@ -1477,6 +1489,7 @@
           updateScrollToTopButton();
         }
         function showImages(isPost) {
+          if (!isPost) stopAllActivePlaylists();
           if (isPost) {
             viewerImage.src = postImages[0].src;
             viewerImage.alt = 'Primera imagen de la publicación ampliada';
@@ -1762,7 +1775,7 @@
         });
         bookEmailButton.addEventListener('click', event => {
           event.stopPropagation();
-          window.open('https://g-store.neocities.org/test/librogratis', '_blank', 'noopener,noreferrer');
+          window.open('https://g-store.neocities.org/test/librogratis', '_blank', 'noopener,noreferrer'); //book01//
         });
         closeAvatar.addEventListener('click', hideAvatar);
         avatarViewer.addEventListener('click', event => {
